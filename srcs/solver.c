@@ -82,7 +82,7 @@ int		try_map(t_map *map, t_list *tetris)
 	return (0);
 }
 
-void	solve_fillit(t_list *tetris)
+t_map	*solve_fillit(t_list *tetris)
 {
 	t_map	*map;
 	int		map_size;
@@ -95,5 +95,5 @@ void	solve_fillit(t_list *tetris)
 		destroy_map(map);
 		map = buildmap(map_size);
 	}
-	display_map(map);
+	return (map);
 }
