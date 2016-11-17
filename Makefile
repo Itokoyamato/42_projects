@@ -82,6 +82,8 @@ SRCLIB =	ft_atoi.c \
 			ft_tolower.c \
 			ft_toupper.c \
 			ft_lstaddend.c \
+			ft_lstcount.c \
+			ft_lstrev.c \
 
 SRC =	main.c \
 		solver.c \
