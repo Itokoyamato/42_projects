@@ -84,7 +84,8 @@ SRCLIB =	ft_atoi.c \
 			ft_lstaddend.c \
 
 SRC =	main.c \
-		solver.c
+		solver.c \
+		map.c
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRC))
 SRCSLIB = $(addprefix $(LIBFTDIR)/, $(SRCLIB))

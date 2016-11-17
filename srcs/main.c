@@ -30,15 +30,28 @@ void		ft_lstrev(t_list **alst)
 	*alst = prev;
 }
 
-int		err(char * errmsg)
+void	display_map(t_map *map)
+{
+	int i;
+
+	i = 0;
+	while (i < map->size)
+	{
+		ft_putstr(map->grid[i]);
+		ft_putchar('\n');
+		++i;
+	}
+}
+
+int		err(char *errmsg)
 {
 	ft_putstr_fd(errmsg, 2);
 	return (1);
 }
+
 int		main(int argc, char **argv)
 {
 	t_list	*list;
-
 /*
 **	Testing: building tetriminos
 */
