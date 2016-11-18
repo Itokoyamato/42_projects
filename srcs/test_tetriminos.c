@@ -12,6 +12,22 @@
 
 #include "headers.h"
 
+
+t_list	*test_tetris(void)
+{
+	t_list		*list;
+
+	list = NULL;
+	ft_lstadd(&list, ft_lstnew(test_t0(), sizeof(t_tetris)));
+	ft_lstadd(&list, ft_lstnew(test_t1(), sizeof(t_tetris)));
+	ft_lstadd(&list, ft_lstnew(test_t2(), sizeof(t_tetris)));
+	ft_lstadd(&list, ft_lstnew(test_t3(), sizeof(t_tetris)));
+	ft_lstadd(&list, ft_lstnew(test_t4(), sizeof(t_tetris)));
+	ft_lstrev(&list);
+	display_tetris(list);
+	return (list);
+}
+
 t_tetris	*test_t0(void)
 {
 	char		**pos0;

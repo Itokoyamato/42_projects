@@ -12,10 +12,10 @@
 
 #include "headers.h"
 
-int		err(char *errmsg)
+void	err(char *errmsg)
 {
 	ft_putstr_fd(errmsg, 2);
-	return (0);
+	exit(1);
 }
 
 void	display_map(t_map *map)
@@ -37,16 +37,15 @@ int		main(int argc, char **argv)
 	t_map		*map;
 
 	if (argc != 2 && argv)
-	{
-		ft_putstr("usage: fillit source_file\n");
-		return (1);
-	}
-	if ((list = test_tetris()))
+		err("Wrong number of argument\nUsage : fillit <source_file>");
+	if ((list = createTetriList(argv[1])))
 	{
 		if ((map = solve_fillit(list)))
 			display_map(map);
+		else
+			err("Failed to solve tetriminos");
 	}
 	else
-		err("Failed to retrieve tetriminos list");
+		err("\nFailed to retrieve tetriminos list");
 	return (0);
 }

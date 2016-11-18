@@ -13,6 +13,8 @@
 #ifndef HEADERS_H
 # define HEADERS_H
 # include "libft.h"
+# include <fcntl.h>
+# include <stdlib.h>
 
 typedef struct	s_map
 {
@@ -34,7 +36,9 @@ typedef struct	s_point
 	int			y;
 }				t_point;
 
-int				err(char *errmsg);
+void			err(char *errmsg);
+
+t_list			*createTetriList(char *file);
 
 void			display_map(t_map *map);
 t_map			*buildmap(int size);

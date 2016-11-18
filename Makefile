@@ -88,7 +88,7 @@ SRCLIB =	ft_atoi.c \
 SRC =	main.c \
 		solver.c \
 		map.c \
-		test_tetriminos.c \
+		sanitize.c \
 		test_utils.c \
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRC))
