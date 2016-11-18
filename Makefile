@@ -100,12 +100,12 @@ OBJLIB = $(SRCLIB:.c=.o)
 
 all: $(NAME)
 
-libft/libft.a:
+libft.a:
 	gcc -c -Wall -Wextra -Werror $(SRCSLIB) -I $(INC)
 	ar rc $(NAMELIB) $(OBJLIB)
 	ranlib $(NAMELIB)
 
-$(NAME): libft/libft.a
+$(NAME): libft.a
 	gcc -o $(NAME) -Wall -Wextra -Werror $(SRCS) libft.a -I $(INC)
 
 clean:

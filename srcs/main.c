@@ -15,7 +15,7 @@
 int		err(char *errmsg)
 {
 	ft_putstr_fd(errmsg, 2);
-	return (1);
+	return (0);
 }
 
 void	display_map(t_map *map)
