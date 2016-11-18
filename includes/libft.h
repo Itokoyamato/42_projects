@@ -92,5 +92,7 @@ char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strtrim(char const *s);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
+size_t				ft_lstcount(t_list *lst);
+void				ft_lstrev(t_list **lst);
 
 #endif

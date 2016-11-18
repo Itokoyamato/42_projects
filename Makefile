@@ -82,10 +82,14 @@ SRCLIB =	ft_atoi.c \
 			ft_tolower.c \
 			ft_toupper.c \
 			ft_lstaddend.c \
+			ft_lstcount.c \
+			ft_lstrev.c \
 
 SRC =	main.c \
 		solver.c \
-		sanitize.c
+		map.c \
+		test_tetriminos.c \
+		test_utils.c \
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRC))
 SRCSLIB = $(addprefix $(LIBFTDIR)/, $(SRCLIB))

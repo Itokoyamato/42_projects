@@ -13,7 +13,6 @@
 #ifndef HEADERS_H
 # define HEADERS_H
 # include "libft.h"
-# include <fcntl.h>
 
 typedef struct	s_map
 {
