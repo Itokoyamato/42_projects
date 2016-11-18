@@ -50,10 +50,16 @@ int				try_tetri(t_map *map, t_tetris *tetri, t_point *pos);
 void			set_tetri(t_map *map, t_tetris *tetri, t_point *pos, char c);
 
 t_list			*test_tetris(void);
+void			test_display_map(t_map *map);
 void			display_tetris(t_list *list);
 t_tetris		*test_t0(void);
 t_tetris		*test_t1(void);
 t_tetris		*test_t2(void);
 t_tetris		*test_t3(void);
 t_tetris		*test_t4(void);
+t_tetris		*test_t5(void);
+t_tetris		*test_t6(void);
+t_tetris		*test_t7(void);
+t_tetris		*test_t8(void);
+t_tetris		*test_t9(void);
 #endif

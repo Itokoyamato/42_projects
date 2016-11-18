@@ -89,6 +89,8 @@ SRC =	main.c \
 		solver.c \
 		map.c \
 		sanitize.c \
+		test_tetriminos.c \
+		test_tetriminos2.c \
 		test_utils.c \
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRC))
