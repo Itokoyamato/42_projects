@@ -84,7 +84,8 @@ SRCLIB =	ft_atoi.c \
 			ft_lstaddend.c \
 
 SRC =	main.c \
-		solver.c
+		solver.c \
+		sanitize.c
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRC))
 SRCSLIB = $(addprefix $(LIBFTDIR)/, $(SRCLIB))
@@ -94,12 +95,12 @@ OBJLIB = $(SRCLIB:.c=.o)
 
 all: $(NAME)
 
-libft/libft.a:
+libft.a:
 	gcc -c -Wall -Wextra -Werror $(SRCSLIB) -I $(INC)
 	ar rc $(NAMELIB) $(OBJLIB)
 	ranlib $(NAMELIB)
 
-$(NAME): libft/libft.a
+$(NAME): libft.a
 	gcc -o $(NAME) -Wall -Wextra -Werror $(SRCS) libft.a -I $(INC)
 
 clean:

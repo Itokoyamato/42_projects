@@ -13,6 +13,7 @@
 #ifndef HEADERS_H
 # define HEADERS_H
 # include "libft.h"
+# include <fcntl.h>
 
 typedef struct	s_map
 {
@@ -30,4 +31,5 @@ typedef struct	s_tetris
 
 void	solve_fillit(t_list *list);
 int		err(char * errmsg);
+t_list 	*creatTetrilist(char *file);
 #endif

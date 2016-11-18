@@ -19,8 +19,11 @@ void	ft_lstaddend(t_list **alst, t_list *newlst)
 	if (alst && newlst)
 	{
 		go = *alst;
-		while (go->next)
+		while (go->next != 0)
+		{
 			go = go->next;
+		}
+			ft_putstr("   HEY   ");
 		ft_lstadd(&go, newlst);
 	}
 }

@@ -33,65 +33,13 @@ void		ft_lstrev(t_list **alst)
 int		err(char * errmsg)
 {
 	ft_putstr_fd(errmsg, 2);
-	return (1);
+	return (0);
 }
 int		main(int argc, char **argv)
 {
 	t_list	*list;
 
-/*
-**	Testing: building tetriminos
-*/
-	char	*pos0[21];
-	t_tetris	*t0;
-	char	*pos1[21];
-	t_tetris	*t1;
-	char	*pos2[21];
-	t_tetris	*t2;
-	char	*pos3[21];
-	t_tetris	*t3;
-
-	list = NULL;
-
-	t0 = ft_memalloc(sizeof(t_tetris));
-	t0->width = 1;
-	t0->height = 4;
-	pos0[0] = "#";
-	pos0[1] = "#";
-	pos0[2] = "#";
-	pos0[3] = "#";
-	t0->pos = pos0;
-	t0->id = 'A';
-
-	t1 = ft_memalloc(sizeof(t_tetris));
-	t1->width = 4;
-	t1->height = 1;
-	pos1[0] = "####";
-	t1->pos = pos1;
-	t1->id = 'B';
-
-	t2 = ft_memalloc(sizeof(t_tetris));
-	t2->width = 3;
-	t2->height = 2;
-	pos2[0] = "###";
-	pos2[1] = "..#";
-	t2->pos = pos2;
-	t2->id = 'C';
-
-	t3 = ft_memalloc(sizeof(t_tetris));
-	t3->width = 3;
-	t3->height = 2;
-	pos3[0] = ".##";
-	pos3[1] = "##.";
-	t3->pos = pos3;
-	t3->id = 'D';
-
-	ft_lstadd(&list, ft_lstnew(t0, sizeof(t_tetris)));
-	ft_lstadd(&list, ft_lstnew(t1, sizeof(t_tetris)));
-	ft_lstadd(&list, ft_lstnew(t2, sizeof(t_tetris)));
-	ft_lstadd(&list, ft_lstnew(t3, sizeof(t_tetris)));
-
-	ft_lstrev(&list);
+	list = creatTetrilist(argv[1]);
 
 /*
 **	Testing: printing list containing tetriminos
