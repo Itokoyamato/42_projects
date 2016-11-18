@@ -44,7 +44,7 @@ int		main(int argc, char **argv)
 	if ((list = test_tetris()))
 	{
 		if ((map = solve_fillit(list)))
-			display_map(map);
+			test_display_map(map);
 	}
 	else
 		err("Failed to retrieve tetriminos list");
