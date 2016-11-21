@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   test_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 15:51:58 by dthuilli          #+#    #+#             */
-/*   Updated: 2016/11/17 15:52:26 by dthuilli         ###   ########.fr       */
+/*   Updated: 2016/11/21 14:13:22 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers.h"
+
+void	display_ttlist(t_list *list)
+{
+	int		i;
+
+	ft_putstr("===Display===\n");
+	while(list)
+	{
+		ft_putstr("==='");
+		ft_putchar(((t_tetris *)(list->content))->id);
+		ft_putstr("'===\n");
+		i = 0;
+		while (i <= ((t_tetris *)(list->content))->height)
+		{
+			ft_putstr(((t_tetris *)(list->content))->pos[i]);
+			ft_putchar('\n');
+			++i;
+		}
+		list = list->next;
+	}
+	ft_putstr("===EndDisplay===\n");
+	
+}
 
 void	display_tetris(t_list *list)
 {
@@ -24,7 +47,7 @@ void	display_tetris(t_list *list)
 	{
 		tetri = (t_tetris *)(tmp->content);
 		i = 0;
-		while (i < tetri->height)
+		while (i <= tetri->height)
 		{
 			ft_putstr(tetri->pos[i]);
 			ft_putchar('\n');
@@ -34,28 +57,6 @@ void	display_tetris(t_list *list)
 		tmp = tmp->next;
 	}
 	ft_putstr("---------------\n---------------\n\n");
-}
-
-<<<<<<< HEAD
-=======
-t_list	*test_tetris(void)
-{
-	t_list		*list;
-
-	list = NULL;
-	ft_lstadd(&list, ft_lstnew(test_t0(), sizeof(t_tetris)));
-	ft_lstadd(&list, ft_lstnew(test_t1(), sizeof(t_tetris)));
-	ft_lstadd(&list, ft_lstnew(test_t2(), sizeof(t_tetris)));
-	ft_lstadd(&list, ft_lstnew(test_t3(), sizeof(t_tetris)));
-	ft_lstadd(&list, ft_lstnew(test_t4(), sizeof(t_tetris)));
-	ft_lstadd(&list, ft_lstnew(test_t5(), sizeof(t_tetris)));
-	ft_lstadd(&list, ft_lstnew(test_t6(), sizeof(t_tetris)));
-	ft_lstadd(&list, ft_lstnew(test_t7(), sizeof(t_tetris)));
-	ft_lstadd(&list, ft_lstnew(test_t8(), sizeof(t_tetris)));
-	ft_lstadd(&list, ft_lstnew(test_t9(), sizeof(t_tetris)));
-	ft_lstrev(&list);
-	display_tetris(list);
-	return (list);
 }
 
 void	test_display_colored_text(t_map *map, int i, int j)
@@ -74,7 +75,6 @@ void	test_display_colored_text(t_map *map, int i, int j)
 	ft_putchar(map->grid[i][j]);
 }
 
->>>>>>> 93f70cbc9c033ddbc7b350791e878c2e87286069
 void	test_display_map(t_map *map)
 {
 	int		i;

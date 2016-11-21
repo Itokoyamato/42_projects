@@ -12,7 +12,6 @@
 
 #include "headers.h"
 
-
 t_list	*test_tetris(void)
 {
 	t_list		*list;

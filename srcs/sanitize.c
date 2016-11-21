@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 14:48:03 by llaporte          #+#    #+#             */
-/*   Updated: 2016/11/16 12:47:31 by llaporte         ###   ########.fr       */
+/*   Updated: 2016/11/21 14:36:40 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,21 @@ char		**tetriAdd2(char *buf)
 	i = 0;
 	j = 0;
 	k = 0;
-	pos = NULL;
+	pos = (char **)ft_memalloc(3);
+	pos[j] = (char *)ft_memalloc(4);
 	while (i < 21)
 	{
 		checkChar(buf, i);
-		pos[j][]
-		++k;		
-		if (i == 4 || i == 9 || i == 14 || i == 19 || i == 20)
+		pos[j][k] = buf[i];
+		if (i == 4 || i == 9 || i == 14 || i == 19)
 		{
-			k = 0;
-			++j;
+			pos[j][k] = '\0';
+			ft_putstr(pos[j]);
+			ft_putchar('\n');
+			pos[++j] = (char *)ft_memalloc(4);
+			k = -1;
 		}
+		++k;
 		++i;
 	}
 	return (pos);
@@ -54,10 +58,12 @@ t_tetris	*tetriAdd(char *buf, char id)
 {
 	t_tetris	*tetrist;
 
-	id = id + 1;
 	if (!(tetrist = (t_tetris *)ft_memalloc(sizeof(tetrist))))
 		err("Can't malloc a t_tetris !");
+	tetrist->height = 3;
+	tetrist->width = 3;
 	tetrist->pos = tetriAdd2(buf);
+	ft_putstr(tetrist->pos[0]);
 	tetrist->id = id;
 	return (tetrist);
 }
@@ -70,7 +76,8 @@ t_list		*createTetriList(char *file)
 	char	id;
 	t_list	*tetriList;
 
-	if ((fd = open(file, O_RDONLY) == -1))
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
 		err("Open failed\nUsage : fillit <source_file>");
 	id = 'A';
 	tetriList = NULL;
@@ -82,5 +89,7 @@ t_list		*createTetriList(char *file)
 		ft_lstadd(&tetriList, ft_lstnew(tetriAdd(buf, id++), sizeof(t_tetris)));
 	}
 	ft_putstr("===EndOfSanitize===\n");
+	ft_lstrev(&tetriList);
+	display_ttlist(tetriList);
 	return (tetriList);
 }
