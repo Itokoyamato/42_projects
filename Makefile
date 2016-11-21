@@ -92,6 +92,7 @@ SRC =	main.c \
 		test_tetriminos.c \
 		test_tetriminos2.c \
 		test_utils.c \
+		shrink.c \
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRC))
 SRCSLIB = $(addprefix $(LIBFTDIR)/, $(SRCLIB))

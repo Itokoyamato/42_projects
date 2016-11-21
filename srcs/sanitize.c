@@ -74,7 +74,7 @@ t_list		*createTetriList(char *file)
 		ft_putstr("==='");
 		ft_putchar(id);
 		ft_putstr("'===\n");
-		ft_lstadd(&tetriList, ft_lstnew(tetriAdd(buf, id++), sizeof(t_tetris)));
+		ft_lstadd(&tetriList, ft_lstnew(shrink(tetriAdd(buf, id++)), sizeof(t_tetris)));
 	}
 	ft_putstr("===EndOfSanitize===\n");
 	ft_lstrev(&tetriList);

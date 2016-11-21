@@ -87,7 +87,9 @@ t_map	*solve_fillit(t_list *tetris)
 	t_map	*map;
 	int		map_size;
 
-	map_size = ft_lstcount(tetris) - 1;
+	map_size = 2;
+	while (map_size * map_size < (int)(ft_lstcount(tetris) * 4))
+		map_size++;
 	map = buildmap(map_size);
 	while (!try_map(map, tetris))
 	{

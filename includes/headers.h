@@ -28,6 +28,10 @@ typedef struct	s_tetris
 	int			width;
 	int			height;
 	char		id;
+	int			startx;
+	int			starty;
+	int			endx;
+	int			endy;
 }				t_tetris;
 
 typedef struct	s_point
@@ -48,10 +52,12 @@ t_map			*solve_fillit(t_list *list);
 int				try_map(t_map *map, t_list *tetris);
 int				try_tetri(t_map *map, t_tetris *tetri, t_point *pos);
 void			set_tetri(t_map *map, t_tetris *tetri, t_point *pos, char c);
+t_tetris		*shrink(t_tetris *tetri);
 
 t_list			*test_tetris(void);
 void			test_display_map(t_map *map);
 void			display_tetris(t_list *list);
+void			display_ttlist(t_list *list);
 t_tetris		*test_t0(void);
 t_tetris		*test_t1(void);
 t_tetris		*test_t2(void);
