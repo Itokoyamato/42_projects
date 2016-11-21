@@ -24,47 +24,35 @@ void		checkChar(char *buf, int i)
 			err("Tetriminos is not valid, character not \".\" or \"#\".");
 }
 
-char		**tetriAdd2(char *buf)
-{
-	char	**pos;
-	int		i;
-	int		j;
-	int		k;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	pos = (char **)ft_memalloc(3);
-	pos[j] = (char *)ft_memalloc(4);
-	while (i < 21)
-	{
-		checkChar(buf, i);
-		pos[j][k] = buf[i];
-		if (i == 4 || i == 9 || i == 14 || i == 19)
-		{
-			pos[j][k] = '\0';
-			ft_putstr(pos[j]);
-			ft_putchar('\n');
-			pos[++j] = (char *)ft_memalloc(4);
-			k = -1;
-		}
-		++k;
-		++i;
-	}
-	return (pos);
-}
-
 t_tetris	*tetriAdd(char *buf, char id)
 {
 	t_tetris	*tetrist;
+	int			i;
+	int			x;
+	int			y;
 
-	if (!(tetrist = (t_tetris *)ft_memalloc(sizeof(tetrist))))
+	if (!(tetrist = (t_tetris *)ft_memalloc(sizeof(t_tetris))))
 		err("Can't malloc a t_tetris !");
-	tetrist->height = 3;
-	tetrist->width = 3;
-	tetrist->pos = tetriAdd2(buf);
-	ft_putstr(tetrist->pos[0]);
+	i = 0;
+	x = 0;
+	y = 0;
+	tetrist->height = 4;
+	tetrist->width = 4;
 	tetrist->id = id;
+	tetrist->pos = (char **)ft_memalloc(sizeof(char *) * tetrist->height);
+	tetrist->pos[0] = (char *)ft_memalloc(sizeof(char) * tetrist->width + 1);
+	while (i < 19)
+	{
+		if (i == 4 || i == 9 || i == 14 || i == 19)
+		{
+			tetrist->pos[y][x] = '\0';
+			x = 0;
+			tetrist->pos[++y] = (char *)ft_memalloc(sizeof(char) * tetrist->width + 1);
+		}
+		else
+			tetrist->pos[y][x++] = buf[i];
+		++i;
+	}
 	return (tetrist);
 }
 
@@ -90,6 +78,6 @@ t_list		*createTetriList(char *file)
 	}
 	ft_putstr("===EndOfSanitize===\n");
 	ft_lstrev(&tetriList);
-	display_ttlist(tetriList);
+	display_tetris(tetriList);
 	return (tetriList);
 }

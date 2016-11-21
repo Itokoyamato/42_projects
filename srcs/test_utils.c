@@ -47,7 +47,7 @@ void	display_tetris(t_list *list)
 	{
 		tetri = (t_tetris *)(tmp->content);
 		i = 0;
-		while (i <= tetri->height)
+		while (i < tetri->height)
 		{
 			ft_putstr(tetri->pos[i]);
 			ft_putchar('\n');
