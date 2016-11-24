@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 14:34:36 by llaporte          #+#    #+#             */
-/*   Updated: 2016/11/16 12:44:05 by llaporte         ###   ########.fr       */
+/*   Updated: 2016/11/24 16:21:22 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	err(char *errmsg)
 {
+	ft_putstr_fd("error\n", 1);
 	ft_putstr_fd(errmsg, 2);
-	exit(1);
+	exit(-1);
 }
 
 void	display_map(t_map *map)
@@ -37,15 +38,15 @@ int		main(int argc, char **argv)
 	t_map		*map;
 
 	if (argc != 2 && argv)
-		err("Wrong number of argument\nUsage : fillit <source_file>");
-	if ((list = createTetriList(argv[1])))
+		err("Wrong number of argument\nUsage : fillit <source_file>\n");
+	if ((list = create_tetri_list(argv[1])))
 	{
 		if ((map = solve_fillit(list)))
 			display_map(map);
 		else
-			err("Failed to solve tetriminos");
+			err("Failed to solve tetriminos\n");
 	}
 	else
-		err("\nFailed to retrieve tetriminos list");
+		err("Failed to retrieve tetriminos list\n");
 	return (0);
 }

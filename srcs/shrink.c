@@ -3,43 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   shrink.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 18:08:08 by dthuilli          #+#    #+#             */
-/*   Updated: 2016/11/21 18:08:31 by dthuilli         ###   ########.fr       */
+/*   Updated: 2016/11/24 16:09:35 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers.h"
 
-void		doShrink(t_tetris *tetri)
+static void	do_shrink(t_tetris *t)
 {
-	char		**pos;
+	char		**p;
 	int			x;
 	int			y;
 
-	pos = (char **)ft_memalloc(sizeof(char *) * tetri->height);
-	pos[0] = (char *)ft_memalloc(sizeof(char) * tetri->width + 1);
+	p = (char **)ft_memalloc(sizeof(char *) * t->height);
+	p[0] = (char *)ft_memalloc(sizeof(char) * t->width + 1);
 	y = 0;
 	while (y < 4)
 	{
-		if (y >= tetri->starty && y <= tetri->endy)
+		if (y >= t->starty && y <= t->endy)
 		{
-			pos[y - tetri->starty] = (char *)ft_memalloc(sizeof(char) * tetri->width + 1);
+			p[y - t->starty] = (char *)ft_memalloc(sizeof(char) * t->width + 1);
 			x = 0;
 			while (x < 4)
 			{
-				if (x >= tetri->startx && x <= tetri->endx)
-					pos[y - tetri->starty][x - tetri->startx] = tetri->pos[y][x];
+				if (x >= t->startx && x <= t->endx)
+					p[y - t->starty][x - t->startx] = t->pos[y][x];
 				++x;
 			}
 		}
 		++y;
 	}
-	tetri->pos = pos;
+	t->pos = p;
 }
 
-void		getTetriSize(t_tetris *tetri)
+static void	get_tetri_size(t_tetris *tetri)
 {
 	t_point		*pos;
 
@@ -73,9 +73,9 @@ t_tetris	*shrink(t_tetris *tetri)
 	tetri->starty = 4;
 	tetri->endx = 0;
 	tetri->endy = 0;
-	getTetriSize(tetri);
+	get_tetri_size(tetri);
 	tetri->width = 1 + tetri->endx - tetri->startx;
 	tetri->height = 1 + tetri->endy - tetri->starty;
-	doShrink(tetri);
+	do_shrink(tetri);
 	return (tetri);
 }

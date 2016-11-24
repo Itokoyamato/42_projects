@@ -6,36 +6,13 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 15:51:58 by dthuilli          #+#    #+#             */
-/*   Updated: 2016/11/21 14:13:22 by llaporte         ###   ########.fr       */
+/*   Updated: 2016/11/24 16:09:57 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers.h"
 
-void	display_ttlist(t_list *list)
-{
-	int		i;
-
-	ft_putstr("===Display===\n");
-	while(list)
-	{
-		ft_putstr("==='");
-		ft_putchar(((t_tetris *)(list->content))->id);
-		ft_putstr("'===\n");
-		i = 0;
-		while (i <= ((t_tetris *)(list->content))->height)
-		{
-			ft_putstr(((t_tetris *)(list->content))->pos[i]);
-			ft_putchar('\n');
-			++i;
-		}
-		list = list->next;
-	}
-	ft_putstr("===EndDisplay===\n");
-	
-}
-
-void	display_tetris(t_list *list)
+void		display_tetris(t_list *list)
 {
 	t_list		*tmp;
 	int			i;
@@ -59,7 +36,7 @@ void	display_tetris(t_list *list)
 	ft_putstr("---------------\n---------------\n\n");
 }
 
-void	test_display_colored_text(t_map *map, int i, int j)
+static void	test_display_colored_text(t_map *map, int i, int j)
 {
 	ft_putstr("\e[");
 	if (map->grid[i][j] - 36 > 37)
@@ -75,7 +52,7 @@ void	test_display_colored_text(t_map *map, int i, int j)
 	ft_putchar(map->grid[i][j]);
 }
 
-void	test_display_map(t_map *map)
+void		test_display_map(t_map *map)
 {
 	int		i;
 	int		j;

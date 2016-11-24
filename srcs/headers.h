@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 14:34:46 by llaporte          #+#    #+#             */
-/*   Updated: 2016/11/16 12:45:37 by llaporte         ###   ########.fr       */
+/*   Updated: 2016/11/24 16:10:20 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ typedef struct	s_point
 
 void			err(char *errmsg);
 
-t_list			*createTetriList(char *file);
+t_list			*create_tetri_list(char *file);
+void			check_tetri(t_tetris *tetrist);
 
 void			display_map(t_map *map);
 t_map			*buildmap(int size);
@@ -57,15 +58,4 @@ t_tetris		*shrink(t_tetris *tetri);
 t_list			*test_tetris(void);
 void			test_display_map(t_map *map);
 void			display_tetris(t_list *list);
-void			display_ttlist(t_list *list);
-t_tetris		*test_t0(void);
-t_tetris		*test_t1(void);
-t_tetris		*test_t2(void);
-t_tetris		*test_t3(void);
-t_tetris		*test_t4(void);
-t_tetris		*test_t5(void);
-t_tetris		*test_t6(void);
-t_tetris		*test_t7(void);
-t_tetris		*test_t8(void);
-t_tetris		*test_t9(void);
 #endif
