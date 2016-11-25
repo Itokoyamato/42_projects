@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 14:34:46 by llaporte          #+#    #+#             */
-/*   Updated: 2016/11/24 16:10:20 by llaporte         ###   ########.fr       */
+/*   Updated: 2016/11/25 17:17:48 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct	s_point
 	int			y;
 }				t_point;
 
-void			err(char *errmsg);
+void			err(void);
 
 t_list			*create_tetri_list(char *file);
 void			check_tetri(t_tetris *tetrist);

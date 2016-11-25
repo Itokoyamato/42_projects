@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 15:30:18 by llaporte          #+#    #+#             */
-/*   Updated: 2016/11/25 14:30:42 by llaporte         ###   ########.fr       */
+/*   Updated: 2016/11/25 17:14:00 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ void		check_tetri(t_tetris *tetrist)
 		++i;
 	}
 	if (!(nb_link == 6 || nb_link == 8) || nb_hash != 4)
-		err("Not a valid Tetriminos.\n");
+		err();
 }

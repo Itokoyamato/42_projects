@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 14:48:03 by llaporte          #+#    #+#             */
-/*   Updated: 2016/11/24 17:11:30 by llaporte         ###   ########.fr       */
+/*   Updated: 2016/11/25 17:14:26 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static void		check_char(char *buf, int i)
 	if (i == 4 || i == 9 || i == 14 || i == 19 || i == 20)
 	{
 		if (buf[i] != '\n')
-			err("Tetriminos is not valid, character is not \"\\n\".\n");
+			err();
 	}
 	else if (buf[i] != '.' && buf[i] != '#')
-		err("Tetriminos is not valid, character not \".\" or \"#\".\n");
+		err();
 }
 
 static void		tadd2(char *buf, t_tetris *tt)
@@ -53,7 +53,7 @@ static t_tetris	*tadd(char *buf, char id)
 	t_tetris	*tetrist;
 
 	if (!(tetrist = (t_tetris *)ft_memalloc(sizeof(t_tetris))))
-		err("Can't malloc a t_tetris !\n");
+		err();
 	tetrist->height = 4;
 	tetrist->width = 4;
 	tetrist->id = id;
@@ -73,18 +73,18 @@ t_list			*create_tetri_list(char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		err("Open failed\nUsage : fillit <source_file>\n");
+		err();
 	id = 'A';
 	tlst = NULL;
 	while ((cur = read(fd, buf, 21)))
 	{
 		buf[cur] = '\0';
 		if (id > 'Z')
-			err("There is too much Tetriminos, must be between 1 and 26\n");
+			err();
 		ft_lstadd(&tlst, ft_lstnew(shrink(tadd(buf, id++)), sizeof(t_tetris)));
 	}
 	if (ft_strlen(buf) != 20)
-		err("Rolfina");
+		err();
 	ft_lstrev(&tlst);
 	return (tlst);
 }

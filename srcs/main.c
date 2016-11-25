@@ -6,16 +6,15 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 14:34:36 by llaporte          #+#    #+#             */
-/*   Updated: 2016/11/24 16:21:22 by llaporte         ###   ########.fr       */
+/*   Updated: 2016/11/25 17:17:36 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers.h"
 
-void	err(char *errmsg)
+void	err(void)
 {
 	ft_putstr_fd("error\n", 1);
-	ft_putstr_fd(errmsg, 2);
 	exit(-1);
 }
 
@@ -38,15 +37,15 @@ int		main(int argc, char **argv)
 	t_map		*map;
 
 	if (argc != 2 && argv)
-		err("Wrong number of argument\nUsage : fillit <source_file>\n");
+		err();
 	if ((list = create_tetri_list(argv[1])))
 	{
 		if ((map = solve_fillit(list)))
 			display_map(map);
 		else
-			err("Failed to solve tetriminos\n");
+			err();
 	}
 	else
-		err("Failed to retrieve tetriminos list\n");
+		err();
 	return (0);
 }
