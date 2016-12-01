@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 13:30:56 by dthuilli          #+#    #+#             */
-/*   Updated: 2016/11/30 16:02:36 by dthuilli         ###   ########.fr       */
+/*   Updated: 2016/12/01 14:53:57 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ static char		*extract_line(char **str)
 	result = ft_strsub(*str, 0, ft_strlen(*str) - ft_strlen(tmp));
 	free(*str);
 	*str = ft_strsub(tmp, 1, ft_strlen(tmp));
-	free(tmp);
+	ft_memdel((void **)&tmp);
 	return (result);
 }
 
-static int		read_next_line(t_fd *nl, char **line, char *buf)
+static int		read_line_fd(t_fd *nl, char **line, char *buf)
 {
 	int		cur;
 	char	*tmp;
@@ -41,9 +41,9 @@ static int		read_next_line(t_fd *nl, char **line, char *buf)
 	while (!fnl(nl->buf) && (cur = read(nl->fd, buf, BUFF_SIZE)) >= 1)
 	{
 		tmp = ft_strdup(nl->buf);
-		free(nl->buf);
+		ft_memdel((void **)&nl->buf);
 		nl->buf = ft_strjoin(tmp, buf);
-		free(tmp);
+		ft_memdel((void **)&tmp);
 		ft_bzero(buf, BUFF_SIZE);
 	}
 	if (cur < 0)
@@ -60,7 +60,7 @@ static int		read_next_line(t_fd *nl, char **line, char *buf)
 	return (1);
 }
 
-static t_list	*new_next_line(int const fd, t_list **lst)
+static t_list	*new_fd(int const fd, t_list **lst)
 {
 	t_fd	*nl;
 
@@ -68,6 +68,7 @@ static t_list	*new_next_line(int const fd, t_list **lst)
 	nl->fd = fd;
 	nl->buf = ft_strnew(BUFF_SIZE + 1);
 	*lst = ft_lstnew(nl, sizeof(t_fd));
+	ft_memdel((void **)&nl);
 	return (*lst);
 }
 
@@ -82,9 +83,9 @@ int				get_next_line(int const fd, char **line)
 	while (lst && ((t_fd*)lst->content)->fd != fd)
 		lst = lst->next;
 	if (!lst)
-		ft_lstadd(&lstfd, new_next_line(fd, &lst));
+		ft_lstadd(&lstfd, new_fd(fd, &lst));
 	buf = ft_strnew(BUFF_SIZE + 1);
-	result = read_next_line(lst->content, line, buf);
-	free(buf);
+	result = read_line_fd(lst->content, line, buf);
+	ft_memdel((void **)&buf);
 	return (result);
 }

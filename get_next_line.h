@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 11:16:02 by dthuilli          #+#    #+#             */
-/*   Updated: 2016/11/30 15:59:17 by dthuilli         ###   ########.fr       */
+/*   Updated: 2016/12/01 14:32:56 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct	s_fd
 {
 	int			fd;
 	char		*buf;
+	int			nbl;
 }				t_fd;
 
 int				get_next_line(int const fd, char **line);
