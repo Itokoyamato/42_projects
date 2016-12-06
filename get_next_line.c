@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 13:30:56 by dthuilli          #+#    #+#             */
-/*   Updated: 2016/12/01 14:53:57 by dthuilli         ###   ########.fr       */
+/*   Updated: 2016/12/06 12:52:11 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,15 @@ int				get_next_line(int const fd, char **line)
 	int				result;
 
 	lst = lstfd;
+	if (!(line) || BUFF_SIZE <= 0)
+		return (-1);
 	while (lst && ((t_fd*)lst->content)->fd != fd)
 		lst = lst->next;
 	if (!lst)
 		ft_lstadd(&lstfd, new_fd(fd, &lst));
 	buf = ft_strnew(BUFF_SIZE + 1);
+	if (!buf)
+		return (-1);
 	result = read_line_fd(lst->content, line, buf);
 	ft_memdel((void **)&buf);
 	return (result);

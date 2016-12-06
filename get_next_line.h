@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 11:16:02 by dthuilli          #+#    #+#             */
-/*   Updated: 2016/12/01 14:32:56 by dthuilli         ###   ########.fr       */
+/*   Updated: 2016/12/06 14:50:51 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <fcntl.h>
 # include "libft.h"
 
-# define BUFF_SIZE 1024
+# define BUFF_SIZE 100
 
 typedef struct	s_fd
 {
