@@ -6,7 +6,7 @@
 #    By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/09 13:08:23 by dthuilli          #+#    #+#              #
-#    Updated: 2017/01/13 17:06:27 by dthuilli         ###   ########.fr        #
+#    Updated: 2017/01/17 17:38:32 by dthuilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,16 @@ NAME	= fdf
 
 # src / obj files
 SRC		=	main.c \
+			controls.c \
+			init.c \
 			map_parser.c \
 			map_utils.c \
 			image.c \
+			math.c \
+			draw.c \
 			render.c \
 			render_utils.c \
-			color_hsl.c \
+			color_hsv.c \
 			color_rgba.c \
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))

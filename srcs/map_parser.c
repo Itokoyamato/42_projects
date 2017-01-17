@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 14:31:02 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/09 16:03:39 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/17 16:53:30 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,25 @@ static int	clean_map(t_list **lst, t_map **map)
 
 static int	get_lines(int fd, t_list **lst)
 {
-	t_list	*temp;
-	int		expected;
+	t_list	*tmp;
+	int		pointspl;
 	char	*line;
-	int		ret;
+	int		cur;
 
-	expected = -1;
-	while ((ret = get_next_line(fd, &line)))
+	pointspl = -1;
+	while ((cur = get_next_line(fd, &line)))
 	{
-		if (expected == -1)
-			expected = (int)ft_countwords(line, ' ');
-		temp = ft_lstnew(line, ft_strlen(line) + 1);
-		if ((temp) == NULL)
+		if (pointspl == -1)
+			pointspl = (int)ft_countwords(line, ' ');
+		tmp = ft_lstnew(line, ft_strlen(line) + 1);
+		if ((tmp) == NULL)
 			return (clean_map(lst, NULL));
-		ft_lstadd(lst, temp);
-		if (expected != (int)ft_countwords(line, ' '))
+		ft_lstadd(lst, tmp);
+		if (pointspl != (int)ft_countwords(line, ' '))
 			return (clean_map(lst, NULL));
 		ft_strdel(&line);
 	}
-	if (expected == -1 || ret == -1)
+	if (pointspl == -1 || cur == -1)
 		return (clean_map(lst, NULL));
 	ft_lstrev(lst);
 	return (1);
@@ -73,15 +73,15 @@ static int	init_map(t_map **m, t_list *list)
 			return (clean_map(&list, m));
 		while (x < (*m)->width)
 		{
-			(*m)->vectors[y * (*m)->width + x] = get_vector(x, y, split[x]);
+			(*m)->vectors[y * (*m)->width + x] = new_vector(x, y, split[x]);
 			x++;
 		}
 		ft_strsplitdel(&split);
 		lst = lst->next;
 		y++;
 	}
-	get_depth(*m);
-	fill_colors(*m);
+	get_map_minmax_depth(*m);
+	set_map_colors(*m);
 	clean_map(&list, NULL);
 	return (1);
 }
@@ -106,7 +106,7 @@ t_map		*get_map(int width, int height)
 	return (map);
 }
 
-int		parse_map(int fd, t_map **map)
+int			parse_map(int fd, t_map **map)
 {
 	t_list	*lst;
 
