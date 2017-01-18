@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 12:51:20 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/17 17:23:47 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/18 15:51:20 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 # define maxsX			2560
 # define maxsY			1395
 
+typedef struct		s_point
+{
+	float		x;
+	float		y;
+}					t_point;
 typedef struct		s_cam
 {
 	double		offsetx;
@@ -45,14 +50,6 @@ typedef struct		s_map
 	int			depth_max;
 	t_vector	**vectors;
 }					t_map;
-typedef struct		s_mouse
-{
-	char		isdown;
-	int			x;
-	int			y;
-	int			lastx;
-	int			lasty;
-}					t_mouse;
 typedef struct		s_img
 {
 	void		*img;
@@ -72,9 +69,36 @@ typedef struct		s_rgba
 }					t_rgba;
 typedef struct		s_settings
 {
-	t_rgba		color1;
-	t_rgba		color2;
+	t_point		p_pos;
+	float		p_hue;
+	float		p_sat;
+	float		p_val;
+	t_rgba		bg_c1;
+	t_point		bg_c1_pos;
+	t_rgba		bg_c2;
+	t_point		bg_c2_pos;
+	t_rgba		c1;
+	t_point		c1_pos;
+	t_rgba		c2;
+	t_point		c2_pos;
+	t_rgba		c3;
+	t_point		c3_pos;
+	t_rgba		c4;
+	t_point		c4_pos;
+	t_rgba		c5;
+	t_point		c5_pos;
+	t_rgba		c6;
+	t_point		c6_pos;
+	int			selected;
 }					t_settings;
+typedef struct		s_controls
+{
+	int			isdown[275];
+	int			m_x;
+	int			m_y;
+	int			m_lastx;
+	int			m_lasty;
+}					t_controls;
 typedef struct		s_mlx
 {
 	void		*mlx;
@@ -83,7 +107,7 @@ typedef struct		s_mlx
 	t_img		*background;
 	t_map		*map;
 	t_cam		*cam;
-	t_mouse		*mouse;
+	t_controls	*controls;
 	double		**zbuf;
 	t_settings	*settings;
 	int			sX;
@@ -140,8 +164,22 @@ t_rgba				rgba(int r, int g, int b, int a);
 t_rgba				hextorgba(int hex);
 int					rgbatohex(t_rgba c);
 
+int					get_palette_color(double z, t_map *m, double percent);
+void				set_map_colors(t_map *m);
+
 int					hook_mousedown(int button, int x, int y, t_mlx *mlx);
 int					hook_mouseup(int button, int x, int y, t_mlx *mlx);
 int					hook_mousemove(int x, int y, t_mlx *mlx);
 int					hook_keydown(int key, t_mlx *mlx);
+int					hook_keyup(int key, t_mlx *mlx);
+int					handle_settings(t_mlx *mlx, t_point m_pos);
+
+void				update_color(t_mlx *mlx);
+void				update_rotation(t_mlx *mlx, int x, int y);
+void				update_zoom(t_mlx *mlx, int y);
+void				update_position(t_mlx *mlx, int x, int y);
+
+t_point				point(float x, float y);
+void				draw_rec(t_img *img, t_point pos, t_point size, t_rgba color);
+void				draw_color_picker(t_mlx *mlx, t_img *img, t_point pos);
 #endif

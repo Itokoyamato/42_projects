@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 11:02:51 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/17 17:23:55 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/18 16:10:28 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int		main(int argc, char **argv)
 		return (err("Error: invalid file"));
 	mlx = init_fdf("FdF", map);
 	render_fdf(mlx);
-	mlx_key_hook(mlx->win, hook_keydown, mlx);
+	mlx_hook(mlx->win, 2, 0, hook_keydown, mlx);
+	mlx_hook(mlx->win, 3, 0, hook_keyup, mlx);
 	mlx_hook(mlx->win, 4, 0, hook_mousedown, mlx);
 	mlx_hook(mlx->win, 5, 0, hook_mouseup, mlx);
 	mlx_hook(mlx->win, 6, 0, hook_mousemove, mlx);

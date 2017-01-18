@@ -6,11 +6,28 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 17:15:53 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/17 17:32:20 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/18 16:07:35 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void		init_settings(t_mlx *mlx)
+{
+	mlx->settings->p_hue = (float)0;
+	mlx->settings->p_sat = (float)1;
+	mlx->settings->p_val = (float)1;
+	mlx->settings->bg_c1 = rgba(204, 204, 204, 255);
+	mlx->settings->bg_c2 = rgba(50, 50, 50, 255);
+	mlx->settings->c1 = rgba(100, 100, 100, 255);
+	mlx->settings->c2 = rgba(100, 100, 100, 255);
+	mlx->settings->c3 = rgba(100, 100, 100, 255);
+	mlx->settings->c4 = rgba(100, 100, 100, 255);
+	mlx->settings->c5 = rgba(100, 100, 100, 255);
+	mlx->settings->c6 = rgba(100, 100, 100, 255);
+	mlx->settings->selected = 0;
+	render_background(mlx);
+}
 
 t_mlx		*init_fdf(char *title, t_map *map)
 {
@@ -27,7 +44,7 @@ t_mlx		*init_fdf(char *title, t_map *map)
 	if ((mlx->mlx = mlx_init()) == NULL ||
 		(mlx->win = mlx_new_window(mlx->mlx, mlx->sX, mlx->sY, title)) == NULL
 		|| (mlx->cam = ft_memalloc(sizeof(t_cam))) == NULL
-		|| (mlx->mouse = ft_memalloc(sizeof(t_mouse))) == NULL
+		|| (mlx->controls = ft_memalloc(sizeof(t_controls))) == NULL
 		|| (mlx->settings = ft_memalloc(sizeof(t_settings))) == NULL
 		|| (mlx->img = new_image(mlx)) == NULL
 		|| (mlx->background = new_image(mlx)) == NULL)
@@ -48,9 +65,7 @@ t_mlx		*init_fdf(char *title, t_map *map)
 	}
 	mlx->cam->offsetx = mlx->sX / 2;
 	mlx->cam->offsety = mlx->sY / 2;
-	mlx->settings->color1 = rgba(204, 204, 204, 255);
-	mlx->settings->color1 = rgba(100, 100, 100, 255);
-	render_background(mlx);
+	init_settings(mlx);
 	return (mlx);
 }
 
@@ -60,8 +75,8 @@ t_mlx		*exit_fdf(t_mlx *mlx)
 		mlx_destroy_window(mlx->mlx, mlx->win);
 	if (mlx->cam != NULL)
 		ft_memdel((void **)&mlx->cam);
-	if (mlx->mouse != NULL)
-		ft_memdel((void **)&mlx->mouse);
+	if (mlx->controls != NULL)
+		ft_memdel((void **)&mlx->controls);
 	if (mlx->img != NULL)
 		del_image(mlx, mlx->img);
 	ft_memdel((void **)&mlx);
