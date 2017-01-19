@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 17:16:33 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/18 16:10:39 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/19 16:17:17 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,27 @@
 
 void	update_color(t_mlx *mlx)
 {
-	mlx->settings->bg_c1 = hsvtorgba(mlx->settings->p_hue,
+	t_rgba	color;
+
+	color = hsvtorgba(mlx->settings->p_hue,
 		mlx->settings->p_sat, mlx->settings->p_val);
+	if (mlx->settings->selected == 0)
+		mlx->settings->bg_c1 = color;
+	else if (mlx->settings->selected == 1)
+		mlx->settings->bg_c2 = color;
+	else if (mlx->settings->selected == 2)
+		mlx->settings->c1 = color;
+	else if (mlx->settings->selected == 3)
+		mlx->settings->c2 = color;
+	else if (mlx->settings->selected == 4)
+		mlx->settings->c3 = color;
+	else if (mlx->settings->selected == 5)
+		mlx->settings->c4 = color;
+	else if (mlx->settings->selected == 6)
+		mlx->settings->c5 = color;
+	else if (mlx->settings->selected == 7)
+		mlx->settings->c6 = color;
+	set_map_colors(mlx, mlx->map);
 	render_background(mlx);
 }
 

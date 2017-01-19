@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 14:31:02 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/17 16:53:30 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/19 15:55:21 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	get_lines(int fd, t_list **lst)
 	return (1);
 }
 
-static int	init_map(t_map **m, t_list *list)
+static int	init_map(t_mlx *mlx, t_map **m, t_list *list)
 {
 	t_list	*lst;
 	char	**split;
@@ -81,7 +81,7 @@ static int	init_map(t_map **m, t_list *list)
 		y++;
 	}
 	get_map_minmax_depth(*m);
-	set_map_colors(*m);
+	set_map_colors(mlx, *m);
 	clean_map(&list, NULL);
 	return (1);
 }
@@ -106,7 +106,7 @@ t_map		*get_map(int width, int height)
 	return (map);
 }
 
-int			parse_map(int fd, t_map **map)
+int			parse_map(int fd, t_mlx *mlx, t_map **map)
 {
 	t_list	*lst;
 
@@ -116,5 +116,5 @@ int			parse_map(int fd, t_map **map)
 	*map = get_map(ft_countwords(lst->content, ' '), ft_lstcount(lst));
 	if (*map == NULL)
 		return (clean_map(&lst, map));
-	return (init_map(map, lst));
+	return (init_map(mlx, map, lst));
 }

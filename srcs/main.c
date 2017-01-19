@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 11:02:51 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/18 16:10:28 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/19 17:35:44 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@ int		main(int argc, char **argv)
 
 	if (argc < 2)
 		return (err("Usage: /mlx map_file"));
+	if ((mlx = ft_memalloc(sizeof(t_mlx))) == NULL)
+		return (err("Error: Failed to init mlx"));
+	init_settings(mlx);
 	fd = open(argv[1], O_RDONLY);
-	if (fd < 0 || !parse_map(fd, &map))
+	if (fd < 0 || !parse_map(fd, mlx, &map))
 		return (err("Error: invalid file"));
-	mlx = init_fdf("FdF", map);
+	init_fdf(mlx, "FdF", map);
 	render_fdf(mlx);
 	mlx_hook(mlx->win, 2, 0, hook_keydown, mlx);
 	mlx_hook(mlx->win, 3, 0, hook_keyup, mlx);

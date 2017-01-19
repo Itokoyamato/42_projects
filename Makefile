@@ -6,7 +6,7 @@
 #    By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/09 13:08:23 by dthuilli          #+#    #+#              #
-#    Updated: 2017/01/18 15:10:36 by dthuilli         ###   ########.fr        #
+#    Updated: 2017/01/19 16:27:06 by dthuilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ SRC		=	main.c \
 			draw.c \
 			render.c \
 			render_utils.c \
-			render_settings.c \
 			color_hsv.c \
 			color_rgba.c \
 			color_palette.c \
