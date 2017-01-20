@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 16:48:46 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/19 18:01:14 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/20 17:08:25 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_vector	*new_vector(int x, int y, char *str)
 {
 	t_vector	*v;
 
+	if (!ft_isstrdigit(str))
+		err("Error: invalid file");
 	v = ft_memalloc(sizeof(t_vector));
 	if (v == NULL)
 		return (NULL);

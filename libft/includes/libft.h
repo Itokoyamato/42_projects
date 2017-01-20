@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 11:23:49 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/09 15:51:23 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/20 17:05:48 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int					ft_strsplitdel(char ***split);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
 size_t				ft_countwords(char *str, char sep);
+int					ft_isstrdigit(char *str);
 int					get_next_line(int const fd, char **line);
 
 /*

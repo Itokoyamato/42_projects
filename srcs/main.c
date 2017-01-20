@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 11:02:51 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/20 16:41:51 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/20 17:06:25 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 int		err(char *err)
 {
 	ft_putendl(err);
+	exit(EXIT_SUCCESS);
 	return (1);
 }
 
@@ -26,11 +27,13 @@ int		main(int argc, char **argv)
 	t_map	*map;
 	int		fd;
 
-	if (argc < 2)
+	if (argc != 2)
 		return (err("Usage: /fdf map_file"));
 	if ((mlx = ft_memalloc(sizeof(t_mlx))) == NULL)
 		return (err("Error: Failed to init mlx"));
 	init_settings(mlx);
+	if ((fd = open(argv[1], O_DIRECTORY)) >= 0)
+		return (err("Error: invalid file, you entered a directory"));
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0 || !parse_map(fd, mlx, &map))
 		return (err("Error: invalid file"));
