@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 14:43:23 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/20 16:27:11 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/20 16:37:39 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void		render_map(t_mlx *mlx)
 				draw_line(mlx, v, math_vec(get_vector(map, x + 1, y), mlx));
 			if (y + 1 < map->height)
 				draw_line(mlx, v, math_vec(get_vector(map, x, y + 1), mlx));
-			if (y + 1 < map->height && x + 1 < map->width && mlx->settings->advanced)
+			if (y + 1 < map->height && x + 1 < map->width
+				&& mlx->settings->advanced)
 				draw_line(mlx, v, math_vec(get_vector(map, x + 1, y + 1), mlx));
 		}
 	}
