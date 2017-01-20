@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 11:02:51 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/20 15:57:56 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/20 16:41:51 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		main(int argc, char **argv)
 	int		fd;
 
 	if (argc < 2)
-		return (err("Usage: /mlx map_file"));
+		return (err("Usage: /fdf map_file"));
 	if ((mlx = ft_memalloc(sizeof(t_mlx))) == NULL)
 		return (err("Error: Failed to init mlx"));
 	init_settings(mlx);
