@@ -6,14 +6,13 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 11:02:51 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/19 17:35:44 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/20 15:57:56 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <fcntl.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 int		err(char *err)
 {

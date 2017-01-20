@@ -6,7 +6,7 @@
 #    By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/03 11:23:53 by dthuilli          #+#    #+#              #
-#    Updated: 2017/01/09 14:10:13 by dthuilli         ###   ########.fr        #
+#    Updated: 2017/01/20 16:12:43 by dthuilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,25 @@ OBJ		= $(SRC:.c=.o)
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
 
+# Colors
+NO_COLOR     := \x1b[0m
+OK_COLOR     := \x1b[32;01m
+ERROR_COLOR  := \x1b[31;01m
+WARN_COLOR   := \x1b[33;01m
+SILENT_COLOR := \x1b[30;01m
+
 all: $(NAME)
 
 %.o:%.c
-	$(CC) $(CFLAGS) -I includes -o $@ -c $<
+	@printf "$(SILENT_COLOR)Compiling $<$(NO_COLOR)"
+	@$(CC) $(CFLAGS) -I includes -o $@ -c $<
+	@echo " $(OK_COLOR)✓ $(NO_COLOR)"
 
 $(NAME): $(OBJ)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+	@printf "$(SILENT_COLOR)Compiling $(NAME)$(NO_COLOR)"
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
+	@echo " $(OK_COLOR)✓ $(NO_COLOR)"
 
 clean:
 	rm -rf $(OBJ)

@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/18 13:29:00 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/19 17:51:01 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/20 15:53:25 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int			get_palette_color(t_mlx *mlx, double z, t_map *m, double p)
 
 	s = mlx->settings;
 	c = rgbatohex(s->c1);
+	if (p < 0)
+		return (c);
 	if (z > (double)m->depth_min && p <= 0.002)
 		c = clerp(rgbatohex(s->c1), rgbatohex(s->c2),
 			ft_ilerp(p * 1000, 0, 2));

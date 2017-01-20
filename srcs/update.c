@@ -6,12 +6,11 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 17:16:33 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/19 16:17:17 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/20 15:58:27 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 void	update_color(t_mlx *mlx)
 {

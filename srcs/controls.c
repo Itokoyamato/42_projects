@@ -6,12 +6,11 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/18 13:22:12 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/19 18:06:34 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/20 16:31:37 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 int		hook_keyup(int key, t_mlx *mlx)
 {

@@ -6,26 +6,26 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/18 15:01:36 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/19 18:04:13 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/20 16:02:29 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
 
-void	handle_color_select2(t_mlx *mlx, t_settings *s, t_point m_pos, int tmp)
+static void	handle_color_select2(t_mlx *mlx, t_settings *s, t_point m, int tmp)
 {
-	if (m_pos.x >= s->c5_pos.x && m_pos.x <= s->c5_pos.x + 80 &&
-		m_pos.y >= s->c5_pos.y && m_pos.y <= s->c5_pos.y + 20)
+	if (m.x >= s->c5_pos.x && m.x <= s->c5_pos.x + 80 &&
+		m.y >= s->c5_pos.y && m.y <= s->c5_pos.y + 20)
 		s->selected = 6;
-	else if (m_pos.x >= s->c6_pos.x && m_pos.x <= s->c6_pos.x + 80 &&
-		m_pos.y >= s->c6_pos.y && m_pos.y <= s->c6_pos.y + 20)
+	else if (m.x >= s->c6_pos.x && m.x <= s->c6_pos.x + 80 &&
+		m.y >= s->c6_pos.y && m.y <= s->c6_pos.y + 20)
 		s->selected = 7;
 	if (tmp != s->selected)
 		render_fdf(mlx);
 }
 
-void	handle_color_select(t_mlx *mlx, t_point m_pos)
+void		handle_color_select(t_mlx *mlx, t_point m_pos)
 {
 	t_settings		*s;
 	int				tmp;
@@ -53,7 +53,7 @@ void	handle_color_select(t_mlx *mlx, t_point m_pos)
 	handle_color_select2(mlx, s, m_pos, tmp);
 }
 
-int		handle_settings(t_mlx *mlx, t_point m_pos)
+int			handle_settings(t_mlx *mlx, t_point m_pos)
 {
 	t_point		cp;
 	int			render;
@@ -76,7 +76,7 @@ int		handle_settings(t_mlx *mlx, t_point m_pos)
 	return (0);
 }
 
-void	change_depth(t_mlx *mlx, int i)
+void		change_depth(t_mlx *mlx, int i)
 {
 	mlx->settings->depth_multiplier += i;
 	if (mlx->settings->depth_multiplier < 1)
@@ -85,7 +85,7 @@ void	change_depth(t_mlx *mlx, int i)
 		mlx->settings->depth_multiplier = 50;
 }
 
-void	toggle_setting(t_mlx *mlx, int setting)
+void		toggle_setting(t_mlx *mlx, int setting)
 {
 	if (setting == 0)
 		mlx->settings->tips = !mlx->settings->tips;

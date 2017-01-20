@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 17:15:53 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/19 18:00:13 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/20 16:31:11 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int			init_settings(t_mlx *mlx)
 void		init_data(t_mlx *mlx, t_map *map)
 {
 	mlx->cam->x = 0;
-	mlx->cam->y = 0;
+	mlx->cam->y = -0.5;
 	mlx->cam->scale = 32;
 	while (map->width * mlx->cam->scale >= mlx->sx ||
 		map->height * mlx->cam->scale >= mlx->sy)

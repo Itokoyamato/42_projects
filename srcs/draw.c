@@ -6,13 +6,13 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 16:47:04 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/01/19 17:49:52 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/01/20 16:02:48 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int			draw_point(t_mlx *mlx, t_line *l, t_vector *p1, t_vector *p2)
+static int		draw_point(t_mlx *mlx, t_line *l, t_vector *p1, t_vector *p2)
 {
 	double	percent;
 
@@ -38,7 +38,7 @@ int			draw_point(t_mlx *mlx, t_line *l, t_vector *p1, t_vector *p2)
 	return (0);
 }
 
-void		draw_line(t_mlx *mlx, t_vector p1, t_vector p2)
+void			draw_line(t_mlx *mlx, t_vector p1, t_vector p2)
 {
 	t_line	line;
 
@@ -58,7 +58,7 @@ void		draw_line(t_mlx *mlx, t_vector p1, t_vector p2)
 			break ;
 }
 
-void		draw_rec(t_img *img, t_point pos, t_point size, t_rgba color)
+void			draw_rec(t_img *img, t_point pos, t_point size, t_rgba color)
 {
 	int		tmpx;
 	t_point	p;
@@ -77,7 +77,7 @@ void		draw_rec(t_img *img, t_point pos, t_point size, t_rgba color)
 	}
 }
 
-void		draw_color_picker(t_mlx *mlx, t_img *img, t_point pos)
+void			draw_color_picker(t_mlx *mlx, t_img *img, t_point pos)
 {
 	t_point		p;
 	t_settings	*s;
