@@ -1,2 +1,2 @@
-# 42_02_libft
+# 42_libft
 Final score: 115/100
