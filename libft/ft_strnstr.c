@@ -3,32 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/02 00:32:11 by pbondoer          #+#    #+#             */
-/*   Updated: 2016/01/08 01:30:00 by pbondoer         ###   ########.fr       */
+/*   Created: 2016/11/04 14:21:27 by dthuilli          #+#    #+#             */
+/*   Updated: 2016/11/11 17:05:15 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <string.h>
 
-char	*ft_strnstr(const char *s1, const char *s2, size_t n)
+char		*ft_strnstr(const char *s1, const char *s2, size_t n)
 {
-	size_t i;
-	size_t j;
+	size_t	start;
+	size_t	i;
 
-	if (*s2 == '\0')
-		return ((char *)s1);
+	start = 0;
 	i = 0;
-	while (s1[i] && i < n)
+	if (!*s2)
+		return ((char *)s1);
+	while (s1[start] && n > start)
 	{
-		j = 0;
-		while (s1[i + j] && i + j < n && s2[j] && s1[i + j] == s2[j])
-			j++;
-		if (s2[j] == '\0')
-			return ((char *)(s1 + i));
-		i++;
+		if (s1[start + i] == s2[i] && start + i < n)
+			i++;
+		else
+		{
+			i = 0;
+			start++;
+		}
+		if (!s2[i])
+			return ((char *)s1 + start);
 	}
-	return (NULL);
+	return (0);
 }

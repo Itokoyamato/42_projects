@@ -1,17 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_iswhitespace.c                                  :+:      :+:    :+:   */
+/*   ft_isstrdigit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/02 02:52:41 by pbondoer          #+#    #+#             */
-/*   Updated: 2015/12/02 02:56:14 by pbondoer         ###   ########.fr       */
+/*   Created: 2017/01/20 17:04:48 by dthuilli          #+#    #+#             */
+/*   Updated: 2017/01/20 17:24:20 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_iswhitespace(int c)
+#include "libft.h"
+
+int			ft_isstrdigit(char *str)
 {
-	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
-			|| c == '\r');
+	int		i;
+
+	i = -1;
+	if (str[i + 1] == '-')
+		i++;
+	while (str[++i])
+		if (!ft_isdigit(str[i]))
+			return (0);
+	return (1);
 }

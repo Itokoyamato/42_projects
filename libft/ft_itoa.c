@@ -3,54 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/02 18:32:07 by pbondoer          #+#    #+#             */
-/*   Updated: 2015/12/03 23:29:54 by pbondoer         ###   ########.fr       */
+/*   Created: 2016/11/04 15:16:43 by dthuilli          #+#    #+#             */
+/*   Updated: 2016/11/10 14:31:41 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <string.h>
 
-static size_t	digit_count(long n)
+static int		nblen(int nb)
 {
-	size_t i;
+	int	len;
 
-	i = 1;
-	if (n < 0)
-		n = -n;
-	while (n >= 10)
+	len = 2;
+	if (nb < 0)
 	{
-		i++;
-		n /= 10;
+		nb *= -1;
+		len += 1;
 	}
-	return (i);
+	while (nb /= 10)
+		++len;
+	return (len);
+}
+
+static void		do_itoa(long int nbr, char *str, int *index)
+{
+	if (nbr > 9)
+		do_itoa(nbr / 10, str, index);
+	str[(*index)++] = '0' + nbr % 10;
 }
 
 char			*ft_itoa(int n)
 {
-	long	v;
-	size_t	count;
-	char	*str;
-	char	neg;
+	char		*str;
+	int			index;
+	long int	nbr;
 
-	v = n;
-	neg = (v < 0 ? 1 : 0);
-	count = digit_count(v);
-	str = ft_strnew(count + neg);
-	if (str == NULL)
-		return (NULL);
-	if (neg)
-	{
-		v = -v;
-		str[0] = '-';
-	}
-	while (count > 0)
-	{
-		str[count + neg - 1] = (v % 10) + '0';
-		count--;
-		v /= 10;
-	}
+	index = 0;
+	nbr = (long int)n;
+	if (!(str = (char*)malloc(sizeof(char) * nblen(n))))
+		return (0);
+	if (nbr < 0)
+		str[index++] = '-';
+	do_itoa(ABS(nbr), str, &index);
+	str[index] = '\0';
 	return (str);
 }

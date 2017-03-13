@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/25 22:27:35 by pbondoer          #+#    #+#             */
-/*   Updated: 2015/12/11 22:46:15 by pbondoer         ###   ########.fr       */
+/*   Created: 2016/11/03 15:17:29 by dthuilli          #+#    #+#             */
+/*   Updated: 2017/01/09 15:49:27 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include "libft.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	while (n > 0)
-	{
-		n--;
-		((unsigned char *)dst)[n] = ((unsigned char *)src)[n];
-	}
-	return (dst);
+	void	*ret;
+
+	ret = dst;
+	while (n--)
+		*(t_byte *)dst++ = *(t_byte *)src++;
+	return (ret);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_countwords.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/02 17:33:40 by pbondoer          #+#    #+#             */
-/*   Updated: 2015/12/02 19:44:59 by pbondoer         ###   ########.fr       */
+/*   Created: 2017/01/09 13:45:35 by dthuilli          #+#    #+#             */
+/*   Updated: 2017/01/09 15:49:22 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "string.h"
+#include "libft.h"
 
 size_t	ft_countwords(char *str, char sep)
 {

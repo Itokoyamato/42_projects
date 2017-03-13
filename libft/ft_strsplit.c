@@ -3,66 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/02 17:28:42 by pbondoer          #+#    #+#             */
-/*   Updated: 2015/12/04 03:35:15 by pbondoer         ###   ########.fr       */
+/*   Created: 2016/11/07 16:46:11 by dthuilli          #+#    #+#             */
+/*   Updated: 2017/01/09 15:49:58 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <string.h>
 
-static size_t	word_len(char const *s, char c)
+static int		splitcount(const char *s, char c)
 {
-	size_t i;
+	int		cnt;
+	int		in_substring;
 
-	i = 0;
-	while (s[i] && s[i] != c)
-		i++;
-	return (i);
-}
-
-static char		*next_word(char const *s, char c)
-{
-	while (*s && *s == c)
-		s++;
-	return ((char *)s);
-}
-
-static void		cleanup(char **split, size_t cur)
-{
-	while (cur > 0)
+	in_substring = 0;
+	cnt = 0;
+	while (*s != '\0')
 	{
-		cur--;
-		ft_strdel(&split[cur]);
+		if (in_substring == 1 && *s == c)
+			in_substring = 0;
+		if (in_substring == 0 && *s != c)
+		{
+			in_substring = 1;
+			cnt++;
+		}
+		s++;
 	}
-	ft_strdel(split);
+	return (cnt);
+}
+
+static int		wlen(const char *s, char c)
+{
+	int		len;
+
+	len = 0;
+	while (*s != c && *s != '\0')
+	{
+		len++;
+		s++;
+	}
+	return (len);
 }
 
 char			**ft_strsplit(char const *s, char c)
 {
-	char	**split;
-	size_t	cur;
-	size_t	wordcount;
+	char	**result;
+	int		wordcount;
+	int		index;
 
-	wordcount = ft_countwords((char *)s, c);
-	split = (char **)ft_memalloc((wordcount + 1) * sizeof(char *));
-	if (split == NULL)
+	if (!s)
 		return (NULL);
-	cur = 0;
-	while (cur < wordcount)
+	index = 0;
+	wordcount = splitcount((const char *)s, c);
+	result = (char **)malloc(sizeof(*result) * (wordcount + 1));
+	if (result == NULL)
+		return (NULL);
+	while (wordcount--)
 	{
-		s = next_word(s, c);
-		split[cur] = ft_strsub(s, 0, word_len(s, c));
-		if (split[cur] == NULL)
-		{
-			cleanup(split, cur);
+		while (*s == c && *s != '\0')
+			s++;
+		result[index] = ft_strsub((const char *)s, 0, wlen((const char *)s, c));
+		if (result[index] == NULL)
 			return (NULL);
-		}
-		cur++;
-		s += word_len(s, c);
+		s = s + wlen(s, c);
+		index++;
 	}
-	split[wordcount] = NULL;
-	return (split);
+	result[index] = NULL;
+	return (result);
 }

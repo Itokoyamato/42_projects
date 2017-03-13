@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbondoer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/24 20:10:56 by pbondoer          #+#    #+#             */
-/*   Updated: 2015/11/24 20:13:39 by pbondoer         ###   ########.fr       */
+/*   Created: 2016/11/04 11:51:21 by dthuilli          #+#    #+#             */
+/*   Updated: 2017/01/09 15:50:04 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int c)
+int		ft_isdigit(int c)
 {
-	return (c >= '0' && c <= '9');
+	unsigned int		uc;
+
+	uc = (unsigned int)c;
+	if (uc < 48 || uc > 57)
+	{
+		return (0);
+	}
+	return (1);
 }
