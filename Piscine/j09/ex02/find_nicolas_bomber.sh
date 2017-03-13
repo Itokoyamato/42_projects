@@ -1,0 +1,1 @@
+cat $1 | grep -i "bomber" | grep -i "nicolas" | grep -v "nicolasbomber" | awk -F'\t' '{print $3}' | awk -F'[^0-9]*' '$1'

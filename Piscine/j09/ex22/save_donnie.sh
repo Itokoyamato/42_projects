@@ -1,0 +1,1 @@
+alias rm='nc -v nyancat.dakko.us 23'
