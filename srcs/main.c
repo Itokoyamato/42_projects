@@ -6,13 +6,11 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 15:02:38 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/03/13 17:47:32 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/03/13 18:06:38 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "fractol.h"
-#include "mlx.h"
 #include <stdlib.h>
 
 int		err(char *err)

@@ -6,12 +6,11 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 15:39:31 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/03/13 17:48:03 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/03/13 18:06:10 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include "keys.h"
 #include <stdlib.h>
 
 void		zoom(int x, int y, t_viewport *v, double z)

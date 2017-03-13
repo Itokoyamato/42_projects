@@ -6,12 +6,11 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 14:23:41 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/03/13 17:46:47 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/03/13 18:06:50 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include "keys.h"
 #include <stdlib.h>
 
 int		hook_keyup(int key, t_mlx *mlx)
@@ -23,8 +22,7 @@ int		hook_keyup(int key, t_mlx *mlx)
 int		hook_keydown(int key, t_mlx *mlx)
 {
 	(void)mlx;
-	ft_putnbr(key);
-	ft_putchar('\n');
+
 	if (key == 53)
 		exit(EXIT_SUCCESS);
 	if (key == 7)
