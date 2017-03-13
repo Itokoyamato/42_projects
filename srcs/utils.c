@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 14:23:41 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/03/09 15:58:39 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/03/13 17:29:04 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ void		viewport_fit(t_viewport *v)
 
 	w = v->xmax - v->xmin;
 	h = v->ymax - v->ymin;
-	if (w / h >= (float)WIN_WIDTH / WIN_HEIGHT)
+	if (w / h >= (float)sX / sY)
 	{
-		v->ymin = -(w * WIN_HEIGHT / WIN_WIDTH / 2);
-		v->ymax = w * WIN_HEIGHT / WIN_WIDTH / 2;
+		v->ymin = -(w * sY / sX / 2);
+		v->ymax = w * sY / sX / 2;
 	}
 	else
 	{
-		v->xmin = -(h * WIN_WIDTH / WIN_HEIGHT / 2);
-		v->xmax = (h * WIN_WIDTH / WIN_HEIGHT / 2);
+		v->xmin = -(h * sX / sY / 2);
+		v->xmax = (h * sX / sY / 2);
 	}
 }
 
@@ -45,9 +45,18 @@ t_complex	screen_to_complex(int x, int y, t_viewport *v)
 {
 	t_complex	p;
 
-	p.r = (((double)x / WIN_WIDTH) * (v->xmax - v->xmin)) * v->zoom
+	p.r = (((double)x / sX) * (v->xmax - v->xmin)) * v->zoom
 		+ v->xmin + v->offx;
-	p.i = (((double)y / WIN_HEIGHT) * (v->ymax - v->ymin)) * v->zoom
+	p.i = (((double)y / sY) * (v->ymax - v->ymin)) * v->zoom
 		+ v->ymin + v->offy;
 	return (p);
+}
+
+t_point		point(float x, float y)
+{
+	t_point		point;
+
+	point.x = x;
+	point.y = y;
+	return (point);
 }

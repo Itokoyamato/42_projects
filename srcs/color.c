@@ -6,12 +6,11 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 15:47:24 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/03/13 13:29:28 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/03/13 17:26:49 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include "libft.h"
 #include "math.h"
 
 t_color		clerp(t_color c1, t_color c2, double p)
@@ -27,24 +26,21 @@ t_color		clerp(t_color c1, t_color c2, double p)
 	return (c);
 }
 
-t_color		linear_color(double i, int max, t_palette *p)
+t_color		linear_color(double i, int max, t_rgba *colors)
 {
 	double		index;
 	double		adjust;
 	int			c;
 
-	if (p->cycle)
-		index = fmod(i, p->cycle - 1) / (p->cycle - 1);
-	else
-		index = i / max;
-	c = p->count - 1;
+	index = i / max;
+	c = 5 - 1;
 	adjust = fmod(index, 1.0f / c) * c;
-	return (clerp((t_color)(p->colors[(int)(index * c) + 1]),
-		(t_color)(p->colors[(int)(index * c)]),
+	return (clerp((t_color)(colors[(int)(index * c) + 1]),
+		(t_color)(colors[(int)(index * c)]),
 		(int)(adjust + 1) - adjust));
 }
 
-t_color		smooth_color(t_pixel p, int max, t_palette *pal)
+t_color		smooth_color(t_pixel p, int max, t_rgba *colors)
 {
 	double i;
 	double zn;
@@ -55,29 +51,18 @@ t_color		smooth_color(t_pixel p, int max, t_palette *pal)
 	i = p.i + 1 - nu;
 	if (i < 0)
 		i = 0;
-	return (linear_color(i, max, pal));
+	return (linear_color(i, max, colors));
 }
 
 int			get_color(t_pixel p, t_mlx *mlx)
 {
 	if (p.i >= mlx->viewport.max)
 		return (0x000000);
-	if (mlx->smooth)
-		return (smooth_color(p, mlx->viewport.max, mlx->palette).value);
-	return (linear_color((double)p.i, mlx->viewport.max, mlx->palette).value);
-}
-
-t_palette	*get_palettes(void)
-{
-	static t_palette	array[5];
-
-	array[0] =
-		(t_palette){6, 0, {0x002F2F, 0x01b0f0, 0x77daff, 0xccf1ff, 0xff0000}};
-	array[1] =
-		(t_palette){5, 0, {0x191919, 0x0ab59b, 0x81b218, 0xe8ab12, 0xd64a04}};
-	array[2] =
-		(t_palette){7, 10, {0xFF0000, 0xFFFF00, 0x00FF00, 0x00FFFF,
-			0x0000FF, 0xFF00FF, 0xFF0000}};
-	array[4] = (t_palette){0, 0, {0}};
-	return (array);
+	if (mlx->settings->smooth)
+	{
+		return (smooth_color(p, mlx->viewport.max,
+			mlx->settings->colors).value);
+	}
+	return (linear_color((double)p.i, mlx->viewport.max,
+		mlx->settings->colors).value);
 }

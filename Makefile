@@ -6,7 +6,7 @@
 #    By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/09 15:39:04 by dthuilli          #+#    #+#              #
-#    Updated: 2017/03/13 12:34:06 by dthuilli         ###   ########.fr        #
+#    Updated: 2017/03/13 17:29:14 by dthuilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,17 @@ SRC		= main.c \
 		  init.c \
 		  image.c \
 		  controls.c \
+		  controls_update.c \
 		  controls_utils.c \
 		  draw.c \
+		  render.c \
+		  render_text.c \
+		  fractals.c \
+		  fractals_utils.c \
 		  color.c \
+		  color_hsv.c \
+		  color_rgba.c \
 		  utils.c \
-		  $(addprefix fractals/,$(shell ls $(SRCDIR)/fractals | grep -E ".+\.c"))
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
@@ -57,7 +63,6 @@ all: obj $(FT_LIB) $(MLX_LIB) $(NAME)
 
 obj:
 	@mkdir -p $(OBJDIR)
-	@mkdir -p $(OBJDIR)/fractals
 
 $(OBJDIR)%.o:$(SRCDIR)%.c
 	@printf "$(SILENT_COLOR)Compiling $<$(NO_COLOR)"

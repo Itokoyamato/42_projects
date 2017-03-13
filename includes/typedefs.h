@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 15:26:14 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/03/13 13:12:38 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/03/13 17:22:55 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 # define TYPEDEFS_H
 # include <stdint.h>
 
+typedef struct	s_point
+{
+	float		x;
+	float		y;
+}				t_point;
 typedef struct		s_rgba
 {
 	uint8_t		b;
@@ -71,12 +76,6 @@ typedef struct		s_pixel
 	long		i;
 }					t_pixel;
 
-typedef struct		s_palette
-{
-	uint8_t		count;
-	int			cycle;
-	int			colors[16];
-}					t_palette;
 typedef struct s_mlx	t_mlx;
 
 typedef void		(*t_f_fn_v)(t_viewport *v);
@@ -89,6 +88,33 @@ typedef struct		s_fractal
 	int			mouse;
 }					t_fractal;
 
+typedef struct	s_settings
+{
+	t_point		p_pos;
+	float		p_hue;
+	float		p_sat;
+	float		p_val;
+	t_point		c1_pos;
+	t_point		c2_pos;
+	t_point		c3_pos;
+	t_point		c4_pos;
+	t_rgba		colors[5];
+	t_point		c5_pos;
+	int			selected;
+	int			display;
+	int			tips;
+	int			smooth;
+	int			mouselock;
+}				t_settings;
+typedef struct	s_controls
+{
+	int			isdown[275];
+	int			m_x;
+	int			m_y;
+	int			m_lastx;
+	int			m_lasty;
+}				t_controls;
+
 struct				s_mlx
 {
 	void		*mlx;
@@ -98,8 +124,14 @@ struct				s_mlx
 	t_img		*img;
 	t_mouse		mouse;
 	t_viewport	viewport;
-	t_palette	*palette;
-	int			smooth;
-	int			mouselock;
+	t_settings	*settings;
+	t_controls	*controls;
 };
+typedef struct	s_pqt
+{
+	float		p;
+	float		q;
+	float		t;
+	float		v;
+}				t_pqt;
 #endif

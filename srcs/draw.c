@@ -5,51 +5,74 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/09 15:26:09 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/03/09 15:48:25 by dthuilli         ###   ########.fr       */
+/*   Created: 2017/03/13 17:25:31 by dthuilli          #+#    #+#             */
+/*   Updated: 2017/03/13 17:26:21 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include "libft.h"
-#include "mlx.h"
 
-void		render(t_mlx *mlx)
+void		draw_rec(t_img *img, t_point pos, t_point size, t_rgba color)
 {
-	int			x;
-	int			y;
+	int		tmpx;
+	t_point	p;
 
-	y = 0;
-	while (y < WIN_HEIGHT)
+	tmpx = ++size.x;
+	++size.y;
+	while (--size.y > 0 && (size.x = tmpx))
 	{
-		x = 0;
-		while (x < WIN_WIDTH)
+		while (--size.x > 0)
 		{
-			*(mlx->data + y * WIN_WIDTH + x) =
-				mlx->fractal->pixel(x, y, &mlx->viewport, mlx);
-			x++;
+			p.x = (int)pos.x + (int)size.x;
+			p.y = (int)pos.y + (int)size.y;
+			set_image_pixel(img, p.x, p.y, rgbatohex(blend(color,
+				hextorgba(get_image_pixel(img, p.x, p.y)))));
 		}
-		y++;
 	}
-	draw(mlx);
 }
 
-void		draw(t_mlx *mlx)
+void		draw_color_picker(t_mlx *mlx, t_img *img, t_point pos)
+{
+	t_point		p;
+	t_settings	*s;
+
+	p.x = -1;
+	p.y = -1;
+	s = mlx->settings;
+	while (++p.y <= 90)
+	{
+		p.x = -1;
+		while (++p.x <= 360)
+		{
+			if (p.y <= 20)
+				set_image_pixel(img, pos.x + p.x, pos.y + p.y, rgbatohex(
+					hsvtorgba(p.x, s->p_sat, s->p_val)));
+			if (p.y >= 30 && p.y <= 50 && p.x >= 50 && p.x <= 150)
+				set_image_pixel(img, pos.x + p.x, pos.y + p.y, rgbatohex(
+					hsvtorgba(s->p_hue, (p.x - 50) / 100, s->p_val)));
+			if (p.y >= 30 && p.y <= 50 && p.x >= 210 && p.x <= 310)
+				set_image_pixel(img, pos.x + p.x, pos.y + p.y, rgbatohex(
+					hsvtorgba(s->p_hue, s->p_sat, (p.x - 210) / 100)));
+		}
+	}
+	mlx->settings->p_pos = pos;
+}
+
+void		draw_fractal(t_mlx *mlx)
 {
 	int x;
 	int y;
 
 	y = 0;
-	while (y < WIN_HEIGHT)
+	while (y < sY)
 	{
 		x = 0;
-		while (x < WIN_WIDTH)
+		while (x < sX)
 		{
 			set_image_pixel(mlx->img, x, y,
-					get_color(*(mlx->data + y * WIN_WIDTH + x), mlx));
+					get_color(*(mlx->data + y * sX + x), mlx));
 			x++;
 		}
 		y++;
 	}
-	mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->img->img, 0, 0);
 }
