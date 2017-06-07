@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:25:31 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/03/13 17:26:21 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/06/07 10:48:50 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void		draw_fractal(t_mlx *mlx)
 	int y;
 
 	y = 0;
-	while (y < sY)
+	while (y < SY)
 	{
 		x = 0;
-		while (x < sX)
+		while (x < SX)
 		{
 			set_image_pixel(mlx->img, x, y,
-					get_color(*(mlx->data + y * sX + x), mlx));
+					get_color(*(mlx->data + y * SX + x), mlx));
 			x++;
 		}
 		y++;

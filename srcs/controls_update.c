@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:28:58 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/03/13 17:47:51 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/06/07 11:01:31 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	update_color(t_mlx *mlx)
 	render_fractol(mlx);
 }
 
-void	update_zoom(t_mlx *mlx, int y)
+void	update_zoom(t_mlx *mlx, int x, int y)
 {
 	if (mlx->controls->m_lasty - y < 0)
-		zoom(sX / 2, sY / 2, &mlx->viewport, ZOOM);
+		zoom(x, y, &mlx->viewport, ZOOM);
 	else
-		zoom(sX / 2, sY / 2, &mlx->viewport, 1 / ZOOM);
+		zoom(x, y, &mlx->viewport, 1 / ZOOM);
 }
 
 void	update_position(t_mlx *mlx, int x, int y)

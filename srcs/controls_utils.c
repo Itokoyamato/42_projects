@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 15:39:31 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/03/13 18:06:10 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/06/07 10:48:50 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void		zoom(int x, int y, t_viewport *v, double z)
 	nw = (v->xmax - v->xmin) * (v->zoom * z);
 	nh = (v->ymax - v->ymin) * (v->zoom * z);
 	v->zoom *= z;
-	v->offx -= ((double)x / sX) * (nw - w);
-	v->offy -= ((double)y / sY) * (nh - h);
+	v->offx -= ((double)x / SX) * (nw - w);
+	v->offy -= ((double)y / SY) * (nh - h);
 }
 
 void		handle_color_select(t_mlx *mlx, t_point m_pos)

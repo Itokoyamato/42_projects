@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:21:14 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/03/13 17:32:41 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/06/07 10:48:48 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ void		render_settings_text(t_mlx *mlx)
 	int		w;
 
 	w = 0xFFFFFFFF;
-	mlx_string_put(mlx->mlx, mlx->window, 25, sY - 215, w, "H:");
-	mlx_string_put(mlx->mlx, mlx->window, 75, sY - 185, w, "S:");
-	mlx_string_put(mlx->mlx, mlx->window, 235, sY - 185, w, "V:");
-	mlx_string_put(mlx->mlx, mlx->window, 30, sY - 135, w, "Color1:");
-	mlx_string_put(mlx->mlx, mlx->window, 30, sY - 80, w, "Color2:");
-	mlx_string_put(mlx->mlx, mlx->window, 155, sY - 135, w, "Color3:");
-	mlx_string_put(mlx->mlx, mlx->window, 155, sY - 80, w, "Color4:");
-	mlx_string_put(mlx->mlx, mlx->window, 275, sY - 135, w, "Color5:");
+	mlx_string_put(mlx->mlx, mlx->window, 25, SY - 215, w, "H:");
+	mlx_string_put(mlx->mlx, mlx->window, 75, SY - 185, w, "S:");
+	mlx_string_put(mlx->mlx, mlx->window, 235, SY - 185, w, "V:");
+	mlx_string_put(mlx->mlx, mlx->window, 30, SY - 135, w, "Color1:");
+	mlx_string_put(mlx->mlx, mlx->window, 30, SY - 80, w, "Color2:");
+	mlx_string_put(mlx->mlx, mlx->window, 155, SY - 135, w, "Color3:");
+	mlx_string_put(mlx->mlx, mlx->window, 155, SY - 80, w, "Color4:");
+	mlx_string_put(mlx->mlx, mlx->window, 275, SY - 135, w, "Color5:");
 	render_settings_selected(mlx);
 }
 

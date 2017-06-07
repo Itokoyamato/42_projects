@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 14:23:41 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/03/13 18:06:50 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/06/07 11:01:07 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,27 @@
 
 int		hook_keyup(int key, t_mlx *mlx)
 {
+	double w;
+	double h;
+
+	w = (mlx->viewport.xmax - mlx->viewport.xmin) * mlx->viewport.zoom;
+	h = (mlx->viewport.ymax - mlx->viewport.ymin) * mlx->viewport.zoom;
+	if (key == 126)
+		mlx->viewport.offy -= h * 0.05f;
+	if (key == 125)
+		mlx->viewport.offy += h * 0.05f;
+	if (key == 123)
+		mlx->viewport.offx -= w * 0.05f;
+	if (key == 124)
+		mlx->viewport.offx += w * 0.05f;
 	mlx->controls->isdown[key] = 0;
+	render_fractol(mlx);
 	return (0);
 }
 
 int		hook_keydown(int key, t_mlx *mlx)
 {
 	(void)mlx;
-
 	if (key == 53)
 		exit(EXIT_SUCCESS);
 	if (key == 7)
@@ -52,12 +65,12 @@ int		hook_mousedown(int button, int x, int y, t_mlx *mlx)
 	cpicker = mlx->settings->p_pos;
 	if (y < 0)
 		return (0);
-	if (button == 4)
+	if (button == 5)
 	{
 		zoom(x, y, &mlx->viewport, 1 / ZOOM);
 		render_fractol(mlx);
 	}
-	else if (button == 5)
+	else if (button == 4)
 	{
 		zoom(x, y, &mlx->viewport, ZOOM);
 		render_fractol(mlx);
@@ -91,13 +104,13 @@ int		hook_mousemove(int x, int y, t_mlx *mlx)
 		mlx->viewport.mouse = screen_to_complex(x, y, &mlx->viewport);
 	if (mlx->controls->isdown[274])
 	{
-		if (x >= 10 && x <= 460 && y >= sY - 230 && y <= sY - 150 && toggle)
+		if (x >= 10 && x <= 460 && y >= SY - 230 && y <= SY - 150 && toggle)
 			handle_settings(mlx, point(x, y));
-		else if (x >= 10 && x <= 510 && y >= sY - 140 && y <= sY - 10
+		else if (x >= 10 && x <= 510 && y >= SY - 140 && y <= SY - 10
 			&& toggle)
 			;
 		else if (mlx->controls->isdown[274] && mlx->controls->isdown[256])
-			update_zoom(mlx, y);
+			update_zoom(mlx, x, y);
 		else if (mlx->settings->mouselock)
 			update_position(mlx, x, y);
 	}
