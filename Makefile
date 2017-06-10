@@ -6,14 +6,15 @@
 #    By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/09 15:39:04 by dthuilli          #+#    #+#              #
-#    Updated: 2017/06/09 18:30:35 by dthuilli         ###   ########.fr        #
+#    Updated: 2017/06/10 13:29:12 by dthuilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= dthuilli.filler
 
 # src / obj files
-SRC		= main.c
+SRC		=	main.c \
+			player.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
