@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 17:55:59 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/06/09 19:44:56 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/06/10 11:46:24 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,9 @@ void	retrieve_data(t_data *env)
 	}
 	if (env->player_pos_x == 0 && env->player_pos_y == 0 && 
 		env->local_pos_x == 0 && env->local_pos_y == 0)
-			retrieve_player_data(env);
+		retrieve_player_data(env);
 }
+
 
 int		main(void)
 {
@@ -99,9 +100,9 @@ int		main(void)
 	get_next_line(0, &gnl);
 	env->mapy = ft_atoi(&gnl[8]);
 	env->mapx = ft_atoi(&gnl[11]);
+	ft_putnbr(env->mapy);
 	while (1)
 	{
-		ft_putnbr(env->mapy);
 		retrieve_data(env);
 	}
 	return (0);

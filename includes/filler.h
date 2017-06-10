@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 15:43:37 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/06/09 18:40:07 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/06/10 11:45:59 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ typedef struct	s_data
 	int		mapy;
 	char	local_playerchar;
 	char	playerchar;
-	int		x;
-	int		y;
+	int		play_x;
+	int		play_y;
 	int		player_pos_x;
 	int		player_pos_y;
 	int		local_pos_x;
@@ -38,7 +38,7 @@ typedef struct	s_data
 	int		piece_x;
 	int		piece_y;
 	int		gamestate;
-	int		spaceav;
+	int		stuck;
 	int		move;
 }				t_data;
 
