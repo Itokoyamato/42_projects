@@ -6,7 +6,7 @@
 #    By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/09 15:39:04 by dthuilli          #+#    #+#              #
-#    Updated: 2017/06/10 13:29:12 by dthuilli         ###   ########.fr        #
+#    Updated: 2017/06/11 17:25:09 by dthuilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME	= dthuilli.filler
 
 # src / obj files
 SRC		=	main.c \
-			player.c
+			player.c \
+			free_stuff.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
@@ -46,16 +47,17 @@ obj:
 	@mkdir -p $(OBJDIR)
 
 $(OBJDIR)%.o:$(SRCDIR)%.c
-	@printf "$(WARN_COLOR)$(NAME): $(NO_COLOR)\n"
 	@printf "$(SILENT_COLOR)Compiling $<$(NO_COLOR)"
 	@$(CC) $(CFLAGS) $(FT_INC) -I $(INCDIR) -o $@ -c $<
 	@echo " $(OK_COLOR)✓ $(NO_COLOR)"
 
 $(FT_LIB):
 	@make -C $(FT_DIR)
+	@echo "$(OK_COLOR)Done compiling libft ✓ $(NO_COLOR)"
 
 $(NAME): $(OBJ)
 	@$(CC) $(OBJ) $(FT_LNK) -lm -o $(NAME)
+	@echo "$(OK_COLOR)Done compiling Filler ✓ $(NO_COLOR)"
 
 clean:
 	@rm -rf $(OBJDIR)

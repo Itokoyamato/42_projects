@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 15:43:37 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/06/11 11:36:44 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/06/11 17:16:23 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ typedef struct	s_data
 */
 int				do_solve(t_data *env);
 void			do_play(t_data *env);
+void			free_stuff(t_data *env);
+void			free_gnl(char *gnl);
 
 #endif

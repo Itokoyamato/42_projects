@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/10 13:28:33 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/06/11 11:36:39 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/06/11 17:15:04 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	do_play(t_data *env)
 	if (env->stuck == 1)
 		env->gamestate = 1;
 	env->play_dir = 3 - env->play_dir;
+	free_stuff(env);
 }
 
 int		try_piece_check(t_data *env, t_point p)
