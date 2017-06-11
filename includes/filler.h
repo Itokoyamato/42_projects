@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 15:43:37 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/06/10 13:29:55 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/06/11 11:36:44 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,32 @@
 /*
 **** Struct
 */
+typedef struct	s_point
+{
+	int		x;
+	int		y;
+}				t_point;
+
 typedef struct	s_data
 {
 	char	**map;
-	int		map_size_x;
-	int		map_size_y;
-	char	local_playerchar;
-	char	playerchar;
-	int		play_x;
-	int		play_y;
+	t_point	map_size;
+	char	local_p_char;
+	char	p_char;
+	t_point	play_pos;
 	int		play_move;
 	int		play_dir;
-	int		player_pos_x;
-	int		player_pos_y;
-	int		local_pos_x;
-	int		local_pos_y;
+	t_point	player_pos;
+	t_point	local_pos;
 	char	**piece;
-	int		piece_size_x;
-	int		piece_size_y;
+	t_point	piece_size;
 	int		gamestate;
 	int		stuck;
 }				t_data;
 
+/*
+**** Functions
+*/
 int				do_solve(t_data *env);
 void			do_play(t_data *env);
 

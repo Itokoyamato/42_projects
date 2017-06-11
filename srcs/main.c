@@ -6,62 +6,61 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 17:55:59 by dthuilli          #+#    #+#             */
-/*   Updated: 2017/06/10 13:28:15 by dthuilli         ###   ########.fr       */
+/*   Updated: 2017/06/11 11:50:43 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-#include "stdio.h"
 
 void	retrieve_piece(t_data *env, char *gnl)
 {
-	int		n;
-	int		i;
+	t_point p;
 
-	n = 6;
-	i = 0;
-	env->piece_size_y = ft_atoi(&gnl[6]);
-	while (ft_isdigit(gnl[n]))
-		n++;
-	n++;
-	env->piece_size_x = ft_atoi(&gnl[n]);
+	p.x = 6;
+	p.y = 0;
+	env->piece_size.y = ft_atoi(&gnl[6]);
+	while (ft_isdigit(gnl[p.x]))
+		++p.x;
+	++p.x;
+	env->piece_size.x = ft_atoi(&gnl[p.x]);
 	if (!env->piece)
-		env->piece = ft_memalloc(sizeof(char *) * env->piece_size_y);
-	while (i < env->piece_size_y)
+		env->piece = ft_memalloc(sizeof(char *) * env->piece_size.y);
+	while (p.y < env->piece_size.y)
 	{
 		get_next_line(0, &gnl);
-		env->piece[i] = ft_strdup(gnl);
-		i++;
+		if (!env->piece[p.y])
+			env->piece[p.y] = ft_memalloc(sizeof(char *) * env->piece_size.x);
+		env->piece[p.y] = ft_strdup(gnl);
+		++p.y;
 	}
 }
 
 void	retrieve_player_data(t_data *env)
 {
-	int		i;
-	int		j;
+	t_point		p;
 
-	i = 0;
-	env->playerchar = (env->local_playerchar == 'O') ? 'X' : 'O';
-	while (i < env->map_size_y)
+	p.y = 0;
+	env->p_char = (env->local_p_char == 'O') ? 'X' : 'O';
+	while (p.y < env->map_size.y)
 	{
-		j = 0;
-		while (j < env->map_size_x)
+		p.x = 0;
+		while (p.x < env->map_size.x)
 		{
-			if (env->map[i][j] == env->playerchar)
+			if (env->map[p.y][p.x] == env->p_char)
 			{
-				env->player_pos_x = j;
-				env->player_pos_y = i;
+				env->player_pos.x = p.x;
+				env->player_pos.y = p.y;
 			}
-			if (env->map[i][j] == env->local_playerchar)
+			if (env->map[p.y][p.x] == env->local_p_char)
 			{
-				env->local_pos_x = j;
-				env->local_pos_y = i;
+				env->local_pos.x = p.x;
+				env->local_pos.y = p.y;
 			}
-			++j;
+			++p.x;
 		}
-		++i;
+		++p.y;
 	}
-	env->play_dir = (env->player_pos_y > env->local_pos_y) ? 1 : 0;
+	env->play_dir = (env->player_pos.y > env->local_pos.y) ? 1 : 0;
 }
 
 void	retrieve_data(t_data *env)
@@ -71,19 +70,23 @@ void	retrieve_data(t_data *env)
 
 	i = 0;
 	if (!env->map)
-		env->map = ft_memalloc(sizeof(char *) * env->map_size_y);
+		env->map = ft_memalloc(sizeof(char *) * env->map_size.y);
 	get_next_line(0, &gnl);
-	while (i <= env->map_size_y)
+	while (i <= env->map_size.y)
 	{
 		get_next_line(0, &gnl);
 		if (ft_isdigit(gnl[0]))
+		{
+			if (!env->map[i])
+				env->map[i] = ft_memalloc(sizeof(char *) * env->map_size.x);
 			env->map[i] = ft_strdup(gnl + 4);
+		}
 		else
 			retrieve_piece(env, gnl);
 		++i;
 	}
-	if (env->player_pos_x == 0 && env->player_pos_y == 0 &&
-		env->local_pos_x == 0 && env->local_pos_y == 0)
+	if (env->player_pos.x == 0 && env->player_pos.y == 0 &&
+		env->local_pos.x == 0 && env->local_pos.y == 0)
 		retrieve_player_data(env);
 }
 
@@ -102,12 +105,12 @@ int		main(void)
 	if (!(env = ft_memalloc(sizeof(t_data))))
 		return (-1);
 	get_next_line(0, &gnl);
-	env->local_playerchar = (ft_atoi(gnl + 10) == 1) ? 'O' : 'X';
-	while (42)
+	env->local_p_char = (ft_atoi(gnl + 10) == 1) ? 'O' : 'X';
+	while (1)
 	{
 		get_next_line(0, &gnl);
-		env->map_size_y = ft_atoi(&gnl[8]);
-		env->map_size_x = ft_atoi(&gnl[11]);
+		env->map_size.y = ft_atoi(&gnl[8]);
+		env->map_size.x = ft_atoi(&gnl[11]);
 		retrieve_data(env);
 		if (do_solve(env) == 0)
 			env->stuck = 1;
