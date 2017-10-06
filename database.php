@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 function init_db()
 {
 	$host = "localhost";
@@ -16,4 +17,6 @@ function init_db()
 		exit();
 	}
 }
+
+$account = new Account();
 ?>

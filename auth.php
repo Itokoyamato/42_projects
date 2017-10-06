@@ -8,15 +8,13 @@
 			$username = $_POST['username'];
 			$email = $_POST['email'];
 			$password = $_POST['password'];
-			$account = new Account(array("username" => $username, "email" => $email, "password" => $password));
-			echo $account->register();
+			echo $account->register($username, $email, $password);
 		}
 		if ($action == "login" && isset($_POST['username']) && isset($_POST['password']))
 		{
 			$username = $_POST['username'];
 			$password = $_POST['password'];
-			$account = new Account(array("username" => $username, "password" => $password));
-			echo $account->login();
+			echo $account->login($username, $password);
 		}
 	}
 ?>

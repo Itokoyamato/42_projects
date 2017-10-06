@@ -1,4 +1,5 @@
 <?php
+	session_start();
 ?>
 <html>
 	<form method="post" action="javascript:void(0);" onSubmit="return register()">
