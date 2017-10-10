@@ -1,5 +1,5 @@
 <?php
-	include('./account.php');
+	include_once "./account.php";
 	if (isset($_POST['action']))
 	{
 		$action = $_POST['action'];

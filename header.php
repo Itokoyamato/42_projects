@@ -1,3 +1,6 @@
+<?php
+	include_once "auth.php";
+?>
 <html>
 	<style>
 		html, body {
@@ -33,53 +36,72 @@
 		.account {
 			float: right;
 			height: 100%;
-			width: 15%;
 		}
-		.drp {
+		.drop {
+			display: none;
 			visibility: hidden;
 			opacity: 0;
 			transition-duration: 0.4s;
-			/*position: absolute;*/
-			/*box-shadow: 0px 8px 16px 0px;*/
 			width: 100%;
 		}
-		.account:hover .drp {
+		.account-drop {
+			float: right;
+			width: 150px;
+		}
+		.account-drop:hover .drop {
+			float: right;
+			display: block;
 			visibility: visible;
 			opacity: 1;
 		}
-		.drp-button {
+		.drop-button {
 			height: 50px;
 			width: 80%;
 			border: none;
 			background: #eee;
 			border-left: solid 4px #283593;
+			border-right: solid 4px #283593;
 			border-top: solid 1px #283593;
 			transition-duration: 0.4s;
 			float: right;
 			right: 0;
 			box-shadow: 0px 8px 16px 0px;
 		}
-		.drp-button:hover {
+		.drop-button:hover {
 			background: #C5CAE9;
 		}
-		.drp-button-main {
+		.drop-button-main {
 			height: 100%;
 			width: 100%;
 			border-top: none;
 			background: #E8EAF6;
 			border-bottom-left-radius: 100px;
 			box-shadow: inset 0 0 10px;
+			border-right: solid 2px #283593;
 		}
 	</style>
 	<header class="header">
-		<div class="logo"><a class="title" href="/">Camagru</a></div>
+		<div class="logo"><a class="title" href="./">Camagru</a></div>
 		<div class="account">
-			<button class="drp-button drp-button-main">Account</button>
-			<div class="drp">
-				<button class="drp-button" onclick="location.href='./settings.php';">Settings</button>
-				<br>
-				<button class="drp-button" onclick="location.href='./logout.php';">Log out</button>
+			<?php if ($account->isLoggedIn()): ?>
+			<div class="account-drop">
+				<button class="drop-button drop-button-main">Account</button>
+				<div class="drop">
+					<button class="drop-button" onclick="location.href='./settings.php';">Settings</button>
+					<br>
+					<button class="drop-button" onclick="location.href='./logout.php';">Log out</button>
+				</div>
 			</div>
+			<?php else: ?>
+			<div class="account-drop">
+				<button class="drop-button drop-button-main">Account</button>
+				<div class="drop">
+					<button class="drop-button" onclick="location.href='./login.php';">Sign in</button>
+					<br>
+					<button class="drop-button" onclick="location.href='./register.php';">Register</button>
+				</div>
+			</div>
+			<?php endif; ?>
 		</div>
 	</header>
 </html>
