@@ -29,17 +29,7 @@
 			.then(response => {
 				response.text().then(data => {
 					console.log(data);
-					switch (parseInt(data))
-					{
-						case 1:
-							console.log("Logged in successfully");
-							break;
-						case 2:
-							console.log("Invalid credentials");
-							break;
-						default:
-							console.log("Error " + response.status);
-					}
+					
 				});
 			});
 		}

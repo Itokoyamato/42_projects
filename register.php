@@ -30,20 +30,21 @@
 			})
 			.then(response => {
 				response.text().then(data => {
-					switch (parseInt(data))
-					{
-						case 1:
-							console.log("Registered successfully");
-							break;
-						case 2:
-							console.log("Username is already in use");
-							break;
-						case 3:
-							console.log("Email is already in use");
-							break;
-						default:
-							console.log("Error " + response.status);
-					}
+					console.log(data);
+					// switch (parseInt(data))
+					// {
+					// 	case 1:
+					// 		console.log("Registered successfully");
+					// 		break;
+					// 	case 2:
+					// 		console.log("Username is already in use");
+					// 		break;
+					// 	case 3:
+					// 		console.log("Email is already in use");
+					// 		break;
+					// 	default:
+					// 		console.log("Error " + response.status);
+					// }
 				});
 			});
 		}

@@ -8,13 +8,13 @@
 			$username = $_POST['username'];
 			$email = $_POST['email'];
 			$password = $_POST['password'];
-			echo $account->register($username, $email, $password);
+			echo json_encode($account->register($username, $email, $password));
 		}
 		if ($action == "login" && isset($_POST['username']) && isset($_POST['password']))
 		{
 			$username = $_POST['username'];
 			$password = $_POST['password'];
-			echo $account->login($username, $password);
+			echo json_encode($account->login($username, $password));
 		}
 	}
 ?>

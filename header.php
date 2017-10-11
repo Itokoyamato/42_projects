@@ -83,7 +83,7 @@
 	<header class="header">
 		<div class="logo"><a class="title" href="./">Camagru</a></div>
 		<div class="account">
-			<?php if ($account->isLoggedIn()): ?>
+			<?php if (!$account->isLoggedIn()['error']): ?>
 			<div class="account-drop">
 				<button class="drop-button drop-button-main">Account</button>
 				<div class="drop">

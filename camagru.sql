@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 10, 2017 at 11:26 AM
+-- Generation Time: Oct 11, 2017 at 01:21 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.9
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `camagru`
 --
+CREATE DATABASE IF NOT EXISTS `camagru` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `camagru`;
 
 -- --------------------------------------------------------
 
@@ -32,8 +34,24 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `active` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_register_token`
+--
+
+CREATE TABLE `users_register_token` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `timestamp_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `timestamp_expire` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `used` int(1) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -43,10 +61,11 @@ CREATE TABLE `users` (
 
 CREATE TABLE `users_sessions` (
   `id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `token` varchar(255) NOT NULL,
   `timestamp_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `timestamp_expire` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `timestamp_expire` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `active` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -57,6 +76,12 @@ CREATE TABLE `users_sessions` (
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users_register_token`
+--
+ALTER TABLE `users_register_token`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -73,6 +98,12 @@ ALTER TABLE `users_sessions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users_register_token`
+--
+ALTER TABLE `users_register_token`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
