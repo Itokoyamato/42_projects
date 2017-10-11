@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 11, 2017 at 01:21 PM
+-- Generation Time: Oct 11, 2017 at 03:05 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.9
 
@@ -56,6 +56,21 @@ CREATE TABLE `users_register_token` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `users_reset_password_token`
+--
+
+CREATE TABLE `users_reset_password_token` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `timestamp_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `timestamp_expire` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `used` int(1) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users_sessions`
 --
 
@@ -85,6 +100,12 @@ ALTER TABLE `users_register_token`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users_reset_password_token`
+--
+ALTER TABLE `users_reset_password_token`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users_sessions`
 --
 ALTER TABLE `users_sessions`
@@ -104,6 +125,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users_register_token`
 --
 ALTER TABLE `users_register_token`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users_reset_password_token`
+--
+ALTER TABLE `users_reset_password_token`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
