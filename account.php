@@ -12,6 +12,10 @@
 				"message" => $msg
 			));
 	}
+	function strclean($str)
+	{
+		return (htmlspecialchars(strip_tags(trim($str))));
+	}
 	class Account {
 		private $db;
 
@@ -21,6 +25,8 @@
 		
 		public function login($username, $password)
 		{
+			$username = strclean($username);
+			$password = strclean($password);
 			try
 			{
 				// Retrieve account using username
@@ -60,11 +66,12 @@
 			// Check if session is active
 			if (isset($_COOKIE['camagru_token']) && $_COOKIE['camagru_token'] != "")
 			{
+				$token = strclean($_COOKIE['camagru_token']);
 				try
 				{
 					// De-activate session token in database
 					$query = $this->db->prepare("UPDATE users_sessions SET active = 0 WHERE token=:token");
-					$query->execute(array(":token" => $_COOKIE['camagru_token']));
+					$query->execute(array(":token" => $token));
 				}
 				catch(PDOException $ex)
 				{
@@ -83,7 +90,7 @@
 			// Check if session is active
 			if (isset($_COOKIE['camagru_token']) && $_COOKIE['camagru_token'] != "")
 			{
-				$token = $_COOKIE['camagru_token'];
+				$token = strclean($_COOKIE['camagru_token']);
 				try
 				{
 					// Check if session is valid
@@ -120,6 +127,7 @@
 		}
 
 		public function isUsernameAvailable($username) {
+			$username = strclean($username);
 			try
 			{
 				$query = $this->db->prepare('SELECT * FROM users WHERE username=:username');
@@ -137,6 +145,7 @@
 		}
 
 		public function isEmailAvailable($email) {
+			$email = strclean($email);
 			try
 			{
 				$query = $this->db->prepare('SELECT * FROM users WHERE email=:email');
@@ -154,6 +163,9 @@
 		}
 
 		public function register($username, $email, $password) {
+			$username = strclean($username);
+			$email = strclean($email);
+			$password = strclean($password);
 			//Check if data is valid
 			if (empty($username) || empty($email) || empty($password))
 				return (response(false, "Invalid username, email or password."));
@@ -197,6 +209,7 @@
 		}
 
 		public function new_activation_token($user_id) {
+			$user_id = strclean($user_id);
 			try
 			{
 				// Generate token and save it
@@ -204,7 +217,10 @@
 				$query = $this->db->prepare("INSERT INTO users_register_token (user_id, token, timestamp_added, timestamp_expire) VALUES (:user_id, :token, NOW(), TIMESTAMPADD(SECOND, 3600, now()))");
 				$query->execute(array(":user_id" => $user_id, "token" => $token));
 				if ($query->rowCount() != 0)
+				{
+					// Send email
 					return (response(true, "New activation token successfully created."));
+				}
 				else
 					return (response(false, "An error occured [A005]. Please try again. If this error persists, contact an Administrator."));
 			}
@@ -216,6 +232,7 @@
 		}
 
 		public function activateAccount($token) {
+			$token = strclean($token);
 			try
 			{
 				if ($token == "")
@@ -233,7 +250,7 @@
 					$user_id = $row["user_id"];
 
 					// Check if account is already activated
-					$query = $this->db->prepare("SELECT * FROM users WHERE user_id = :user_id");
+					$query = $this->db->prepare("SELECT * FROM users WHERE id = :user_id");
 					$query->execute(array(":user_id" => $user_id));
 					$row = $query->fetch(PDO::FETCH_ASSOC);
 					if ($query->rowCount() > 0 && $row["active"] == 1)
@@ -256,6 +273,104 @@
 				}
 				else
 					return (response(false, "This activation token is invalid."));
+			}
+			catch(PDOException $ex)
+			{
+				return (response(false, $ex->getMessage()));
+			}
+		}
+
+		function resetPass_send($email)
+		{
+			$email = strclean($email);
+			try
+			{
+				// Check if email is used
+				$query = $this->db->prepare("SELECT * FROM users WHERE email = :email");
+				$query->execute(array(":email" => $email));
+				$row = $query->fetch(PDO::FETCH_ASSOC);
+				if ($query->rowCount() > 0)
+				{
+					// Generate token and save it
+					$token = bin2hex(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+					$query = $this->db->prepare("INSERT INTO users_reset_password_token (user_id, token, timestamp_added, timestamp_expire) VALUES (:user_id, :token, NOW(), TIMESTAMPADD(SECOND, 3600, now()))");
+					$query->execute(array(":user_id" => $row['id'], "token" => $token));
+					if ($query->rowCount() != 0)
+					{
+						// Send email
+						return (response(true, "New password-reset token successfully created."));
+					}
+					else
+						return (response(false, "An error occured [A009]. Please try again. If this error persists, contact an Administrator."));
+				}
+				else
+					return (response(false, "No account is registered to this email."));
+			}
+			catch(PDOException $ex)
+			{
+				return (response(false, $ex->getMessage()));
+			}
+		}
+
+		function resetPass_check($token)
+		{
+			$token = strclean($token);
+			try
+			{
+				if ($token == "")
+					return (response(false, "This password-reset token is invalid."));
+				// Retrieve token
+				$query = $this->db->prepare("SELECT * FROM users_reset_password_token WHERE token = :token");
+				$query->execute(array(":token" => $token));
+				$row = $query->fetch(PDO::FETCH_ASSOC);
+				if ($query->rowCount() > 0)
+				{
+					// Check if expired
+					if ($row["timestamp_expire"] < date("Y-m-d H:i:s") || $row["used"] == 1)
+						return (response(false, "This password-reset token has expired."));
+
+					return (response(true, $row['user_id']));
+				}
+				else
+					return (response(false, "This password-reset token is invalid."));
+			}
+			catch(PDOException $ex)
+			{
+				return (response(false, $ex->getMessage()));
+			}
+		}
+
+		function resetPass_set($token, $password)
+		{
+			$token = strclean($token);
+			$password = strclean($password);
+			$isTokenValid = $this->resetPass_check($token);
+
+			// Check if token is valid
+			if ($isTokenValid['error'])
+				return (response(false, $isTokenValid['message']));
+			// Check is new password is valid
+			if (strlen($password) < 7 || !preg_match("#[0-9]+#", $password) || !preg_match("#[A-Z]+#", $password) || !preg_match("#[a-z]+#", $password))
+				return (response(false, "Invalid password. Must be at least 7 characters long, contain an uppercase letter, a lowercase letter and a number."));
+
+			try
+			{
+				// Retrieve token
+				$query = $this->db->prepare("UPDATE users SET password = :password WHERE id = :user_id");
+				$query->execute(array(":user_id" => 17, ":password" => hash("whirlpool", $password)));
+				if ($query->rowCount() != 0)
+				{
+					$query = $this->db->prepare("UPDATE users_reset_password_token SET used = 1 WHERE token = :token");
+					$query->execute(array(":token" => $token));
+					if ($query->rowCount() > 0)
+						return (response(true, "You password has been changed successfully"));
+					else
+						return (response(false, "An error occured [A010]. Please try again. If this error persists, contact an Administrator."));
+				}
+				elseif ($query->rowCount() == 0)
+					return (response(false, "Your new password is the same as the old password."));
+				else
+					return (response(false, "An error occured [A011]. Please try again. If this error persists, contact an Administrator."));
 			}
 			catch(PDOException $ex)
 			{
