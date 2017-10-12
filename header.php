@@ -8,7 +8,7 @@
 			padding: 0;
 			background: #E8EAF6;
 		}
-		header {
+		.header {
 			width: 100%;
 			height: 50px;
 			background: #2957b5;
@@ -79,8 +79,53 @@
 			box-shadow: inset 0 0 10px;
 			border-right: solid 2px #283593;
 		}
+
+		.info {
+			width: 80%;
+			padding: 10px;
+			margin: auto;
+			margin-top: 10px;
+			background: rgb(90, 200, 90);
+			border: solid 1px rgb(0, 255, 0);
+			box-shadow: inset 0 0 1px #000, 0 0 10px #000;
+			display: none;
+			margin-bottom: 10px;
+		}
+		.info-content {
+			display: inline-block;
+			position: absolute;
+			margin-top: 10px;
+			margin-left: 15px;
+		}
+		.info:before {
+			display: inline-block;
+			width: 25px;
+			height: 25px;
+			content: "";
+			background: url("./css/info.png") no-repeat 0 0;
+			background-size: 100%;
+			margin-top: 5px;
+			filter: invert(100%);
+		}
+		.info.error {
+			background: rgb(200, 90, 90);
+			border-color: rgb(255, 0, 0);
+		}
+		.info.error:before {
+			display: inline-block;
+			width: 25px;
+			height: 25px;
+			content: "";
+			background: url("./css/error.png") no-repeat 0 0;
+			background-size: 100%;
+			margin-top: 5px;
+			filter: invert(100%);
+		}
+		.show {
+			display: block;
+		}
 	</style>
-	<header class="header">
+	<div class="header">
 		<div class="logo"><a class="title" href="./">Camagru</a></div>
 		<div class="account">
 			<?php if (!$account->isLoggedIn()['error']): ?>
@@ -103,5 +148,19 @@
 			</div>
 			<?php endif; ?>
 		</div>
-	</header>
+	</div>
+	<div class="info" id="info">
+		<div class="info-content" id="info-content"></div>
+	</div>
+	<script>
+		function info(msg, error)
+		{
+			document.getElementById("info-content").innerHTML = msg;
+			document.getElementById("info").classList.add("show");
+			if (!error)
+				document.getElementById("info").classList.remove("error");
+			else
+				document.getElementById("info").classList.add("error");
+		}
+	</script>
 </html>

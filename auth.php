@@ -5,7 +5,7 @@
 		$action = $_POST['action'];
 		if ($action == "register")
 		{
-			if (isset($_POST['username']) && $_POST['username'] != "" && isset($_POST['email']) && $_POST['email'] != "" && isset($_POST['password']) && $_POST['passord'] != "")
+			if (isset($_POST['username']) && $_POST['username'] != "" && isset($_POST['email']) && $_POST['email'] != "" && isset($_POST['password']) && $_POST['password'] != "")
 				echo json_encode($account->register($_POST['username'], $_POST['email'], $_POST['password']));
 		}
 		elseif ($action == "login")

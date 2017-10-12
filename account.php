@@ -1,5 +1,5 @@
 <?php
-	include_once "./database.php";
+	include_once "./config/database.php";
 	function response($success, $msg)
 	{
 		if (!$success)
@@ -38,6 +38,8 @@
 					// Check if password matches
 					if ($row["password"] == hash("whirlpool", $password))
 					{
+						if ($row["active"] != 1)
+							return (response(false, "Your account is not yet activated. Check your emails for an activation link."));
 						// Generate session token
 						$token = bin2hex(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
 						$user_id = $row['id'];
@@ -192,7 +194,7 @@
 				if ($query->rowCount() != 0)
 				{
 					// Generate activation token
-					$activation = $this->new_activation_token($this->db->lastInsertId());
+					$activation = $this->new_activation_token($this->db->lastInsertId(), $email);
 					if ($activation['error'])
 						return (response(false, "You have successfully registered. ".$validation['message']));
 					else
@@ -208,8 +210,9 @@
 			return (response(false, "An error occured [A005]. Please try again. If this error persists, contact an Administrator."));
 		}
 
-		public function new_activation_token($user_id) {
+		public function new_activation_token($user_id, $email) {
 			$user_id = strclean($user_id);
+			$email = strclean($email);
 			try
 			{
 				// Generate token and save it
@@ -219,6 +222,7 @@
 				if ($query->rowCount() != 0)
 				{
 					// Send email
+					mail($email, "Camagru test activation token", "Activation token: ".$token);
 					return (response(true, "New activation token successfully created."));
 				}
 				else
@@ -298,6 +302,7 @@
 					if ($query->rowCount() != 0)
 					{
 						// Send email
+						mail($email, "Camagru test reset token", "Reset token: ".$token);
 						return (response(true, "New password-reset token successfully created."));
 					}
 					else
@@ -357,7 +362,7 @@
 			{
 				// Retrieve token
 				$query = $this->db->prepare("UPDATE users SET password = :password WHERE id = :user_id");
-				$query->execute(array(":user_id" => 17, ":password" => hash("whirlpool", $password)));
+				$query->execute(array(":user_id" => $isTokenValid["message"], ":password" => hash("whirlpool", $password)));
 				if ($query->rowCount() != 0)
 				{
 					$query = $this->db->prepare("UPDATE users_reset_password_token SET used = 1 WHERE token = :token");
