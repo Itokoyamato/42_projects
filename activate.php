@@ -3,9 +3,17 @@
 	{
 		include_once "./header.php";
 		$validate = $account->activateAccount($_GET['token']);
-		print_r($validate);
+		if ($validate['error']): ?>
+			<script>
+				info('<?php echo $validate['message'] ?>', true);
+			</script>
+		<?php else: ?>
+			<script>
+				info('<?php echo $validate['message'] ?>');
+				setTimeout(function(){window.location.href = "./";}, 2000);
+			</script>
+		<?php endif;
 	}
 	else
 		header("Location: ./");
 ?>
-<meta http-equiv="refresh" content="5;URL='./'">

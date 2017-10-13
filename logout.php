@@ -1,14 +1,20 @@
 <?php
 	include_once "./account.php";
-	if ($account->isLoggedIn())
+	if (!$account->isLoggedIn()['error'])
 	{
-		if ($account->logout())
-		{
-			include("./header.php");
-			echo "You have been logged out.\nRedirecting you in 5 seconds.";
-		}
+		$logout = $account->logout();
+		include("./header.php");
+		if ($logout['error']): ?>
+			<script>
+				info('<?php echo $logout['message'] ?>', true);
+			</script>
+		<?php else: ?>
+			<script>
+				info('<?php echo $logout['message'] ?>');
+				setTimeout(function(){window.location.href = "./";}, 2000);
+			</script>
+		<?php endif;
 	}
 	else
 		header("Location: ./");
 ?>
-<meta http-equiv="refresh" content="5;URL='./'">

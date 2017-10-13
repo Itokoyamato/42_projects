@@ -1,64 +1,57 @@
 <?php 
-	include_once "header.php";
-	if (isset($_GET['token']) && $_GET['token'] != ""): ?>
-		<html>
-			<form method="post" action="javascript:void(0);" onSubmit="return change_password()">
-				<input type="password" name="password" id="password" placeholder="password" />
-				<input type="password" name="password2" id="password2" placeholder="password" />
-				<input type="submit" value="Change password"/>
-			</form>
+	if (isset($_GET['token']) && $_GET['token'] != ""):
+		include_once "header.php";
+		$reset = $account->resetPass_check($_GET['token']);
+		if ($reset['error']): ?>
 			<script>
-				const password = document.getElementById("password");
-				const password2 = document.getElementById("password2");
-
-				function change_password()
-				{
-					const body = 	"action=reset&token=<?php echo $_GET['token']; ?>&password=" + encodeURIComponent(password.value);
-					fetch("./auth.php", {
-						method: "post",
-						credentials: "include",
-						headers: {
-								"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-						},
-						body,
-					})
-					.then(response => {
-						response.text().then(data => {
-							console.log(data);
-							
-						});
-					});
-				}
+				info('<?php echo $reset['message'] ?>', true);
 			</script>
-		</html>
-	<?php else: ?>
-		<html>
-			<form method="post" action="javascript:void(0);" onSubmit="return reset_password()">
-				<input type="text" name="reset_email" id="reset_email" placeholder="email" />
-				<input type="submit" value="Reset my password"/>
-			</form>
-			<script>
-				const reset_email = document.getElementById("reset_email");
+		<?php else: ?>
+			<html>
+				<div class="container roll-in" id="reset-container">
+					<div class="container title">Reset</div>
+					<form method="post" action="javascript:void(0);" onSubmit="return change_password()">
+						<input required type="password" id="reset_pwd" name="Password" placeholder="Password"
+							oninput="form.reset_pwd2.pattern = escapeRegExp(this.value)"
+							pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" title="Password must:&#10;- be at least 7 characters long&#10;- Contain one uppercase letter&#10;- Contain one lowercase letter&#10;- Contain one number"/>
 
-				function reset_password()
-				{
-					const body = 	"action=reset&email=" + encodeURIComponent(reset_email.value);
-					fetch("./auth.php", {
-						method: "post",
-						credentials: "include",
-						headers: {
-								"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-						},
-						body,
-					})
-					.then(response => {
-						response.text().then(data => {
-							console.log(data);
-							
+						<input required type="password" id="reset_pwd2" name="Password" placeholder="Comfirm Password" pattern="" title="Fields must match" />
+						
+						<input type="submit" value="Change password"/>
+					</form>
+				</div>
+				<script>
+					const reset_pwd = document.getElementById("reset_pwd");
+
+					function change_password()
+					{
+						const body = 	"action=reset&token=<?php echo $_GET['token']; ?>&password=" + encodeURIComponent(reset_pwd.value);
+						fetch("./auth.php", {
+							method: "post",
+							credentials: "include",
+							headers: {
+									"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+							},
+							body,
+						})
+						.then(response => {
+							response.text().then(data => {
+								console.log(data);
+								var response = JSON.parse(data);
+								if (response.error)
+									info(response.message, true);
+								else
+								{
+									info(response.message);
+									setTimeout(function(){window.location.href = "./";}, 2000);
+								}
+							});
 						});
-					});
-				}
-			</script>
-		</html>
-	<?php endif;
+					}
+				</script>
+			</html>
+		<?php endif;
+	else:
+		header("Location: ./");
+	endif;
 ?>

@@ -298,7 +298,7 @@
 					// Generate token and save it
 					$token = bin2hex(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
 					$query = $this->db->prepare("INSERT INTO users_reset_password_token (user_id, token, timestamp_added, timestamp_expire) VALUES (:user_id, :token, NOW(), TIMESTAMPADD(SECOND, 3600, now()))");
-					$query->execute(array(":user_id" => $row['id'], "token" => $token));
+					$query->execute(array(":user_id" => $row['id'], ":token" => $token));
 					if ($query->rowCount() != 0)
 					{
 						// Send email
