@@ -4,7 +4,6 @@ html, body {
 	background: radial-gradient(#0079bf, #212f38);
 	background-repeat: no-repeat;
 	background-attachment: fixed;
-	overflow: hidden;
 }
 
 
@@ -234,6 +233,12 @@ html, body {
 	color: #3F51B5;
 	text-shadow: none;
 }
+
+
+/**/
+/* Montage */
+/**/
+
 .camera-container {
 	display: inline-block;
 	width: calc(100% - 250px);
@@ -257,6 +262,8 @@ html, body {
 .dragme {
 	position: absolute;
 	z-index: 10;
+	width: 200px;
+	transform: rotate(0deg);
 }
 .dragme:hover {
 	cursor: pointer;
@@ -266,7 +273,45 @@ html, body {
 	float: left;
 	margin-top: 20px;
 }
-
+.stickers-canvas .sticker {
+	pointer-events: none;
+	width: 100%;
+}
+.stickers-canvas .sticker-del {
+	opacity: 0;
+	position: absolute;
+}
+.stickers-canvas .dragme:hover .sticker-del {
+	opacity: 1;
+}
+.stickers-canvas .slider {
+	all: initial;
+	appearance: none;
+	display: block;
+	opacity: 0;
+	position: absolute;
+	bottom: 0;
+	height: 2px;
+	width: 100%;
+	background: #f6f6f6;
+}
+.stickers-canvas .slider-vert {
+	all: initial;
+	appearance: none;
+	display: block;
+	opacity: 0;
+	position: absolute;
+	bottom: 0;
+	height: 2px;
+	width: 100%;
+	background: #f6f6f6;
+	transform-origin: 0 0;
+	transform: rotate(-90deg);
+}
+.stickers-canvas .dragme:hover .slider {
+	opacity: 1;
+	background: #f6f6f6;
+}
 .sticker {
 	width: 100px;
 }
