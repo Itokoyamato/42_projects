@@ -318,7 +318,13 @@ html, body {
 .sticker:hover {
 	cursor: pointer;
 }
-
+.take-picture {
+	width: 60px;
+	float: left;
+	margin-top: 20px;
+	margin-left: calc(calc(100% - 250px)/2 - 30px);
+	height: 30px;
+}
 
 /**/
 /* Animations */

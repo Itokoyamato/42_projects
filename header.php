@@ -25,6 +25,7 @@
 				document.getElementById("info").classList.remove("error");
 			else
 				document.getElementById("info").classList.add("error");
+			setTimeout(function(){document.getElementById("info").classList.remove("show");}, 10000);
 		}
 		function escapeRegExp(str) {
 			return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");

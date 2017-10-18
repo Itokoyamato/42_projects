@@ -15,9 +15,11 @@
 			<div class="container sidebar">
 				<div class="container title">Your gallery</div>
 			</div>
+			<div class="container take-picture" onclick="takepicture()">click</div>
 			<div class="container stickers-container">
 				<img class="sticker" src="./img/stickers/grumpy.png" onclick="javascript:newSticker('grumpy.png')">
 				<img class="sticker" src="./img/stickers/nanachi.png" onclick="javascript:newSticker('nanachi.png')">
+				<img class="sticker" src="./img/stickers/kebab.png" onclick="javascript:newSticker('kebab.png')">
 			</div>
 		</div>
 		<script>
@@ -30,15 +32,55 @@
 				var canvas = document.createElement("canvas");
 				var context = canvas.getContext("2d");
 				height = video.videoHeight / (video.videoWidth / width);
-				canvas.width = width;
-				canvas.height = height;
-				context.drawImage(video, 0, 0, width, height);
+				canvas.width = video.clientWidth;
+				canvas.height = video.clientHeight;
+				context.drawImage(video, 0, 0, video.clientWidth, video.clientHeight);
 
 				var data = canvas.toDataURL('image/png');
 				document.getElementById("photo").setAttribute('src', data);
+
+				var stickers_send = JSON.parse(JSON.stringify(stickers));
+				// for (i in stickers_send)
+				// {
+				// 	var sticker = stickers_send[i];
+				// 	var corners = getPixelsByAngle(sticker.x, sticker.y, sticker.width/2, sticker.height/2, sticker.rot);
+				// 	var x = video.clientWidth;
+				// 	var y = video.clientHeight;
+				// 	for (j in corners)
+				// 	{
+				// 		if (corners[j][0] < x)
+				// 			x = corners[j][0];
+				// 		if (corners[j][1] < y)
+				// 			y = corners[j][1];
+				// 	}
+				// 	sticker.x = x;
+				// 	sticker.y = y;
+				// }
+				upload_pic(data, JSON.stringify(stickers_send));
 			}
 
-			video.addEventListener('click', takepicture, false);
+			function upload_pic(pic, data)
+			{
+				const body = 	"action=upload&picture=" + encodeURIComponent(pic) + "&stickers=" + encodeURIComponent(data);
+				fetch("./upload.php", {
+					method: "post",
+					credentials: "include",
+					headers: {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
+					body,
+				})
+				.then(response => {
+					response.text().then(data => {
+						console.log(data);
+						// var response = JSON.parse(data);
+						// if (response.error)
+						// 	info(response.message, true);
+						// else
+						// {
+						// 	info(response.message);
+						// }
+					});
+				});
+			}
 
 			navigator.camera = (navigator.getUserMedia ||
 								navigator.webkitGetUserMedia ||
@@ -85,11 +127,13 @@
 
 			function newSticker(src)
 			{
-				if (stickers.length < 10)
+				if (stickers.filter(Boolean).length < 5)
 				{
 					document.getElementById("stickers-canvas").innerHTML += "<div id='sticker_" + (stickers.length) + "' class='dragme'><img src='./img/stickers/" + src + "' class='sticker' id='sticker_" + stickers.length + "_img'><button class='sticker-del' onclick='delSticker(" + stickers.length + ")'>X</button><input type='range' min='40' max='100' value='50' class='slider' oninput='changeSize(this)'><br><input type='range' min='1' max='360' value='0' class='slider slider-vert' oninput='changeRotation(this)'></div>";
-					stickers.push({x: 0, y: 0, height: 200, width: 200, rot: 0});
+					stickers.push({x: 0, y: 0, height: document.getElementById("sticker_" + stickers.length).clientHeight, width: 200, rot: 0, src: src});
 				}
+				else
+					info("You are using the maximum amount of stickers already.", true);
 
 			}
 			function delSticker(id)
@@ -182,6 +226,19 @@
 						stickers[i].height = img.clientHeight;
 					}
 				}
+			}
+			function getPixelsByAngle(x,y,halfWidth,halfHeight,angle){
+				var bounds = [
+					//upper left
+					[x + (halfWidth) * Math.cos(angle) - (halfHeight) * Math.sin(angle) + halfWidth, y + (halfHeight) * Math.cos(angle) + (halfWidth) * Math.sin(angle) + halfHeight],
+					//upper right
+					[x - (halfWidth) * Math.cos(angle) - (halfHeight) * Math.sin(angle) + halfWidth, y + (halfHeight) * Math.cos(angle) - (halfWidth) * Math.sin(angle) + halfHeight],
+					//bottom right
+					[x - (halfWidth) * Math.cos(angle) + (halfHeight) * Math.sin(angle) + halfWidth, y - (halfHeight) * Math.cos(angle) - (halfWidth) * Math.sin(angle) + halfHeight],
+					//bottom left
+					[x + (halfWidth) * Math.cos(angle) + (halfHeight) * Math.sin(angle) + halfWidth, y - (halfHeight) * Math.cos(angle) + (halfWidth) * Math.sin(angle) + halfHeight]
+				];
+				return bounds;
 			}
 			window.onload = function() {
 				document.onmousedown = startDrag;
