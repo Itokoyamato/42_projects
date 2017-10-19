@@ -3,7 +3,7 @@
 	{
 		include_once "./header.php";
 		$validate = $account->activateAccount($_GET['token']);
-		if ($validate['error']): ?>
+		if (isset($validate['error'])): ?>
 			<script>
 				info('<?php echo $validate['message'] ?>', true);
 			</script>

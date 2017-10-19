@@ -6,7 +6,7 @@
 	<div class="header">
 		<a class="title" href="./">Camagru</a>
 		<div class="account">
-			<?php if (!$account->isLoggedIn()['error']): ?>
+			<?php if (!isset($account->isLoggedIn()['error'])): ?>
 				<a href="#">?</a> | <a href="./logout.php">Sign off</a>
 			<?php else: ?>
 				<a href="./login.php#login">Sign in</a> | <a href="./login.php#register">Register</a>

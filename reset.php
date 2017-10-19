@@ -2,7 +2,7 @@
 	if (isset($_GET['token']) && $_GET['token'] != ""):
 		include_once "header.php";
 		$reset = $account->resetPass_check($_GET['token']);
-		if ($reset['error']): ?>
+		if (isset($reset['error'])): ?>
 			<script>
 				info('<?php echo $reset['message'] ?>', true);
 			</script>

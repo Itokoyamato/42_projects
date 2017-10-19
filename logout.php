@@ -1,10 +1,10 @@
 <?php
 	include_once "./account.php";
-	if (!$account->isLoggedIn()['error'])
+	if (!isset($account->isLoggedIn()['error']))
 	{
 		$logout = $account->logout();
 		include("./header.php");
-		if ($logout['error']): ?>
+		if (isset($logout['error'])): ?>
 			<script>
 				info('<?php echo $logout['message'] ?>', true);
 			</script>

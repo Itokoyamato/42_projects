@@ -1,67 +1,163 @@
 <?php
 	include_once "./account.php";
-	if ($account->isLoggedIn()['error'])
+	if (isset($account->isLoggedIn()['error']))
 		header("Location: ./");
 	else
 	{
 		include_once "./header.php";
 		?>
-		<div class="main-container">
-			<img id="photo" alt="The screen capture will appear in this box.">
-			<div class="container camera-container" id="camera-container">
-				<div class="stickers-canvas" id="stickers-canvas"></div>
-				<video class="camera" autoplay></video>
-			</div>
-			<div class="container sidebar">
-				<div class="container title">Your gallery</div>
-			</div>
-			<div class="container take-picture" onclick="takepicture()">click</div>
-			<div class="container stickers-container">
-				<img class="sticker" src="./img/stickers/grumpy.png" onclick="javascript:newSticker('grumpy.png')">
-				<img class="sticker" src="./img/stickers/nanachi.png" onclick="javascript:newSticker('nanachi.png')">
-				<img class="sticker" src="./img/stickers/kebab.png" onclick="javascript:newSticker('kebab.png')">
+		<div class="container-outer">
+			<div class="main-container">
+				<div class="left">
+					<div class="left-inner">
+						<form method="post" action="javascript:void(0);" onSubmit="return takepicture()">
+							<div class="container title-container">
+								<input required type="text" id="picture-title" placeholder="You can add some text with the picture here" onkeydown="if (event.keyCode == 13) return (false);">
+							</div>
+							<div class="container camera-container" id="camera-container">
+								<div class="stickers-canvas" id="stickers-canvas"></div>
+								<video id="camera" class="camera" autoplay></video>
+								<img id="picture" class="picture" src=""/>
+							</div>
+							<br>
+							<div class="container options">
+								<input type="button" class="button" onclick="use_camera()" value="Camera"/>
+								<input type="submit" class="button"/>
+								<input type="file" id="use-picture" onchange="use_picture(this)" style="display: none;"/>
+								<input class="button" type="button" value="Picture" onclick="document.getElementById('use-picture').click();" />
+							</div>
+							<br>
+							<div class="container stickers-container">
+								<img class="sticker" src="./img/stickers/grumpy.png" onclick="javascript:newSticker('grumpy.png')">
+								<img class="sticker" src="./img/stickers/nanachi.png" onclick="javascript:newSticker('nanachi.png')">
+								<img class="sticker" src="./img/stickers/kebab.png" onclick="javascript:newSticker('kebab.png')">
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="container right">
+					<div class="container title">Your gallery</div>
+				</div>
 			</div>
 		</div>
 		<script>
+			var mode = "none";
+			var stickersEnabled = false;
 			var video = document.querySelector("video");
-			var localMediaStream = null;
-			var width = 480;
-			var height = 0;
 
-			function takepicture() {
-				var canvas = document.createElement("canvas");
-				var context = canvas.getContext("2d");
-				height = video.videoHeight / (video.videoWidth / width);
-				canvas.width = video.clientWidth;
-				canvas.height = video.clientHeight;
-				context.drawImage(video, 0, 0, video.clientWidth, video.clientHeight);
-
-				var data = canvas.toDataURL('image/png');
-				document.getElementById("photo").setAttribute('src', data);
-
-				var stickers_send = JSON.parse(JSON.stringify(stickers));
-				// for (i in stickers_send)
-				// {
-				// 	var sticker = stickers_send[i];
-				// 	var corners = getPixelsByAngle(sticker.x, sticker.y, sticker.width/2, sticker.height/2, sticker.rot);
-				// 	var x = video.clientWidth;
-				// 	var y = video.clientHeight;
-				// 	for (j in corners)
-				// 	{
-				// 		if (corners[j][0] < x)
-				// 			x = corners[j][0];
-				// 		if (corners[j][1] < y)
-				// 			y = corners[j][1];
-				// 	}
-				// 	sticker.x = x;
-				// 	sticker.y = y;
-				// }
-				upload_pic(data, JSON.stringify(stickers_send));
+			function use_camera() {
+				navigator.camera = (navigator.getUserMedia ||
+								navigator.webkitGetUserMedia ||
+								navigator.mozGetUserMedia ||
+								navigator.msGetUserMedia);
+				navigator.camera({ video: true, audio: false},
+					function(stream)
+					{
+						video.src = window.URL.createObjectURL(stream);
+						video.play();
+						mode = "camera";
+						document.getElementById("picture").classList.remove("show");
+						document.getElementById("camera").classList.add("show");
+						document.getElementById("stickers-canvas").innerHTML = "";
+						stickers = [];
+						stickersEnabled = true;
+					},
+				function(err){
+					info("Could not detect your camera. You can still use the picture mode, to upload your own snapshot.", true);
+					mode = "picture";
+				});
 			}
 
-			function upload_pic(pic, data)
+			function use_picture(e) {
+				var reader = new FileReader();
+				reader.onload = function (event) {
+					document.getElementById("picture").classList.add("show");
+					document.getElementById("camera").classList.remove("show");
+					document.getElementById('picture').src = event.target.result;
+					mode = "picture";
+					document.getElementById("stickers-canvas").innerHTML = "";
+					stickers = [];
+					stickersEnabled = true;
+				}
+				reader.readAsDataURL(e.files[0]);
+			}
+
+			function isPictureValid(blob, callback)
 			{
-				const body = 	"action=upload&picture=" + encodeURIComponent(pic) + "&stickers=" + encodeURIComponent(data);
+				if (blob) {
+					var URL = window.URL || window.webkitURL;
+					var image = new Image();
+
+					image.onload = function() {
+						if (this.width) {
+							URL.revokeObjectURL(image.src);
+							image = null;
+							callback(true);
+						}
+						else
+						{
+							URL.revokeObjectURL(image.src);
+							image = null;
+							callback(false);
+						}
+					};
+					image.onerror = function() {
+						URL.revokeObjectURL(image.src);
+						image = null;
+						callback(false);
+					};
+					image.src = URL.createObjectURL(blob);
+				}
+				else
+					callback(false);
+			}
+
+			function takepicture() {
+				if (stickers.filter(Boolean).length < 1)
+				{
+					info("You must add a sticker to upload the picture.", true);
+					return;
+				}
+				var canvas = document.createElement("canvas");
+				var context = canvas.getContext("2d");
+				var width;
+				var height;
+				var image;
+				if (mode == "camera")
+				{
+					width = video.clientWidth;
+					height = video.clientHeight;
+					image = video;
+				}
+				else if (mode == "picture")
+				{
+					width = document.getElementById("picture").clientWidth;
+					height = document.getElementById("picture").clientHeight;
+					image = document.getElementById("picture");
+				}
+				canvas.width = width;
+				canvas.height = height;
+				context.drawImage(image, 0, 0, width, height);
+
+				var stickers_send = JSON.parse(JSON.stringify(stickers));
+				var title = document.getElementById("picture-title").value;
+				var picture = canvas.toBlob(function(blob){
+					isPictureValid(blob, function(isValid){
+						if (isValid)
+						{
+							var picture = canvas.toDataURL('image/png');
+							upload_pic(picture, JSON.stringify(stickers_send), title);
+						}
+						else
+							info("The image uploaded, or camera snapshot seem to be invalid. Try again, if this issues persists, contact an Administrator.");
+
+					});
+				}, 'image/png', 1.0);
+			}
+
+			function upload_pic(picture, stickers_data, title)
+			{
+				const body = 	"action=upload&token=" + encodeURIComponent("<?php echo $_COOKIE['camagru_token'] ?>") + "&picture=" + encodeURIComponent(picture) + "&stickers=" + encodeURIComponent(stickers_data) + "&title=" + encodeURIComponent(title);
 				fetch("./upload.php", {
 					method: "post",
 					credentials: "include",
@@ -71,33 +167,15 @@
 				.then(response => {
 					response.text().then(data => {
 						console.log(data);
-						// var response = JSON.parse(data);
-						// if (response.error)
-						// 	info(response.message, true);
-						// else
-						// {
-						// 	info(response.message);
-						// }
+						var response = JSON.parse(data);
+						if (response.error)
+							info(response.message, true);
+						else
+						{
+							info(response.message);
+						}
 					});
 				});
-			}
-
-			navigator.camera = (navigator.getUserMedia ||
-								navigator.webkitGetUserMedia ||
-								navigator.mozGetUserMedia ||
-								navigator.msGetUserMedia);
-
-			navigator.camera({ video: true, audio: false},
-				function(stream)
-				{
-					video.src = window.URL.createObjectURL(stream);
-					video.play();
-				},
-			err);
-
-			function err(error)
-			{
-				console.log(error);
 			}
 
 			var drag = false;
@@ -127,6 +205,11 @@
 
 			function newSticker(src)
 			{
+				if (!stickersEnabled)
+				{
+					info("You must enable your camera or upload a picture first.", true);
+					return;
+				}
 				if (stickers.filter(Boolean).length < 5)
 				{
 					document.getElementById("stickers-canvas").innerHTML += "<div id='sticker_" + (stickers.length) + "' class='dragme'><img src='./img/stickers/" + src + "' class='sticker' id='sticker_" + stickers.length + "_img'><button class='sticker-del' onclick='delSticker(" + stickers.length + ")'>X</button><input type='range' min='40' max='100' value='50' class='slider' oninput='changeSize(this)'><br><input type='range' min='1' max='360' value='0' class='slider slider-vert' oninput='changeRotation(this)'></div>";
@@ -227,23 +310,11 @@
 					}
 				}
 			}
-			function getPixelsByAngle(x,y,halfWidth,halfHeight,angle){
-				var bounds = [
-					//upper left
-					[x + (halfWidth) * Math.cos(angle) - (halfHeight) * Math.sin(angle) + halfWidth, y + (halfHeight) * Math.cos(angle) + (halfWidth) * Math.sin(angle) + halfHeight],
-					//upper right
-					[x - (halfWidth) * Math.cos(angle) - (halfHeight) * Math.sin(angle) + halfWidth, y + (halfHeight) * Math.cos(angle) - (halfWidth) * Math.sin(angle) + halfHeight],
-					//bottom right
-					[x - (halfWidth) * Math.cos(angle) + (halfHeight) * Math.sin(angle) + halfWidth, y - (halfHeight) * Math.cos(angle) - (halfWidth) * Math.sin(angle) + halfHeight],
-					//bottom left
-					[x + (halfWidth) * Math.cos(angle) + (halfHeight) * Math.sin(angle) + halfWidth, y - (halfHeight) * Math.cos(angle) + (halfWidth) * Math.sin(angle) + halfHeight]
-				];
-				return bounds;
-			}
 			window.onload = function() {
 				document.onmousedown = startDrag;
 				document.onmouseup = stopDrag;
 				window.onresize = function(){check_stickers()};
+				use_camera();
 			}
 		</script>
 		<?php
