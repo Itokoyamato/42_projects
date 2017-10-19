@@ -7,22 +7,16 @@
 			$data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $_POST['picture']));
 			$picture = imagecreatefromstring($data);
 			if (!$picture)
-			{
-				echo json_encode(response("[U001] The image uploaded, or camera snapshot seem to be invalid. Try again, if this issues persists, contact an Administrator.", false));
-				return;
-			}
+				exit(json_encode(response(false, "[U001] The image uploaded, or camera snapshot seem to be invalid. Try again, if this issues persists, contact an Administrator.")));
 
 			$stickers = json_decode($_POST['stickers'], true);
 
 			foreach ($stickers as $key => $sticker) {
 				$img = imagecreatefrompng("./img/stickers/".$sticker['src']);
 				if (!$img)
-				{
-					echo json_encode(response("[U002] Failed to process the stickers. Try again, if this issues persists, contact an Administrator.", false));
-					return;
-				}
+					exit(json_encode(response(false, "[U002] Failed to process the stickers. Try again, if this issues persists, contact an Administrator.")));
 				$img = resizePng($img, $sticker['width'], $sticker['height']);
-				
+
 				$w_original = imagesx($img);
 				$h_original = imagesy($img);
 
@@ -52,27 +46,43 @@
 			if (!file_exists("./img/uploads/".$year."/".$month."/".$day))
 				mkdir("./img/uploads/".$year."/".$month."/".$day);
 
-			$destFile = "./img/uploads/".$year."/".$month."/".$day."/".uniqid().".png";
-			imagepng($picture, $destFile);
-			imagedestroy($picture);
+			$destFolder = "./img/uploads/".$year."/".$month."/".$day;
 
-			if (is_file($destFile))
+			try
 			{
-				echo json_encode(response("Successfully created your image !", true));
-				return;
+				// Retrieve user's id from his token
+				$query = $account->getDB()->prepare("SELECT user_id FROM users_sessions WHERE token=:token");
+				$query->execute(array(":token" => $_POST['token']));
+				$row = $query->fetch(PDO::FETCH_ASSOC);
+				if ($query->rowCount() == 0)
+					exit(json_encode(response(true, "[U003] An error occured. Try again, if this issues persists, contact an Administrator.")));
+
+				// Insert image in database
+				$query = $account->getDB()->prepare("INSERT INTO images (user_id, title, date_created) VALUES (:user_id, :title, NOW())");
+				$query->execute(array(":user_id" => $row['user_id'], ":title" => $_POST['title']));
+				if ($query->rowCount() == 0)
+					exit(json_encode(response(true, "[U004] An error occured. Try again, if this issues persists, contact an Administrator.")));
+
+				// Create image and save file
+				$destPath = $destFolder."/".$account->getDB()->lastInsertId().".png";
+				imagepng($picture, $destPath);
+				imagedestroy($picture);
+				if (!is_file($destPath))
+					exit(json_encode(response(true, "[U005] An error occured. Try again, if this issues persists, contact an Administrator.")));
+				else
+					exit(json_encode(response(true, "Successfully created your image !")));
 			}
-			else
+			catch(PDOException $ex)
 			{
-				echo json_encode(response("[U003] Failed to process the image. Try again, if this issues persists, contact an Administrator.", true));
-				return;
+				exit(json_encode(response(false, $ex->getMessage())));
 			}
-			echo json_encode(response("[U004] Unexpected behaviour. Try again, if this issues persists, contact an Administrator.", true));
+			exit(json_encode(response(false, "[U006] An error occured. Try again, if this issues persists, contact an Administrator.")));
 		}
 		else
-			echo json_encode(response("[U005] Invalid request.", true));
+			exit(json_encode(response(false, "[U007] Invalid request.")));
 	}
 	else
-		echo json_encode(response("[U006] Invalid request.", true));
+		exit(json_encode(response(false, "[U008] Invalid request.")));
 
 	function rotate_transparent_img($img_resource, $angle){
 		$transparency = imagecolorallocatealpha($img_resource,0,0,0,127);

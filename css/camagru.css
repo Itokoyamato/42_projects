@@ -325,6 +325,12 @@ html, body {
 	width: 100%;
 	margin-top: 20px;
 }
+.pic-holder {
+	width: 100%;
+}
+.pic-holder .inner {
+	width: 100%;
+}
 .stickers-canvas {
 	position: absolute;
 }

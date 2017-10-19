@@ -1,5 +1,10 @@
 <?php
 	include_once "./config/database.php";
+	function echo_r($msg)
+	{
+		echo ($msg);
+		exit();
+	}
 	function response($success, $msg)
 	{
 		if (!$success)
@@ -21,6 +26,11 @@
 
 		public function __construct() {
 			$this->db = init_db();
+		}
+
+		public function getDB()
+		{
+			return ($this->db);
 		}
 		
 		public function login($username, $password)

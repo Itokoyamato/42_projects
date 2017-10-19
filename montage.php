@@ -5,6 +5,17 @@
 	else
 	{
 		include_once "./header.php";
+
+		$query = $account->getDB()->prepare("SELECT user_id FROM users_sessions WHERE token=:token AND active=1");
+		$query->execute(array(":token" => $_COOKIE['camagru_token']));
+		$row = $query->fetch(PDO::FETCH_ASSOC);
+		$rows = array();
+		if ($query->rowCount() != 0)
+		{
+			$query = $account->getDB()->prepare("SELECT * FROM images WHERE user_id=:user_id");
+			$query->execute(array(":user_id" => $row['user_id']));
+			$rows = $query->fetchAll(PDO::FETCH_ASSOC);
+		}
 		?>
 		<div class="container-outer">
 			<div class="main-container">
@@ -37,6 +48,19 @@
 				</div>
 				<div class="container right">
 					<div class="container title">Your gallery</div>
+					<?php
+					foreach ($rows as $key => $image) {
+						$date = strtotime($image['date_created']);
+						$year = date("Y", $date);
+						$month = date("m", $date);
+						$day = date("d", $date);
+						$path = "./img/uploads/".$year."/".$month."/".$day."/".$image['id'].".png";
+						?>
+						<div class="pic-holder">
+							<p><?php echo $image['title'] ?></p>
+							<img class="inner" src="<?php echo $path ?>">
+						</div>
+						<?php } ?>
 				</div>
 			</div>
 		</div>
