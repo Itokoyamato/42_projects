@@ -12,7 +12,7 @@
 		$rows = array();
 		if ($query->rowCount() != 0)
 		{
-			$query = $account->getDB()->prepare("SELECT * FROM images WHERE user_id=:user_id");
+			$query = $account->getDB()->prepare("SELECT * FROM images WHERE user_id=:user_id ORDER BY id DESC");
 			$query->execute(array(":user_id" => $row['user_id']));
 			$rows = $query->fetchAll(PDO::FETCH_ASSOC);
 		}

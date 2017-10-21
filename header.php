@@ -7,9 +7,9 @@
 		<a class="title" href="./">Camagru</a>
 		<div class="account">
 			<?php if (!isset($account->isLoggedIn()['error'])): ?>
-				<a href="#">?</a> | <a href="./logout.php">Sign off</a>
+				<a href="./">Gallery</a> | <a href="./montage.php">Take a picture !</a> | <a href="./logout.php">Sign off</a>
 			<?php else: ?>
-				<a href="./login.php#login">Sign in</a> | <a href="./login.php#register">Register</a>
+				<a href="./">Gallery</a> | <a href="./login.php#login">Sign in</a> | <a href="./login.php#register">Register</a>
 			<?php endif; ?>
 		</div>
 	</div>
@@ -17,6 +17,7 @@
 		<div class="info-content" id="info-content"></div>
 	</div>
 	<script>
+		var info_timeout;
 		function info(msg, error)
 		{
 			document.getElementById("info-content").innerHTML = msg;
@@ -25,7 +26,9 @@
 				document.getElementById("info").classList.remove("error");
 			else
 				document.getElementById("info").classList.add("error");
-			setTimeout(function(){document.getElementById("info").classList.remove("show");}, 10000);
+			if (info_timeout)
+				clearTimeout(info_timeout);
+			info_timeout = setTimeout(function(){document.getElementById("info").classList.remove("show");}, 10000);
 		}
 		function escapeRegExp(str) {
 			return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");

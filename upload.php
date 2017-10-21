@@ -32,8 +32,8 @@
 				imagedestroy($img);
 			}
 
-			$newHeight = imagesy($picture) / (imagesx($picture)/480);
-			$picture = resizePng($picture, 480, $newHeight);
+			$newHeight = imagesy($picture) / (imagesx($picture)/720);
+			$picture = resizePng($picture, 720, $newHeight);
 
 			$day = date("d");
 			$month = date("m");

@@ -4,6 +4,7 @@ html, body {
 	background: radial-gradient(#0079bf, #212f38);
 	background-repeat: no-repeat;
 	background-attachment: fixed;
+	width: 100%;
 }
 
 
@@ -315,6 +316,8 @@ html, body {
 	height: 70%;
 	width: 200px;
 	margin-left: 20px;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
 .sidebar .title {
 	padding: 0;
@@ -419,6 +422,59 @@ html, body {
     left:-1px;
     z-index:1;
     border:none;
+}
+
+
+/**/
+/* Gallery */
+/**/
+
+.gallery {
+	position: relative;
+	width: 90%;
+	text-align: center;
+	margin: auto;
+	display: block;
+}
+.picture-holder {
+	position: relative;
+	display: inline-block;
+	min-width: 300px;
+	max-width: 300px;
+	margin-top: 50px;
+	padding: 20px;
+}
+.picture-content {
+	position: relative;
+	background: #eee;
+	display: inline-block;
+	border: solid 1px #0b3d95;
+    box-shadow: 0 0 80px -10px #000;
+	max-height: 100%;
+	max-width: 100%;
+}
+.gallery .picture {
+	position: relative;
+	display: block;
+	max-height: 300px;
+	max-width: 100%;
+}
+.gallery .title {
+	all: initial;
+	display: block;
+	font-size: 20px;
+	font-weight: bold;
+    text-align: center;
+    color: #9FA8DA;
+    text-shadow: 1px 1px 0px #000;
+    font-family: sans-serif;
+}
+.gallery .username {
+	all: initial;
+	display: inline-block;
+	color: #295bbe;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 /**/
