@@ -191,9 +191,9 @@
 			// Check if username or email is already used
 			$userExists = $this->isUsernameAvailable($username);
 			$emailExists = $this->isEmailAvailable($email);
-			if ($userExists['error'])
+			if (isset($userExists['error']))
 				return (response(false, $userExists['message']));
-			if ($emailExists['error'])
+			if (isset($emailExists['error']))
 				return (response(false, $emailExists['message']));
 			
 			try
@@ -205,7 +205,7 @@
 				{
 					// Generate activation token
 					$activation = $this->new_activation_token($this->db->lastInsertId(), $email);
-					if ($activation['error'])
+					if (isset($activation['error']))
 						return (response(false, "You have successfully registered. ".$validation['message']));
 					else
 						return (response(true, "You have successfully registered."));
@@ -232,7 +232,13 @@
 				if ($query->rowCount() != 0)
 				{
 					// Send email
-					mail($email, "Camagru test activation token", "Activation token: ".$token);
+					$to = $email;
+					$subject = 'Camagru account activation';
+					$message = '"Activation token: ".$token';
+					$headers = 'From: no-reply@camagru.itokoyamato.net';
+
+					mail($to, $subject, $message, $headers);
+					// mail($email, "Camagru test activation token", "Activation token: ".$token);
 					return (response(true, "New activation token successfully created."));
 				}
 				else
@@ -362,7 +368,7 @@
 			$isTokenValid = $this->resetPass_check($token);
 
 			// Check if token is valid
-			if ($isTokenValid['error'])
+			if (isset($isTokenValid['error']))
 				return (response(false, $isTokenValid['message']));
 			// Check is new password is valid
 			if (strlen($password) < 7 || !preg_match("#[0-9]+#", $password) || !preg_match("#[A-Z]+#", $password) || !preg_match("#[a-z]+#", $password))
