@@ -5,16 +5,20 @@
 		echo ($msg);
 		exit();
 	}
-	function response($success, $msg)
+	function response($success, $msg, $data)
 	{
+		if (!isset($data))
+			$data = "";
 		if (!$success)
 			return (array(
 				"error" => true,
-				"message" => $msg
+				"message" => $msg,
+				"data" => $data
 			));
 		else
 			return (array(
-				"message" => $msg
+				"message" => $msg,
+				"data" => $data
 			));
 	}
 	function strclean($str)
@@ -120,11 +124,11 @@
 							return (response(false, "Your session token expired."));
 						}
 						elseif ($row["active"] == 0)
-							return (response(false, "Your session token expired"));
+							return (response(false, "Your session token expired."));
 						else
 						{
 							// $_SESSION['username'] = $row["username"];
-							return (response(true, "You are logged in."));
+							return (response(true, "You are logged in.", $row['user_id']));
 						}
 					}
 					else

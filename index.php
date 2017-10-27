@@ -1,5 +1,6 @@
 <?php
 	include_once "header.php";
+	include_once "count.php";
 	try
 	{
 		?><div class="gallery"><?php
@@ -18,10 +19,13 @@
 			if (!file_exists($path))
 				continue;
 			?>
-			<div class="picture-holder">
+			<div id="<?php echo $image['id'] ?>" class="picture-holder">
 				<div class="picture-content">
 					<img class="picture" src="<?php echo $path ?>"/>
-					<p class="title">"<?php echo $image['title'] ?>"</p><i>by <p class="username"><?php echo $row['username'] ?></p></i>
+					<?php $like = ($user_id && didUserLike($image['id'], $user_id)['data']) ? "<font color='red'>♥</font> ".count_likes($image['id'])['data'] : "♥ ".count_likes($image['id'])['data'] ?>
+						<button id="<?php echo 'like_'.$image['id'] ?>" class="like" onclick="like(<?php echo $image['id'] ?>)"><?php echo $like ?></button>
+					<!-- <button class="comment">💬</button> -->
+					<p class="title">"<?php echo htmlspecialchars($image['title']) ?>"</p><i>by <p class="username"><?php echo $row['username'] ?></p></i>
 				</div>
 			</div>
 			<?php
@@ -32,4 +36,34 @@
 	{
 		exit(json_encode(response(false, $ex->getMessage())));
 	}
+	?>
+	<script>
+		function like(id) {
+			const body = "action=like&token=" + encodeURIComponent("<?php echo $_COOKIE['camagru_token'] ?>") + "&id=" + encodeURIComponent(id);
+			console.log(body);
+			fetch("./image.php", {
+				method: "post",
+				credentials: "include",
+				headers: {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
+				body,
+			})
+			.then(response => {
+				response.text().then(data => {
+					console.log(data);
+					var response = JSON.parse(data);
+					if (response.error)
+						info(response.message, true);
+					else
+					{
+						// info(response.message);
+						if (response.data[0])
+							document.getElementById("like_" + id).innerHTML = "<font color='red'>♥</font> " + response.data[1];
+						else
+							document.getElementById("like_" + id).innerHTML = "♥ " + response.data[1];
+					}
+				});
+			});
+		}
+	</script>
+	<?php
 ?>

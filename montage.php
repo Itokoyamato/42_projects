@@ -56,9 +56,12 @@
 						$day = date("d", $date);
 						$path = "./img/uploads/".$year."/".$month."/".$day."/".$image['id'].".png";
 						?>
-						<div class="pic-holder">
-							<p><?php echo $image['title'] ?></p>
-							<img class="inner" src="<?php echo $path ?>">
+						<div class="picture-holder">
+							<div class="picture-content">
+								<img class="picture" src="<?php echo $path ?>"/>
+								<p class="title">"<?php echo $image['title'] ?>"</p>
+								<input type="button" class="button delete" onclick="del_image(<?php echo $image['id'] ?>);" value="X"/>
+							</div>
 						</div>
 						<?php } ?>
 				</div>
@@ -68,6 +71,32 @@
 			var mode = "none";
 			var stickersEnabled = false;
 			var video = document.querySelector("video");
+
+			function del_image(id) {
+				if (confirm("Are you sure you want to delete this image ?"))
+				{
+					const body = 	"action=delete&token=" + encodeURIComponent("<?php echo $_COOKIE['camagru_token'] ?>") + "&id=" + encodeURIComponent(id);
+					console.log(body);
+					fetch("./upload.php", {
+						method: "post",
+						credentials: "include",
+						headers: {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
+						body,
+					})
+					.then(response => {
+						response.text().then(data => {
+							console.log(data);
+							var response = JSON.parse(data);
+							if (response.error)
+								info(response.message, true);
+							else
+							{
+								info(response.message);
+							}
+						});
+					});
+				}
+			}
 
 			function use_camera() {
 				navigator.camera = (navigator.getUserMedia ||
