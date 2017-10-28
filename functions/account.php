@@ -1,5 +1,5 @@
 <?php
-	include_once "./config/database.php";
+	include_once PATH_CONFIG."database.php";
 	function echo_r($msg)
 	{
 		echo ($msg);

@@ -512,6 +512,30 @@ html, body {
 	padding: 0;
 	font-size: 18px;
 }
+
+
+/**/
+/* Pagination */
+/**/
+
+.pagination {
+	display: inline-block;
+}
+.pagination a.active {
+	background-color: #3F51B5;
+	pointer-events: none;
+}
+.pagination a {
+	color: #9FA8DA;
+	padding: 0px 16px;
+	text-decoration: none;
+	transition: background-color 0.3s;
+}
+.pagination a:hover {
+	background-color: #3F51B5;
+}
+
+
 /**/
 /* Animations */
 /**/

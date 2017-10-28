@@ -1,5 +1,5 @@
 <?php
-	include_once "./account.php";
+	include_once PATH_FT."account.php";
 	if (isset($_POST['action']))
 	{
 		$action = $_POST['action'];

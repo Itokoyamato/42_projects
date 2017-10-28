@@ -1,5 +1,5 @@
 <?php
-	include_once "auth.php";
+	include_once PATH_FT."auth.php";
 	if (isset($_COOKIE['camagru_token']) && $_COOKIE['camagru_token'] != "")
 	{
 		$camagru_token = $_COOKIE['camagru_token'];
@@ -21,9 +21,9 @@
 		<a class="title" href="./">Camagru</a>
 		<div class="account">
 			<?php if (!isset($account->isLoggedIn()['error'])): ?>
-				<a href="./">Gallery</a> | <a href="./montage.php">Take a picture !</a> | <a href="./logout.php">Sign off</a>
+				<a href="<?php echo PATH_ROOT ?>">Gallery</a> | <a href="<?php echo PATH_VIEW.'montage.php' ?>">Take a picture !</a> | <a href="<?php echo PATH_FT.'logout.php' ?>">Sign off</a>
 			<?php else: ?>
-				<a href="./">Gallery</a> | <a href="./login.php#login">Sign in</a> | <a href="./login.php#register">Register</a>
+				<a href="<?php echo PATH_ROOT ?>">Gallery</a> | <a href="<?php echo PATH_VIEW.'login.php#login' ?>">Sign in</a> | <a href="<?php echo PATH_VIEW.'login.php#register' ?>">Register</a>
 			<?php endif; ?>
 		</div>
 	</div>
