@@ -4,21 +4,21 @@
 	{
 		$user_id = $account->isLoggedIn($_POST['token']);
 		if (isset($user_id['error']))
-			exit(json_encode(response(false, "[U001] An error occured. Try again, if this issues persists, contact an Administrator.")));
+			exit(json_encode(response(false, "[U001] An error occured. Try again, if this issues persists, contact an Administrator.", "")));
 		$user_id = $user_id['data'];
 		if ($_POST['action'] == "upload" && isset($_POST['picture']) && $_POST['picture'] != "" && isset($_POST['stickers']) && $_POST['stickers'] != "" && isset($_POST['title']) && $_POST['title'] != "")
 		{
 			$data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $_POST['picture']));
 			$picture = imagecreatefromstring($data);
 			if (!$picture)
-				exit(json_encode(response(false, "[U002] The image uploaded, or camera snapshot seem to be invalid. Try again, if this issues persists, contact an Administrator.")));
+				exit(json_encode(response(false, "[U002] The image uploaded, or camera snapshot seem to be invalid. Try again, if this issues persists, contact an Administrator.", "")));
 
 			$stickers = json_decode($_POST['stickers'], true);
 
 			foreach ($stickers as $key => $sticker) {
 				$img = imagecreatefrompng("./img/stickers/".$sticker['src']);
 				if (!$img)
-					exit(json_encode(response(false, "[U003] Failed to process the stickers. Try again, if this issues persists, contact an Administrator.")));
+					exit(json_encode(response(false, "[U003] Failed to process the stickers. Try again, if this issues persists, contact an Administrator.", "")));
 				$img = resizePng($img, $sticker['width'], $sticker['height']);
 
 				$w_original = imagesx($img);
@@ -59,28 +59,28 @@
 				$query->execute(array(":token" => $_POST['token']));
 				$row = $query->fetch(PDO::FETCH_ASSOC);
 				if ($query->rowCount() == 0)
-					exit(json_encode(response(false, "[U004] An error occured. Try again, if this issues persists, contact an Administrator.")));
+					exit(json_encode(response(false, "[U004] An error occured. Try again, if this issues persists, contact an Administrator.", "")));
 
 				// Insert image in database
 				$query = $account->getDB()->prepare("INSERT INTO images (user_id, title, date_created) VALUES (:user_id, :title, NOW())");
 				$query->execute(array(":user_id" => $row['user_id'], ":title" => $_POST['title']));
 				if ($query->rowCount() == 0)
-					exit(json_encode(response(false, "[U005] An error occured. Try again, if this issues persists, contact an Administrator.")));
+					exit(json_encode(response(false, "[U005] An error occured. Try again, if this issues persists, contact an Administrator.", "")));
 
 				// Create image and save file
 				$destPath = $destFolder."/".$account->getDB()->lastInsertId().".png";
 				imagepng($picture, $destPath);
 				imagedestroy($picture);
 				if (!is_file($destPath))
-					exit(json_encode(response(false, "[U006] An error occured. Try again, if this issues persists, contact an Administrator.")));
+					exit(json_encode(response(false, "[U006] An error occured. Try again, if this issues persists, contact an Administrator.", "")));
 				else
-					exit(json_encode(response(true, "Successfully created your image !")));
+					exit(json_encode(response(true, "Successfully created your image !", "")));
 			}
 			catch(PDOException $ex)
 			{
-				exit(json_encode(response(false, $ex->getMessage())));
+				exit(json_encode(response(false, $ex->getMessage(), "")));
 			}
-			exit(json_encode(response(false, "[U007] An error occured. Try again, if this issues persists, contact an Administrator.")));
+			exit(json_encode(response(false, "[U007] An error occured. Try again, if this issues persists, contact an Administrator.", "")));
 		}
 		elseif ($_POST['action'] == "delete" && isset($_POST['id']) && $_POST['id'] != "")
 		{
@@ -91,11 +91,11 @@
 				$query->execute(array(":id" => $_POST['id']));
 				$row = $query->fetch(PDO::FETCH_ASSOC);
 				if ($query->rowCount() == 0)
-					exit(json_encode(response(false, "[U008] An error occured. Try again, if this issues persists, contact an Administrator.")));
+					exit(json_encode(response(false, "[U008] An error occured. Try again, if this issues persists, contact an Administrator.", "")));
 
 				// Check if it's the user's image
 				if ($row['user_id'] != $user_id)
-					exit(json_encode(response(false, "[U009] An error occured. Try again, if this issues persists, contact an Administrator.")));
+					exit(json_encode(response(false, "[U009] An error occured. Try again, if this issues persists, contact an Administrator.", "")));
 
 				// Get path to image
 				$date = strtotime($row['date_created']);
@@ -108,23 +108,23 @@
 				$query = $account->getDB()->prepare("DELETE FROM images WHERE id=:id");
 				$query->execute(array(":id" => $_POST['id']));
 				if ($query->rowCount() == 0)
-					exit(json_encode(response(false, "[U010] An error occured. Try again, if this issues persists, contact an Administrator.")));
+					exit(json_encode(response(false, "[U010] An error occured. Try again, if this issues persists, contact an Administrator.", "")));
 			}
 			catch(PDOException $ex)
 			{
-				exit(json_encode(response(false, $ex->getMessage())));
+				exit(json_encode(response(false, $ex->getMessage(), "")));
 			}
 
 			// Delete image
 			if (!unlink($path))
-				exit(json_encode(response(false, "[U011] An error occured. Try again, if this issues persists, contact an Administrator.")));
-			exit(json_encode(response(true, "Successfully deleted your image.")));
+				exit(json_encode(response(false, "[U011] An error occured. Try again, if this issues persists, contact an Administrator.", "")));
+			exit(json_encode(response(true, "Successfully deleted your image.", "")));
 		}
 		else
-			exit(json_encode(response(false, "[U012] Invalid request.")));
+			exit(json_encode(response(false, "[U012] Invalid request.", "")));
 	}
 	else
-		exit(json_encode(response(false, "[U013] Invalid request.")));
+		exit(json_encode(response(false, "[U013] Invalid request.", "")));
 
 	// Functions
 	function rotate_transparent_img($img_resource, $angle){

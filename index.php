@@ -23,9 +23,10 @@
 				<div class="picture-content">
 					<img class="picture" src="<?php echo $path ?>"/>
 					<?php $like = ($user_id && didUserLike($image['id'], $user_id)['data']) ? "<font color='red'>♥</font> ".count_likes($image['id'])['data'] : "♥ ".count_likes($image['id'])['data'] ?>
-						<button id="<?php echo 'like_'.$image['id'] ?>" class="like" onclick="like(<?php echo $image['id'] ?>)"><?php echo $like ?></button>
-					<!-- <button class="comment">💬</button> -->
 					<p class="title">"<?php echo htmlspecialchars($image['title']) ?>"</p><i>by <p class="username"><?php echo $row['username'] ?></p></i>
+					<br>
+					<button id="<?php echo 'like_'.$image['id'] ?>" class="like" onclick="like(<?php echo $image['id'] ?>)"><?php echo $like ?></button>
+					<button class="comment">💬</button>
 				</div>
 			</div>
 			<?php
@@ -34,12 +35,12 @@
 	}
 	catch(PDOException $ex)
 	{
-		exit(json_encode(response(false, $ex->getMessage())));
+		exit(json_encode(response(false, $ex->getMessage(), "")));
 	}
 	?>
 	<script>
 		function like(id) {
-			const body = "action=like&token=" + encodeURIComponent("<?php echo $_COOKIE['camagru_token'] ?>") + "&id=" + encodeURIComponent(id);
+			const body = "action=like&token=" + encodeURIComponent("<?php echo $camagru_token ?>") + "&id=" + encodeURIComponent(id);
 			console.log(body);
 			fetch("./image.php", {
 				method: "post",

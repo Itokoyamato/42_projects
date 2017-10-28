@@ -13,7 +13,7 @@
 		}
 		catch(PDOException $ex)
 		{
-			return(response(false, $ex->getMessage()));
+			return(response(false, $ex->getMessage(), ""));
 		}
 	}
 
@@ -29,7 +29,7 @@
 		}
 		catch(PDOException $ex)
 		{
-			return(response(false, $ex->getMessage()));
+			return(response(false, $ex->getMessage(), ""));
 		}
 	}
 
@@ -47,7 +47,7 @@
 		}
 		catch(PDOException $ex)
 		{
-			return(response(false, $ex->getMessage()));
+			return(response(false, $ex->getMessage(), ""));
 		}
 	}
 ?>

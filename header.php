@@ -1,10 +1,19 @@
 <?php
 	include_once "auth.php";
-	$user_id = $account->isLoggedIn($_POST['token']);
-	if (isset($user_id['error']))
-		$user_id = false;
+	if (isset($_COOKIE['camagru_token']) && $_COOKIE['camagru_token'] != "")
+	{
+		$camagru_token = $_COOKIE['camagru_token'];
+		$user_id = $account->isLoggedIn($_COOKIE['camagru_token']);
+		if (isset($user_id['error']))
+			$user_id = false;
+		else
+			$user_id = $user_id['data'];
+	}
 	else
-		$user_id = $user_id['data'];
+	{
+		$user_id = false;
+		$camagru_token = "";
+	}
 ?>
 <html>
 	<link rel="stylesheet" type="text/css" href="./css/camagru.css">
