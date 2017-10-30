@@ -1,5 +1,6 @@
 <?php
-	include_once "account.php";
+	include_once $_SERVER['DOCUMENT_ROOT']."/camagru/config/config.php";
+	include_once PATH_FT."account.php";
 	if (isset($_POST['action']) && $_POST['action'] != "" && isset($_POST['token']) && $_POST['token'] != "")
 	{
 		$user_id = $account->isLoggedIn($_POST['token']);
@@ -16,7 +17,7 @@
 			$stickers = json_decode($_POST['stickers'], true);
 
 			foreach ($stickers as $key => $sticker) {
-				$img = imagecreatefrompng("./img/stickers/".$sticker['src']);
+				$img = imagecreatefrompng(PATH_IMG."stickers/".$sticker['src']);
 				if (!$img)
 					exit(json_encode(response(false, "[U003] Failed to process the stickers. Try again, if this issues persists, contact an Administrator.", "")));
 				$img = resizePng($img, $sticker['width'], $sticker['height']);
@@ -39,18 +40,11 @@
 			$newHeight = imagesy($picture) / (imagesx($picture)/720);
 			$picture = resizePng($picture, 720, $newHeight);
 
-			$day = date("d");
-			$month = date("m");
-			$year = date("Y");
+			$date = date("Y/m/d");
+			if (!file_exists(PATH_IMG."uploads/".$date))
+				mkdir(PATH_IMG."uploads/".$date, 0755, true);
 
-			if (!file_exists("./img/uploads/".$year))
-				mkdir("./img/uploads/".$year);
-			if (!file_exists("./img/uploads/".$year."/".$month))
-				mkdir("./img/uploads/".$year."/".$month);
-			if (!file_exists("./img/uploads/".$year."/".$month."/".$day))
-				mkdir("./img/uploads/".$year."/".$month."/".$day);
-
-			$destFolder = "./img/uploads/".$year."/".$month."/".$day;
+			$destFolder = PATH_IMG."uploads/".$date;
 
 			try
 			{
@@ -99,10 +93,8 @@
 
 				// Get path to image
 				$date = strtotime($row['date_created']);
-				$year = date("Y", $date);
-				$month = date("m", $date);
-				$day = date("d", $date);
-				$path = "./img/uploads/".$year."/".$month."/".$day."/".$row['id'].".png";
+				$date = date("Y/m/d", $date);
+				$path = PATH_IMG."uploads/".$date."/".$row['id'].".png";
 
 				// Delete in DB
 				$query = $account->getDB()->prepare("DELETE FROM images WHERE id=:id");

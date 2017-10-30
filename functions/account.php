@@ -1,4 +1,5 @@
 <?php
+	include_once $_SERVER['DOCUMENT_ROOT']."/camagru/config/config.php";
 	include_once PATH_CONFIG."database.php";
 	function echo_r($msg)
 	{
@@ -57,7 +58,7 @@
 						// Generate session token
 						$token = bin2hex(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
 						$user_id = $row['id'];
-						setcookie("camagru_token", $token, time() + 3600);
+						setcookie("camagru_token", $token, time() + 3600, "/");
 						// Save session token
 						$query = $this->db->prepare("INSERT INTO users_sessions (user_id, token, timestamp_added, timestamp_expire) VALUES (:user_id, :token, NOW(), TIMESTAMPADD(SECOND, 3600, now()))");
 						$query->execute(array(":user_id" => $user_id, ":token" => $token));
@@ -127,7 +128,6 @@
 							return (response(false, "Your session token expired.", ""));
 						else
 						{
-							// $_SESSION['username'] = $row["username"];
 							return (response(true, "You are logged in.", $row['user_id']));
 						}
 					}

@@ -515,6 +515,49 @@ html, body {
 
 
 /**/
+/* Comments */
+/**/
+
+.comments-outer {
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.5);
+}
+.comments-container {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translateY(-50%);
+	margin: auto;
+	left: 0;
+	right: 0;
+	width: 500px;
+	max-width: 100%;
+}
+.comments-container input {
+	display: inline-block;
+}
+.comments-container input[type=submit] {
+	display: inline-block;
+	width: auto;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.comments-container .comments {
+
+}
+.comments-container .new-comment {
+
+}
+.comments-container .comments .comment {
+	display: block;
+}
+
+/**/
 /* Pagination */
 /**/
 

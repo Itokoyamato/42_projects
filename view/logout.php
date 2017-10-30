@@ -1,5 +1,6 @@
 <?php
-	include_once "./account.php";
+	include_once $_SERVER['DOCUMENT_ROOT']."/camagru/config/config.php";
+	include_once PATH_FT."account.php";
 	if (!isset($account->isLoggedIn()['error']))
 	{
 		$logout = $account->logout();

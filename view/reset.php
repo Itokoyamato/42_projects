@@ -1,6 +1,6 @@
 <?php 
 	if (isset($_GET['token']) && $_GET['token'] != ""):
-		include_once "header.php";
+		include_once PATH_VIEW."header.php";
 		$reset = $account->resetPass_check($_GET['token']);
 		if (isset($reset['error'])): ?>
 			<script>

@@ -1,4 +1,5 @@
 <?php
+	include_once "../config/config.php";
 	include_once PATH_FT."account.php";
 	if (isset($_POST['action']))
 	{

@@ -1,5 +1,6 @@
 <?php 
-	include_once "header.php";
+	include_once "../config/config.php";
+	include_once PATH_VIEW."header.php";
 ?>
 <html>
 	<div class="container" id="login-container">
@@ -130,7 +131,7 @@
 				return;
 			const body = 	"action=login&username=" + encodeURIComponent(login_username.value) +
 							"&password=" + encodeURIComponent(login_password.value);
-			fetch("./auth.php", {
+			fetch("<?php echo PATH_FT_HTTP.'/auth.php' ?>", {
 				method: "post",
 				credentials: "include",
 				headers: {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
@@ -156,7 +157,7 @@
 			const body = 	"action=register&username=" + encodeURIComponent(register_username.value) +
 							"&email=" + encodeURIComponent(register_email.value) +
 							"&password=" + encodeURIComponent(register_password.value);
-			fetch("./auth.php", {
+			fetch("<?php echo PATH_FT_HTTP.'/auth.php' ?>", {
 				method: "post",
 				credentials: "include",
 				headers: {
@@ -173,7 +174,7 @@
 					else
 					{
 						info(response.message);
-						setTimeout(function(){window.location.href = "./";}, 2000);
+						setTimeout(function(){window.location.href = "<?php echo PATH_ROOT_HTTP ?>";}, 2000);
 					}
 				});
 			});
@@ -182,7 +183,7 @@
 		function reset_password()
 		{
 			const body = 	"action=reset&email=" + encodeURIComponent(reset_email.value);
-			fetch("./auth.php", {
+			fetch("<?php echo PATH_FT_HTTP.'/auth.php' ?>", {
 				method: "post",
 				credentials: "include",
 				headers: {
@@ -199,7 +200,7 @@
 					else
 					{
 						info(response.message);
-						setTimeout(function(){window.location.href = "./";}, 2000);
+						setTimeout(function(){window.location.href = "<?php echo PATH_ROOT_HTTP ?>";}, 2000);
 					}
 				});
 			});

@@ -1,5 +1,6 @@
 <?php
-	include_once PATH_FT."auth.php";
+	include_once $_SERVER['DOCUMENT_ROOT']."/camagru/config/config.php";
+	include_once PATH_FT."account.php";
 	if (isset($_COOKIE['camagru_token']) && $_COOKIE['camagru_token'] != "")
 	{
 		$camagru_token = $_COOKIE['camagru_token'];
@@ -16,14 +17,14 @@
 	}
 ?>
 <html>
-	<link rel="stylesheet" type="text/css" href="./css/camagru.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo PATH_CSS_HTTP.'camagru.css' ?>">
 	<div class="header">
-		<a class="title" href="./">Camagru</a>
+		<a class="title" href="<?php echo PATH_ROOT_HTTP ?>">Camagru</a>
 		<div class="account">
 			<?php if (!isset($account->isLoggedIn()['error'])): ?>
-				<a href="<?php echo PATH_ROOT ?>">Gallery</a> | <a href="<?php echo PATH_VIEW.'montage.php' ?>">Take a picture !</a> | <a href="<?php echo PATH_FT.'logout.php' ?>">Sign off</a>
+				<a href="<?php echo PATH_ROOT_HTTP ?>">Gallery</a> | <a href="<?php echo PATH_VIEW_HTTP.'montage.php' ?>">Take a picture !</a> | <a href="<?php echo PATH_VIEW_HTTP.'logout.php' ?>">Sign off</a>
 			<?php else: ?>
-				<a href="<?php echo PATH_ROOT ?>">Gallery</a> | <a href="<?php echo PATH_VIEW.'login.php#login' ?>">Sign in</a> | <a href="<?php echo PATH_VIEW.'login.php#register' ?>">Register</a>
+				<a href="<?php echo PATH_ROOT_HTTP ?>">Gallery</a> | <a href="<?php echo PATH_VIEW_HTTP.'login.php#login' ?>">Sign in</a> | <a href="<?php echo PATH_VIEW_HTTP.'login.php#register' ?>">Register</a>
 			<?php endif; ?>
 		</div>
 	</div>

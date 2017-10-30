@@ -1,10 +1,11 @@
 <?php
-	include_once "./account.php";
+	include_once $_SERVER['DOCUMENT_ROOT']."/camagru/config/config.php";
+	include_once PATH_FT."account.php";
 	if (isset($account->isLoggedIn()['error']))
 		header("Location: ./");
 	else
 	{
-		include_once "./header.php";
+		include_once PATH_VIEW."header.php";
 
 		$query = $account->getDB()->prepare("SELECT user_id FROM users_sessions WHERE token=:token AND active=1");
 		$query->execute(array(":token" => $_COOKIE['camagru_token']));
@@ -39,9 +40,9 @@
 							</div>
 							<br>
 							<div class="container stickers-container">
-								<img class="sticker" src="./img/stickers/grumpy.png" onclick="javascript:newSticker('grumpy.png')">
-								<img class="sticker" src="./img/stickers/nanachi.png" onclick="javascript:newSticker('nanachi.png')">
-								<img class="sticker" src="./img/stickers/kebab.png" onclick="javascript:newSticker('kebab.png')">
+								<img class="sticker" src="<?php echo PATH_IMG_HTTP.'stickers/grumpy.png' ?>" onclick="javascript:newSticker('grumpy.png')">
+								<img class="sticker" src="<?php echo PATH_IMG_HTTP.'stickers/nanachi.png' ?>" onclick="javascript:newSticker('nanachi.png')">
+								<img class="sticker" src="<?php echo PATH_IMG_HTTP.'stickers/kebab.png' ?>" onclick="javascript:newSticker('kebab.png')">
 							</div>
 						</form>
 					</div>
@@ -54,7 +55,9 @@
 						$year = date("Y", $date);
 						$month = date("m", $date);
 						$day = date("d", $date);
-						$path = "./img/uploads/".$year."/".$month."/".$day."/".$image['id'].".png";
+						$path = PATH_IMG_HTTP."uploads/".$year."/".$month."/".$day."/".$image['id'].".png";
+						if (!@file_get_contents($path))
+							continue;
 						?>
 						<div class="picture-holder">
 							<div class="picture-content">
@@ -77,7 +80,7 @@
 				{
 					const body = 	"action=delete&token=" + encodeURIComponent("<?php echo $_COOKIE['camagru_token'] ?>") + "&id=" + encodeURIComponent(id);
 					console.log(body);
-					fetch("./upload.php", {
+					fetch("<?php echo PATH_FT_HTTP.'upload.php' ?>", {
 						method: "post",
 						credentials: "include",
 						headers: {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
@@ -211,7 +214,8 @@
 			function upload_pic(picture, stickers_data, title)
 			{
 				const body = 	"action=upload&token=" + encodeURIComponent("<?php echo $_COOKIE['camagru_token'] ?>") + "&picture=" + encodeURIComponent(picture) + "&stickers=" + encodeURIComponent(stickers_data) + "&title=" + encodeURIComponent(title);
-				fetch("./upload.php", {
+				console.log(body);
+				fetch("<?php echo PATH_FT_HTTP.'upload.php' ?>", {
 					method: "post",
 					credentials: "include",
 					headers: {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
@@ -265,7 +269,7 @@
 				}
 				if (stickers.filter(Boolean).length < 5)
 				{
-					document.getElementById("stickers-canvas").innerHTML += "<div id='sticker_" + (stickers.length) + "' class='dragme'><img src='./img/stickers/" + src + "' class='sticker' id='sticker_" + stickers.length + "_img'><button class='sticker-del' onclick='delSticker(" + stickers.length + ")'>X</button><input type='range' min='40' max='100' value='50' class='slider' oninput='changeSize(this)'><br><input type='range' min='1' max='360' value='0' class='slider slider-vert' oninput='changeRotation(this)'></div>";
+					document.getElementById("stickers-canvas").innerHTML += "<div id='sticker_" + (stickers.length) + "' class='dragme'><img src='<?php echo PATH_IMG_HTTP.'stickers/' ?>" + src + "' class='sticker' id='sticker_" + stickers.length + "_img'><button class='sticker-del' onclick='delSticker(" + stickers.length + ")'>X</button><input type='range' min='40' max='100' value='50' class='slider' oninput='changeSize(this)'><br><input type='range' min='1' max='360' value='0' class='slider slider-vert' oninput='changeRotation(this)'></div>";
 					stickers.push({x: 0, y: 0, height: document.getElementById("sticker_" + stickers.length).clientHeight, width: 200, rot: 0, src: src});
 				}
 				else

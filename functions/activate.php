@@ -1,4 +1,5 @@
 <?php
+	include_once "../config/config.php";
 	if (isset($_GET['token']) && $_GET['token'] != "")
 	{
 		include_once "./header.php";

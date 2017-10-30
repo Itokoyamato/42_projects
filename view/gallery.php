@@ -39,8 +39,8 @@
 				$year = date("Y", $date);
 				$month = date("m", $date);
 				$day = date("d", $date);
-				$path = "./img/uploads/".$year."/".$month."/".$day."/".$image['id'].".png";
-				if (!file_exists($path))
+				$path = PATH_IMG_HTTP."uploads/".$year."/".$month."/".$day."/".$image['id'].".png";
+				if (!@file_get_contents($path))
 					continue;
 				?>
 				<div id="<?php echo $image['id'] ?>" class="picture-holder">
@@ -50,7 +50,7 @@
 						<p class="title">"<?php echo htmlspecialchars($image['title']) ?>"</p><i>by <p class="username"><?php echo $row['username'] ?></p></i>
 						<br>
 						<button id="<?php echo 'like_'.$image['id'] ?>" class="like" onclick="like(<?php echo $image['id'] ?>)"><?php echo $like ?></button>
-						<button class="comment">💬</button>
+						<button class="comment" onclick="toggle_comments(true, <?php echo $image['id'] ?>)">💬</button>
 					</div>
 				</div>
 				<?php
@@ -60,7 +60,21 @@
 		{
 			info($ex->getMessage(), true);
 		}
-		?><br>
+		?>
+		<div id="comments-outer" class="comments-outer">
+			<div id="comments-container" class="container comments-container">
+				<div id="comments" class="comments">
+					hello
+				</div>
+				<div id="new-comment" class="new-comment">
+					<form method="post" action="javascript:void(0);" onSubmit="return new_comment()">
+						<input type="text" id="comment-text" placeholder="Write a comment ..."/>
+						<input type="submit" value="comment"/>
+					</form>
+				</div>
+			</div>
+		</div>
+		<br>
 		<div class="container pagination">
 			<?php 
 			if ($current_page > 1) { ?>
@@ -88,6 +102,104 @@
 			<?php }
 		?>
 		</div>
+
 	</div>
+	<script>
+		document.getElementById("comments-outer").addEventListener("click",
+			function(e) {
+				if (e.target === this)
+					toggle_comments(false);
+			}
+		);
+		var current_img_id;
+		function new_comment() {
+			var element = document.getElementById("comment-text");
+			if (element.value == "" || !current_img_id)
+				return ;
+			const body = "action=newComment&id=" + encodeURIComponent(current_img_id) + "&comment=" + encodeURIComponent(element.value);
+			fetch("<?php echo PATH_FT_HTTP.'comment.php' ?>", {
+				method: "post",
+				credentials: "include",
+				headers: {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
+				body,
+			})
+			.then(response => {
+				response.text().then(data => {
+					console.log(data);
+					var response = JSON.parse(data);
+					if (response.error)
+						info(response.message, true);
+					else
+					{
+						console.log(response.data);
+					}
+				});
+			});
+		}
+		function toggle_comments(toggle, id) {
+			var element = document.getElementById("comments-outer");
+			element.style.display = (toggle) ? "block" : "none";
+			if (toggle)
+			{
+				document.getElementById("comments").innerHTML = "";
+				const body = "action=getComments&id=" + encodeURIComponent(id);
+				fetch("<?php echo PATH_FT_HTTP.'comment.php' ?>", {
+					method: "post",
+					credentials: "include",
+					headers: {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
+					body,
+				})
+				.then(response => {
+					response.text().then(data => {
+						console.log(data);
+						var response = JSON.parse(data);
+						if (response.error)
+							info(response.message, true);
+						else
+						{
+							console.log(response.data);
+							current_img_id = id;
+							var html = "";
+							for (i in response.data) {
+								var comment = response.data[i];
+								html += "<div class=comment>" +
+											"<div class='user'>" + comment.username + "</div>" +
+											"<div class='contenr'>" + comment.comment + "</div>" +
+										"</div>";
+							}
+							document.getElementById("comments").innerHTML = html;
+						}
+					});
+				});
+			} else {
+				current_img_id = null;
+			}
+		}
+		function like(id) {
+			const body = "action=like&token=" + encodeURIComponent("<?php echo $camagru_token ?>") + "&id=" + encodeURIComponent(id);
+			fetch("<?php echo PATH_FT_HTTP.'image.php' ?>", {
+				method: "post",
+				credentials: "include",
+				headers: {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
+				body,
+			})
+			.then(response => {
+				response.text().then(data => {
+					console.log(data);
+					var response = JSON.parse(data);
+					if (response.error)
+						info(response.message, true);
+					else
+					{
+						// info(response.message);
+						if (response.data[0])
+							document.getElementById("like_" + id).innerHTML = "<font color='red'>♥</font> " + response.data[1];
+						else
+							document.getElementById("like_" + id).innerHTML = "♥ " + response.data[1];
+					}
+				});
+			});
+		}
+	</script>
 	<?php
 ?>
