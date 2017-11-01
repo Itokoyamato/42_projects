@@ -40,17 +40,18 @@
 				$month = date("m", $date);
 				$day = date("d", $date);
 				$path = PATH_IMG_HTTP."uploads/".$year."/".$month."/".$day."/".$image['id'].".png";
+				$like = ($user_id && didUserLike($image['id'], $user_id)['data']) ? "<font color='red'>♥</font> ".count_likes($image['id'])['data'] : "♥ ".count_likes($image['id'])['data'];
 				if (!@file_get_contents($path))
 					continue;
 				?>
 				<div id="<?php echo $image['id'] ?>" class="picture-holder">
 					<div class="picture-content">
-						<img class="picture" src="<?php echo $path ?>"/>
-						<?php $like = ($user_id && didUserLike($image['id'], $user_id)['data']) ? "<font color='red'>♥</font> ".count_likes($image['id'])['data'] : "♥ ".count_likes($image['id'])['data'] ?>
+						<div style="position: relative;">
+							<img class="picture" src="<?php echo $path ?>"/>
+							<button id="<?php echo 'like_'.$image['id'] ?>" class="like" onclick="like(<?php echo $image['id'] ?>)"><?php echo $like ?></button>
+							<button class="comment" onclick="toggle_comments(true, <?php echo $image['id'] ?>)">💬 <?php echo count_comments($image['id'])['data'] ?></button>
+						</div>
 						<p class="title">"<?php echo htmlspecialchars($image['title']) ?>"</p><i>by <p class="username"><?php echo $row['username'] ?></p></i>
-						<br>
-						<button id="<?php echo 'like_'.$image['id'] ?>" class="like" onclick="like(<?php echo $image['id'] ?>)"><?php echo $like ?></button>
-						<button class="comment" onclick="toggle_comments(true, <?php echo $image['id'] ?>)">💬</button>
 					</div>
 				</div>
 				<?php
@@ -64,7 +65,6 @@
 		<div id="comments-outer" class="comments-outer">
 			<div id="comments-container" class="container comments-container">
 				<div id="comments" class="comments">
-					hello
 				</div>
 				<div id="new-comment" class="new-comment">
 					<form method="post" action="javascript:void(0);" onSubmit="return new_comment()">
@@ -73,6 +73,12 @@
 					</form>
 				</div>
 			</div>
+			<div id="comments-container-loading" class="container comments-container loading">
+				<div id="loading" class="loading">
+					<div class="spinner"></div>
+				</div>
+			</div>
+			<button class="exit" onclick="toggle_comments(false)">X</button>
 		</div>
 		<br>
 		<div class="container pagination">
@@ -132,6 +138,7 @@
 					else
 					{
 						console.log(response.data);
+						toggle_comments(true, current_img_id);
 					}
 				});
 			});
@@ -139,8 +146,11 @@
 		function toggle_comments(toggle, id) {
 			var element = document.getElementById("comments-outer");
 			element.style.display = (toggle) ? "block" : "none";
+			document.getElementById("comments-container").style.display = "none";
+			document.getElementById("comments-container-loading").style.display = "inline-block";
 			if (toggle)
 			{
+				document.getElementById("comment-text").value = "";
 				document.getElementById("comments").innerHTML = "";
 				const body = "action=getComments&id=" + encodeURIComponent(id);
 				fetch("<?php echo PATH_FT_HTTP.'comment.php' ?>", {
@@ -163,11 +173,13 @@
 							for (i in response.data) {
 								var comment = response.data[i];
 								html += "<div class=comment>" +
-											"<div class='user'>" + comment.username + "</div>" +
-											"<div class='contenr'>" + comment.comment + "</div>" +
+											"<div class='username'>" + comment.username + ":</div><div class='date'>" + comment.date_added + "</div>" +
+											"<div class='content'>" + comment.comment + "</div>" +
 										"</div>";
 							}
 							document.getElementById("comments").innerHTML = html;
+							document.getElementById("comments-container-loading").style.display = "none";
+							document.getElementById("comments-container").style.display = "block";
 						}
 					});
 				});

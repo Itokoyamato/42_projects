@@ -1,16 +1,16 @@
 <?php
 	include_once $_SERVER['DOCUMENT_ROOT']."/camagru/config/config.php";
 	include_once PATH_FT."account.php";
+
 	if (isset($_POST['action']) && $_POST['action'] != "" && isset($_POST['token']) && $_POST['token'] != "")
 	{
 		$user_id = $account->isLoggedIn($_POST['token']);
 		if (isset($user_id['error']))
 			exit(json_encode(response(false, "[U001] An error occured. Try again, if this issues persists, contact an Administrator.", "")));
 		$user_id = $user_id['data'];
-		if ($_POST['action'] == "upload" && isset($_POST['picture']) && $_POST['picture'] != "" && isset($_POST['stickers']) && $_POST['stickers'] != "" && isset($_POST['title']) && $_POST['title'] != "")
+		if ($_POST['action'] == "upload" && isset($_FILES['file']) && isset($_POST['stickers']) && $_POST['stickers'] != "" && isset($_POST['title']) && $_POST['title'] != "")
 		{
-			$data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $_POST['picture']));
-			$picture = imagecreatefromstring($data);
+			$picture = imagecreatefrompng($_FILES['file']['tmp_name']);
 			if (!$picture)
 				exit(json_encode(response(false, "[U002] The image uploaded, or camera snapshot seem to be invalid. Try again, if this issues persists, contact an Administrator.", "")));
 
@@ -37,8 +37,11 @@
 				imagedestroy($img);
 			}
 
-			$newHeight = imagesy($picture) / (imagesx($picture)/720);
-			$picture = resizePng($picture, 720, $newHeight);
+			$maxSize = 1000;
+			$width = imagesx($picture);
+			$height = imagesy($picture);
+			$max = max($width, $height);
+			$picture = resizePng($picture, $width * $max / $maxSize, $height * $max / $maxSize);
 
 			$date = date("Y/m/d");
 			if (!file_exists(PATH_IMG."uploads/".$date))
@@ -97,7 +100,7 @@
 				$path = PATH_IMG."uploads/".$date."/".$row['id'].".png";
 
 				// Delete in DB
-				$query = $account->getDB()->prepare("DELETE FROM images WHERE id=:id");
+				$query = $account->getDB()->prepare("DELETE FROM images WHERE id=:id; DELETE FROM likes WHERE img_id=:id; DELETE FROM comments WHERE img_id=:id");
 				$query->execute(array(":id" => $_POST['id']));
 				if ($query->rowCount() == 0)
 					exit(json_encode(response(false, "[U010] An error occured. Try again, if this issues persists, contact an Administrator.", "")));
@@ -127,14 +130,15 @@
 		return ($rotated);
 	}
 	function resizePng($im, $dst_width, $dst_height) {
-	    $width = imagesx($im);
-	    $height = imagesy($im);
-	    $newImg = imagecreatetruecolor($dst_width, $dst_height);
-	    imagealphablending($newImg, false);
-	    imagesavealpha($newImg, true);
-	    $transparent = imagecolorallocatealpha($newImg, 255, 255, 255, 127);
-	    imagefilledrectangle($newImg, 0, 0, $width, $height, $transparent);
-	    imagecopyresampled($newImg, $im, 0, 0, 0, 0, $dst_width, $dst_height, $width, $height);
-	    return $newImg;
+		$width = imagesx($im);
+		$height = imagesy($im);
+		$newImg = imagecreatetruecolor($dst_width, $dst_height);
+		imagealphablending($newImg, false);
+		imagesavealpha($newImg, true);
+		$transparent = imagecolorallocatealpha($newImg, 255, 255, 255, 127);
+		imagefilledrectangle($newImg, 0, 0, $width, $height, $transparent);
+		imagecopyresampled($newImg, $im, 0, 0, 0, 0, $dst_width, $dst_height, $width, $height);
+		imagedestroy($im);
+		return $newImg;
 	}
 ?>

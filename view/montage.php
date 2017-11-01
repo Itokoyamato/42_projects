@@ -198,28 +198,32 @@
 				var stickers_send = JSON.parse(JSON.stringify(stickers));
 				var title = document.getElementById("picture-title").value;
 				var picture = canvas.toBlob(function(blob){
+
 					isPictureValid(blob, function(isValid){
 						if (isValid)
 						{
-							var picture = canvas.toDataURL('image/png');
-							upload_pic(picture, JSON.stringify(stickers_send), title);
+							upload_pic(blob, JSON.stringify(stickers_send), title);
 						}
 						else
 							info("The image uploaded, or camera snapshot seem to be invalid. Try again, if this issues persists, contact an Administrator.");
 
 					});
-				}, 'image/png', 1.0);
+					
+				}, 'image', 1.0);
 			}
 
 			function upload_pic(picture, stickers_data, title)
 			{
-				const body = 	"action=upload&token=" + encodeURIComponent("<?php echo $_COOKIE['camagru_token'] ?>") + "&picture=" + encodeURIComponent(picture) + "&stickers=" + encodeURIComponent(stickers_data) + "&title=" + encodeURIComponent(title);
-				console.log(body);
+				var formData = new FormData();
+				formData.append("file", picture);
+				formData.append("action", "upload");
+				formData.append("token", "<?php echo $_COOKIE['camagru_token'] ?>");
+				formData.append("stickers", stickers_data);
+				formData.append("title", title);
 				fetch("<?php echo PATH_FT_HTTP.'upload.php' ?>", {
 					method: "post",
 					credentials: "include",
-					headers: {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"},
-					body,
+					body: formData
 				})
 				.then(response => {
 					response.text().then(data => {

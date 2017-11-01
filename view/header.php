@@ -43,7 +43,9 @@
 				document.getElementById("info").classList.add("error");
 			if (info_timeout)
 				clearTimeout(info_timeout);
+			window.scrollTo(0, 0);
 			info_timeout = setTimeout(function(){document.getElementById("info").classList.remove("show");}, 10000);
+
 		}
 		function escapeRegExp(str) {
 			return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");

@@ -7,7 +7,7 @@
 		{
 			try
 			{
-				$query = $account->getDB()->prepare("SELECT * FROM comments WHERE img_id=:img_id");
+				$query = $account->getDB()->prepare("SELECT * FROM comments WHERE img_id=:img_id ORDER BY comments.date_added DESC");
 				$query->execute(array(":img_id" => $_POST['id']));
 				$rows = $query->fetchAll(PDO::FETCH_ASSOC);
 				if ($query->rowCount() == 0)
