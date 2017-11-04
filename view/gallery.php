@@ -119,6 +119,11 @@
 					toggle_comments(false);
 			}
 		);
+		var pictures = document.getElementsByClassName("picture");
+		for (var i = 0; i < pictures.length; i++)
+		{
+			pictures[i].parentElement.parentElement.style.width = pictures[i].clientWidth - 1;
+		}
 		var current_img_id;
 		function new_comment() {
 			var element = document.getElementById("comment-text");
