@@ -1,11 +1,12 @@
 <?php
-	include_once PATH_CONFIG."config.php";
+	include_once $_SERVER['DOCUMENT_ROOT']."/camagru/config/config.php";
+	include_once PATH_FT."account.php";
 	session_start();
 	$DB_NAME = "camagru";
 	$DB_HOST = "localhost";
 	$DB_DSN = "mysql:dbname={$DB_NAME};host={$DB_HOST};charset=utf8";
 	$DB_USER = "root";
-	$DB_PASSWORD = "password";
+	$DB_PASSWORD = "Jcr321321";
 
 	function init_db()
 	{
@@ -18,7 +19,7 @@
 			return($db);
 		}
 		catch(PDOException $err) {
-			echo $err;
+			echo $err->getMessage();
 			exit();
 		}
 	}

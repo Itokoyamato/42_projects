@@ -58,9 +58,9 @@
 						// Generate session token
 						$token = bin2hex(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
 						$user_id = $row['id'];
-						setcookie("camagru_token", $token, time() + 3600, "/");
+						setcookie("camagru_token", $token, time() + 86400, "/");
 						// Save session token
-						$query = $this->db->prepare("INSERT INTO users_sessions (user_id, token, timestamp_added, timestamp_expire) VALUES (:user_id, :token, NOW(), TIMESTAMPADD(SECOND, 3600, now()))");
+						$query = $this->db->prepare("INSERT INTO users_sessions (user_id, token, timestamp_added, timestamp_expire) VALUES (:user_id, :token, NOW(), TIMESTAMPADD(SECOND, 86400, now()))");
 						$query->execute(array(":user_id" => $user_id, ":token" => $token));
 
 						return (response(true, "You have successfully logged in.", ""));
@@ -128,6 +128,8 @@
 							return (response(false, "Your session token expired.", ""));
 						else
 						{
+							$query = $this->db->prepare("UPDATE users_sessions SET timestamp_expire = TIMESTAMPADD(SECOND, 86400, now()) WHERE token=:token");
+							$query->execute(array(":token" => $token));
 							return (response(true, "You are logged in.", $row['user_id']));
 						}
 					}
@@ -238,11 +240,10 @@
 					// Send email
 					$to = $email;
 					$subject = "Camagru account activation";
-					$message = "Use this link to activate your account: http://itokoyamato.net/camagru/activate.php?token=".$token;
+					$message = "Use this link to activate your account: ".PATH_VIEW_HTTP."activate.php?token=".$token;
 					$headers = "From: no-reply@camagru.itokoyamato.net";
 
 					mail($to, $subject, $message, $headers);
-					// mail($email, "Camagru test activation token", "Activation token: ".$token);
 					return (response(true, "New activation token successfully created.", ""));
 				}
 				else
@@ -321,12 +322,9 @@
 					$query->execute(array(":user_id" => $row['id'], ":token" => $token));
 					if ($query->rowCount() != 0)
 					{
-						// Send email
-						// mail($email, "Camagru test reset token", "Reset token: ".$token);
-						// Send email
 						$to = $email;
 						$subject = "Camagru account password reset";
-						$message = "Use this link to change your password: http://itokoyamato.net/camagru/reset.php?token=".$token;
+						$message = "Use this link to change your password: ".PATH_VIEW_HTTP."reset.php?token=".$token;
 						$headers = "From: no-reply@camagru.itokoyamato.net";
 
 						mail($to, $subject, $message, $headers);

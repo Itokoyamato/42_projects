@@ -1,4 +1,5 @@
 <?php 
+	include_once $_SERVER['DOCUMENT_ROOT']."/camagru/config/config.php";
 	if (isset($_GET['token']) && $_GET['token'] != ""):
 		include_once PATH_VIEW."header.php";
 		$reset = $account->resetPass_check($_GET['token']);
@@ -26,7 +27,7 @@
 					function change_password()
 					{
 						const body = 	"action=reset&token=<?php echo $_GET['token']; ?>&password=" + encodeURIComponent(reset_pwd.value);
-						fetch("./auth.php", {
+						fetch("<?php echo PATH_FT_HTTP.'auth.php' ?>", {
 							method: "post",
 							credentials: "include",
 							headers: {
@@ -43,7 +44,7 @@
 								else
 								{
 									info(response.message);
-									setTimeout(function(){window.location.href = "./";}, 2000);
+									setTimeout(function(){window.location.href = "<?php echo PATH_ROOT_HTTP ?>";}, 2000);
 								}
 							});
 						});
@@ -52,6 +53,6 @@
 			</html>
 		<?php endif;
 	else:
-		header("Location: ./");
+		header("Location: ".PATH_ROOT_HTTP);
 	endif;
 ?>

@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `camagru`
 --
-CREATE DATABASE IF NOT EXISTS `camagru` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `camagru` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `camagru`;
 
 -- --------------------------------------------------------
@@ -89,7 +89,7 @@ CREATE TABLE `users_register_token` (
   `user_id` int(11) NOT NULL,
   `token` varchar(255) NOT NULL,
   `timestamp_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `timestamp_expire` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `timestamp_expire` timestamp NOT NULL,
   `used` int(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -104,7 +104,7 @@ CREATE TABLE `users_reset_password_token` (
   `user_id` int(11) NOT NULL,
   `token` varchar(255) NOT NULL,
   `timestamp_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `timestamp_expire` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `timestamp_expire` timestamp NOT NULL,
   `used` int(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -119,7 +119,7 @@ CREATE TABLE `users_sessions` (
   `user_id` int(11) NOT NULL,
   `token` varchar(255) NOT NULL,
   `timestamp_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `timestamp_expire` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `timestamp_expire` timestamp NOT NULL,
   `active` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

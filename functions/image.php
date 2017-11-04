@@ -1,6 +1,7 @@
 <?php
-	include_once "account.php";
-	include_once "count.php";
+	include_once $_SERVER['DOCUMENT_ROOT']."/camagru/config/config.php";
+	include_once PATH_FT."account.php";
+	include_once PATH_FT."count.php";
 	if (isset($_POST['action']) && $_POST['action'] != "" && isset($_POST['token']) && $_POST['token'] != "")
 	{
 		$user_id = $account->isLoggedIn($_POST['token']);

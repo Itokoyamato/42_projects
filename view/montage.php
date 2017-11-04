@@ -2,7 +2,7 @@
 	include_once $_SERVER['DOCUMENT_ROOT']."/camagru/config/config.php";
 	include_once PATH_FT."account.php";
 	if (isset($account->isLoggedIn()['error']))
-		header("Location: ./");
+		header("Location: ".PATH_ROOT_HTTP);
 	else
 	{
 		include_once PATH_VIEW."header.php";

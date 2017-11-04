@@ -1,5 +1,5 @@
 <?php 
-	include_once "../config/config.php";
+	include_once $_SERVER['DOCUMENT_ROOT']."/camagru/config/config.php";
 	include_once PATH_VIEW."header.php";
 ?>
 <html>
@@ -146,7 +146,7 @@
 					else
 					{
 						info(response.message);
-						setTimeout(function(){window.location.href = "./";}, 2000);
+						setTimeout(function(){window.location.href = "<?php echo PATH_ROOT_HTTP ?>";}, 2000);
 					}
 				});
 			});

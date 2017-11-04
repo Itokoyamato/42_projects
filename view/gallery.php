@@ -1,5 +1,7 @@
 <?php
+	include_once $_SERVER['DOCUMENT_ROOT']."/camagru/config/config.php";
 	include_once PATH_FT."count.php";
+	include_once PATH_VIEW."header.php";
 	try
 	{
 		$query = $account->getDB()->prepare("SELECT COUNT(*) AS count FROM images");
