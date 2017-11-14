@@ -52,6 +52,7 @@
 				</script>
 			</html>
 		<?php endif;
+		include_once PATH_VIEW."footer.php";
 	else:
 		header("Location: ".PATH_ROOT_HTTP);
 	endif;

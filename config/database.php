@@ -6,7 +6,7 @@
 	$DB_HOST = "localhost";
 	$DB_DSN = "mysql:dbname={$DB_NAME};host={$DB_HOST};charset=utf8";
 	$DB_USER = "root";
-	$DB_PASSWORD = "Jcr321321";
+	$DB_PASSWORD = "password";
 
 	function init_db()
 	{

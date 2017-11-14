@@ -15,6 +15,7 @@
 				setTimeout(function(){window.location.href = "<?php echo PATH_ROOT_HTTP ?>";}, 2000);
 			</script>
 		<?php endif;
+		include_once PATH_VIEW."footer.php";
 	}
 	else
 		header("Location: ".PATH_ROOT_HTTP);

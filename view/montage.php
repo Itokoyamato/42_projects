@@ -70,6 +70,7 @@
 				</div>
 			</div>
 		</div>
+		<?php include_once PATH_VIEW."footer.php"; ?>
 		<script>
 			var mode = "none";
 			var stickersEnabled = false;

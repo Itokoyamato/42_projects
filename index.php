@@ -4,4 +4,5 @@
 
 	include_once PATH_VIEW."header.php";
 	include_once PATH_VIEW."gallery.php";
+	include_once PATH_VIEW."footer.php";
 ?>

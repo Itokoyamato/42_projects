@@ -112,6 +112,7 @@
 		</div>
 
 	</div>
+	<?php include_once PATH_VIEW."footer.php"; ?>
 	<script>
 		document.getElementById("comments-outer").addEventListener("click",
 			function(e) {

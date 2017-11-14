@@ -10,7 +10,7 @@
 			<input required type="password" name="login_password" id="login_password" placeholder="Password" />
 			<input type="submit" value="Login"/>
 		</form>
-		<div class="container footer">
+		<div class="container container-footer">
 			<p>Forgot password ? <a href="#reset">Click here</a></p>
 			<p>Don't have account yet ? <a href="#register" onclick="display('register')">Register</a></p>
 		</div>
@@ -31,7 +31,7 @@
 
 			<input type="submit" value="Register"/>
 		</form>
-		<div class="container footer">
+		<div class="container container-footer">
 			<p>Already have an account ? <a href="#login" onclick="display('login')">Login</a></p>
 		</div>
 	</div>
@@ -42,10 +42,11 @@
 				title="Please enter a valid email address." />
 			<input type="submit" value="Reset my password"/>
 		</form>
-		<div class="container footer">
+		<div class="container container-footer">
 			<p>Go back to <a href="#login" onclick="display('login')">Login</a></p>
 		</div>
 	</div>
+	<?php include_once PATH_VIEW."footer.php"; ?>
 	<script>
 		var hash = window.location.hash;
 		if (hash != "")

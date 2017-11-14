@@ -6,7 +6,7 @@
 	define("PATH_VIEW", PATH_ROOT."view/");
 	define("PATH_FT", PATH_ROOT."functions/");
 
-	define("PATH_ROOT_HTTP", "http://localhost/camagru/");
+	define("PATH_ROOT_HTTP", "http://localhost:8080/camagru/");
 	define("PATH_CONFIG_HTTP", PATH_ROOT_HTTP."config/");
 	define("PATH_CSS_HTTP", PATH_ROOT_HTTP."css/");
 	define("PATH_IMG_HTTP", PATH_ROOT_HTTP."img/");
