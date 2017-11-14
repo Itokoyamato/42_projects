@@ -221,10 +221,13 @@
 		var current_page = <?php echo $current_page; ?>;
 		var max_page = <?php echo $total_pages; ?>;
 		window.onscroll = function(ev) {
+			check_scroll();
+		};
+		function check_scroll() {
 			if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
 				load_next_page();
 			}
-		};
+		}
 		var loading = false;
 		function load_next_page() {
 			if (current_page >= max_page || loading)
@@ -250,6 +253,9 @@
 					loading = false;
 				});
 			});
+		}
+		window.onload = function() {
+			check_scroll();
 		}
 	</script>
 	<?php
