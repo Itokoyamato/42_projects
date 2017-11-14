@@ -30,7 +30,7 @@
 	{
 		info($ex->getMessage(), true);
 	}
-	?><div class="gallery"><?php
+	?><div id="gallery" class="gallery"><?php
 		try
 		{
 			foreach ($rows as $key => $image) {
@@ -82,8 +82,8 @@
 			</div>
 			<button class="exit" onclick="toggle_comments(false)">X</button>
 		</div>
-		<br>
-		<div class="container pagination">
+	</div>
+	<div id="pagination" class="container pagination">
 			<?php 
 			if ($current_page > 1) { ?>
 				<a href="./?p=<?php echo ($current_page - 1) ?>">&laquo;</a>
@@ -109,8 +109,6 @@
 				<a href="./?p=<?php echo ($current_page + 1) ?>">&raquo;</a>
 			<?php }
 		?>
-		</div>
-
 	</div>
 	<?php include_once PATH_VIEW."footer.php"; ?>
 	<script>
@@ -217,6 +215,39 @@
 						else
 							document.getElementById("like_" + id).innerHTML = "♥ " + response.data[1];
 					}
+				});
+			});
+		}
+		var current_page = <?php echo $current_page; ?>;
+		var max_page = <?php echo $total_pages; ?>;
+		window.onscroll = function(ev) {
+			if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+				load_next_page();
+			}
+		};
+		var loading = false;
+		function load_next_page() {
+			if (current_page >= max_page || loading)
+				return;
+			loading = true;
+			fetch("<?php echo PATH_VIEW_HTTP.'gallery.php' ?>?p=" + encodeURIComponent(current_page + 1), {
+				method: "get",
+				credentials: "include",
+				headers: {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"}
+			})
+			.then(response => {
+				response.text().then(data => {
+					// console.log(data);
+					var element = document.createElement('div');
+					element.innerHTML = data;
+					for (var i = 0; i < element.getElementsByClassName("gallery").length; i++)
+					{
+						document.getElementById("gallery").innerHTML += (element.getElementsByClassName("gallery")[i].innerHTML);
+					}
+					if (element && element.getElementsByClassName("pagination")[0] && element.getElementsByClassName("pagination")[0].innerHTML)
+						document.getElementById("pagination").innerHTML = (element.getElementsByClassName("pagination")[0].innerHTML);
+					current_page = current_page + 1;
+					loading = false;
 				});
 			});
 		}
