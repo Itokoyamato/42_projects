@@ -37,7 +37,7 @@
 						})
 						.then(response => {
 							response.text().then(data => {
-								console.log(data);
+								// console.log(data);
 								var response = JSON.parse(data);
 								if (response.error)
 									info(response.message, true);

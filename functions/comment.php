@@ -37,22 +37,36 @@
 			$user_id = $user_id['data'];
 			try
 			{
+				// Retrieve author of the comment
+				$query = $account->getDB()->prepare("SELECT * FROM users WHERE id=:user_id");
+				$query->execute(array(":user_id" => $user_id));
+				if ($query->rowCount() == 0)
+					exit(json_encode(response(false, "[C002] An error occured. Try again, if this issues persists, contact an Administrator.", "")));
+				$row_me = $query->fetch(PDO::FETCH_ASSOC);
+
+				// Insert new comment
 				$query = $account->getDB()->prepare("INSERT INTO comments (img_id, user_id, comment) VALUES (:img_id, :user_id, :comment)");
 				$query->execute(array(":img_id" => $_POST['id'], ":user_id" => $user_id, ":comment" => $_POST['comment']));
 				if ($query->rowCount() == 0)
 					exit(json_encode(response(false, "[C002] An error occured. Try again, if this issues persists, contact an Administrator.", "")));
+
+				// Retrieve image data for mail
 				$query = $account->getDB()->prepare("SELECT * FROM images WHERE id=:img_id");
 				$query->execute(array(":img_id" => $_POST['id']));
 				$row_img = $query->fetch(PDO::FETCH_ASSOC);
 				if ($query->rowCount() != 0)
 				{
+
+					// Retrieve image author for mail
 					$query = $account->getDB()->prepare("SELECT * FROM users WHERE id=:user_id");
 					$query->execute(array(":user_id" => $row_img['user_id']));
 					$row_user = $query->fetch(PDO::FETCH_ASSOC);
 					if ($query->rowCount() != 0)
+
+						// Send mail
 						$to = $row_user['email'];
 						$subject = "New comment on one of your pictures !";
-						$message = "Someone commented on your picture '".$row_img['title'];
+						$message = "You received a new comment on your picture '".$row_img['title']."'.\n[".date("Y-m-d H:i:s")."]".$row_me['username']." said:\n".$_POST['comment'];
 						$headers = "From: no-reply@camagru.itokoyamato.net";
 
 						mail($to, $subject, $message, $headers);

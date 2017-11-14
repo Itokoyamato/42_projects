@@ -139,13 +139,13 @@
 			})
 			.then(response => {
 				response.text().then(data => {
-					console.log(data);
+					// console.log(data);
 					var response = JSON.parse(data);
 					if (response.error)
 						info(response.message, true);
 					else
 					{
-						console.log(response.data);
+						// console.log(response.data);
 						toggle_comments(true, current_img_id);
 					}
 				});
@@ -169,13 +169,13 @@
 				})
 				.then(response => {
 					response.text().then(data => {
-						console.log(data);
+						// console.log(data);
 						var response = JSON.parse(data);
 						if (response.error)
 							info(response.message, true);
 						else
 						{
-							console.log(response.data);
+							// console.log(response.data);
 							current_img_id = id;
 							var html = "";
 							for (i in response.data) {
@@ -205,7 +205,7 @@
 			})
 			.then(response => {
 				response.text().then(data => {
-					console.log(data);
+					// console.log(data);
 					var response = JSON.parse(data);
 					if (response.error)
 						info(response.message, true);

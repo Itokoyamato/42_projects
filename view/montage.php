@@ -80,7 +80,7 @@
 				if (confirm("Are you sure you want to delete this image ?"))
 				{
 					const body = 	"action=delete&token=" + encodeURIComponent("<?php echo $_COOKIE['camagru_token'] ?>") + "&id=" + encodeURIComponent(id);
-					console.log(body);
+					// console.log(body);
 					fetch("<?php echo PATH_FT_HTTP.'upload.php' ?>", {
 						method: "post",
 						credentials: "include",
@@ -89,7 +89,7 @@
 					})
 					.then(response => {
 						response.text().then(data => {
-							console.log(data);
+							// console.log(data);
 							var response = JSON.parse(data);
 							if (response.error)
 								info(response.message, true);
@@ -228,7 +228,7 @@
 				})
 				.then(response => {
 					response.text().then(data => {
-						console.log(data);
+						// console.log(data);
 						var response = JSON.parse(data);
 						if (response.error)
 							info(response.message, true);
