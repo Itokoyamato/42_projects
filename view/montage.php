@@ -61,7 +61,7 @@
 						?>
 						<div class="picture-holder">
 							<div class="picture-content">
-								<img class="picture" src="<?php echo $path ?>"/>
+								<a href="<?php echo PATH_VIEW_HTTP.'image.php?id='.$image['id']; ?>"><img class="picture" src="<?php echo $path ?>"/></a>
 								<p class="title">"<?php echo $image['title'] ?>"</p>
 								<input type="button" class="button delete" onclick="del_image(<?php echo $image['id'] ?>);" value="X"/>
 							</div>

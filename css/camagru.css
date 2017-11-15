@@ -36,13 +36,13 @@ html, body {
 	letter-spacing: 3px;
 	height: 100%;
 	width: 100%;
-	margin-left: 50px;
+	margin-left: 2%;
 }
 .account {
 	display: inline-block;
 	float: right;
 	height: 100%;
-	margin-right: 50px;
+	margin-right: 2%;
 	line-height: 50px;
 }
 .account a {
@@ -709,8 +709,47 @@ html, body {
 
 
 /**/
+/* Image display */
+/**/
+
+.image-display {
+	min-width: 300px;
+	max-width: 95%;
+	text-align: center;
+}
+.image-display .picture-holder {
+	max-width: none;
+	max-height: none;
+	margin-bottom: 20px;
+}
+.image-display .picture {
+	max-width: 100%;
+	max-height: none;
+}
+.image-display .picture-content {
+	max-width: none;
+	max-height: none;
+}
+.image-display .comments-container {
+	display: block;
+	left: auto;
+	right: auto;
+	top: auto;
+	bottom: auto;
+	transform: none;
+	margin-bottom: 50px;
+	max-height: none;
+	height: auto;
+}
+.image-display .comments {
+	height: auto;
+}
+
+
+/**/
 /* Animations */
 /**/
+
 .roll-in {
 	-webkit-animation: roll-in-blurred-left 0.65s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
 	animation: roll-in-blurred-left 0.65s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;

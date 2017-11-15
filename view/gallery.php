@@ -49,7 +49,7 @@
 				<div id="<?php echo $image['id'] ?>" class="picture-holder">
 					<div class="picture-content">
 						<div style="position: relative;">
-							<img class="picture" src="<?php echo $path ?>"/>
+							<a href="<?php echo PATH_VIEW_HTTP.'image.php?id='.$image['id']; ?>"><img class="picture" src="<?php echo $path ?>"/></a>
 							<button id="<?php echo 'like_'.$image['id'] ?>" class="like" onclick="like(<?php echo $image['id'] ?>)"><?php echo $like ?></button>
 							<button class="comment" onclick="toggle_comments(true, <?php echo $image['id'] ?>)">💬 <?php echo count_comments($image['id'])['data'] ?></button>
 						</div>
