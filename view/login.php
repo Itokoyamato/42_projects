@@ -8,7 +8,7 @@
 		<form method="post" action="javascript:void(0);" onSubmit="return login()">
 			<input required type="text" name="login_username" id="login_username" placeholder="Username" />
 			<input required type="password" name="login_password" id="login_password" placeholder="Password" />
-			<input type="submit" value="Login"/>
+			<input id="login-submit" type="submit" value="Login"/>
 		</form>
 		<div class="container container-footer">
 			<p>Forgot password ? <a href="#reset">Click here</a></p>
@@ -29,7 +29,7 @@
 
 			<input required type="password" id="register_pwd2" name="Password" placeholder="Comfirm Password" pattern="" title="Fields must match" />
 
-			<input type="submit" value="Register"/>
+			<input id="register-submit" type="submit" value="Register"/>
 		</form>
 		<div class="container container-footer">
 			<p>Already have an account ? <a href="#login" onclick="display('login')">Login</a></p>
@@ -40,7 +40,7 @@
 		<form method="post" action="javascript:void(0);" onSubmit="return reset_password()">
 			<input required type="email" id="reset_email" name="Email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
 				title="Please enter a valid email address." />
-			<input type="submit" value="Reset my password"/>
+			<input id="reset-submit" type="submit" value="Reset my password"/>
 		</form>
 		<div class="container container-footer">
 			<p>Go back to <a href="#login" onclick="display('login')">Login</a></p>
@@ -143,7 +143,9 @@
 					// console.log(data);
 					var response = JSON.parse(data);
 					if (response.error)
+					{
 						info(response.message, true);
+					}
 					else
 					{
 						info(response.message);
@@ -155,6 +157,7 @@
 
 		function register()
 		{
+			document.getElementById("register-submit").disabled = true;
 			const body = 	"action=register&username=" + encodeURIComponent(register_username.value) +
 							"&email=" + encodeURIComponent(register_email.value) +
 							"&password=" + encodeURIComponent(register_password.value);
@@ -171,7 +174,10 @@
 					// console.log(data);
 					var response = JSON.parse(data);
 					if (response.error)
+					{
 						info(response.message, true);
+						setTimeout(function(){document.getElementById("register-submit").disabled = false;}, 2000);
+					}
 					else
 					{
 						info(response.message);
@@ -183,6 +189,7 @@
 
 		function reset_password()
 		{
+			document.getElementById("reset-submit").disabled = true;
 			const body = 	"action=reset&email=" + encodeURIComponent(reset_email.value);
 			fetch("<?php echo PATH_FT_HTTP.'/auth.php' ?>", {
 				method: "post",
@@ -197,7 +204,10 @@
 					// console.log(data);
 					var response = JSON.parse(data);
 					if (response.error)
+					{
 						info(response.message, true);
+						setTimeout(function(){document.getElementById("reset-submit").disabled = false;}, 2000);
+					}
 					else
 					{
 						info(response.message);

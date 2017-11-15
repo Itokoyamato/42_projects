@@ -20,6 +20,8 @@
 				$current_page = $_GET['p'];
 		}
 		$offset = ($current_page - 1) * $per_page;
+		if ($offset < 0)
+			exit();
 		$query = $account->getDB()->prepare("SELECT * FROM images ORDER BY id DESC LIMIT :offset,:per_page");
 		$query->bindParam(":offset", $offset, PDO::PARAM_INT);
 		$query->bindParam(":per_page", $per_page, PDO::PARAM_INT);
@@ -28,7 +30,7 @@
 	}
 	catch(PDOException $ex)
 	{
-		info($ex->getMessage(), true);
+		exit($ex->getMessage());
 	}
 	?><div id="gallery" class="gallery"><?php
 		try
@@ -43,8 +45,6 @@
 				$day = date("d", $date);
 				$path = PATH_IMG_HTTP."uploads/".$year."/".$month."/".$day."/".$image['id'].".png";
 				$like = ($user_id && didUserLike($image['id'], $user_id)['data']) ? "<font color='red'>♥</font> ".count_likes($image['id'])['data'] : "♥ ".count_likes($image['id'])['data'];
-				if (!@file_get_contents($path))
-					continue;
 				?>
 				<div id="<?php echo $image['id'] ?>" class="picture-holder">
 					<div class="picture-content">
@@ -61,7 +61,7 @@
 		}
 		catch(PDOException $ex)
 		{
-			info($ex->getMessage(), true);
+			exit($ex->getMessage());
 		}
 		?>
 		<div id="comments-outer" class="comments-outer">

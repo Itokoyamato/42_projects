@@ -56,7 +56,7 @@
 						if ($row["active"] != 1)
 							return (response(false, "Your account is not yet activated. Check your emails for an activation link.", ""));
 						// Generate session token
-						$token = bin2hex(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+						$token = bin2hex(random_bytes(64));
 						$user_id = $row['id'];
 						setcookie("camagru_token", $token, time() + 86400, "/");
 						// Save session token
@@ -212,7 +212,7 @@
 					// Generate activation token
 					$activation = $this->new_activation_token($this->db->lastInsertId(), $email);
 					if (isset($activation['error']))
-						return (response(false, "You have successfully registered. ".$validation['message'], ""));
+						return (response(false, "You have successfully registered. ".$activation['message'], ""));
 					else
 						return (response(true, "You have successfully registered.", ""));
 				}
@@ -232,7 +232,7 @@
 			try
 			{
 				// Generate token and save it
-				$token = bin2hex(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+				$token = bin2hex(random_bytes(64));
 				$query = $this->db->prepare("INSERT INTO users_register_token (user_id, token, timestamp_added, timestamp_expire) VALUES (:user_id, :token, NOW(), TIMESTAMPADD(SECOND, 3600, now()))");
 				$query->execute(array(":user_id" => $user_id, "token" => $token));
 				if ($query->rowCount() != 0)
@@ -317,7 +317,7 @@
 				if ($query->rowCount() > 0)
 				{
 					// Generate token and save it
-					$token = bin2hex(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+					$token = bin2hex(random_bytes(64));
 					$query = $this->db->prepare("INSERT INTO users_reset_password_token (user_id, token, timestamp_added, timestamp_expire) VALUES (:user_id, :token, NOW(), TIMESTAMPADD(SECOND, 3600, now()))");
 					$query->execute(array(":user_id" => $row['id'], ":token" => $token));
 					if ($query->rowCount() != 0)

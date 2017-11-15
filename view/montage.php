@@ -41,8 +41,10 @@
 							<br>
 							<div class="container stickers-container">
 								<img class="sticker" src="<?php echo PATH_IMG_HTTP.'stickers/grumpy.png' ?>" onclick="javascript:newSticker('grumpy.png')">
-								<img class="sticker" src="<?php echo PATH_IMG_HTTP.'stickers/nanachi.png' ?>" onclick="javascript:newSticker('nanachi.png')">
-								<img class="sticker" src="<?php echo PATH_IMG_HTTP.'stickers/kebab.png' ?>" onclick="javascript:newSticker('kebab.png')">
+								<img class="sticker" src="<?php echo PATH_IMG_HTTP.'stickers/kinpachi.png' ?>" onclick="javascript:newSticker('kinpachi.png')">
+								<img class="sticker" src="<?php echo PATH_IMG_HTTP.'stickers/panda.png' ?>" onclick="javascript:newSticker('panda.png')">
+								<img class="sticker" src="<?php echo PATH_IMG_HTTP.'stickers/star.png' ?>" onclick="javascript:newSticker('star.png')">
+								<img class="sticker" src="<?php echo PATH_IMG_HTTP.'stickers/unicorn.png' ?>" onclick="javascript:newSticker('unicorn.png')">
 							</div>
 						</form>
 					</div>
@@ -56,8 +58,6 @@
 						$month = date("m", $date);
 						$day = date("d", $date);
 						$path = PATH_IMG_HTTP."uploads/".$year."/".$month."/".$day."/".$image['id'].".png";
-						if (!@file_get_contents($path))
-							continue;
 						?>
 						<div class="picture-holder">
 							<div class="picture-content">
@@ -235,6 +235,7 @@
 						else
 						{
 							info(response.message);
+							setTimeout(function(){window.location.href = "<?php echo PATH_VIEW_HTTP.'montage.php' ?>";}, 1000);
 						}
 					});
 				});

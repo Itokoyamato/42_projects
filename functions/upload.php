@@ -2,6 +2,7 @@
 	include_once $_SERVER['DOCUMENT_ROOT']."/camagru/config/config.php";
 	include_once PATH_FT."account.php";
 
+	// exit(json_encode(response(true, "hello", "")));
 	if (isset($_POST['action']) && $_POST['action'] != "" && isset($_POST['token']) && $_POST['token'] != "")
 	{
 		$user_id = $account->isLoggedIn($_POST['token']);

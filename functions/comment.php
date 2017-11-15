@@ -66,7 +66,7 @@
 						// Send mail
 						$to = $row_user['email'];
 						$subject = "New comment on one of your pictures !";
-						$message = "You received a new comment on your picture '".$row_img['title']."'.\n[".date("Y-m-d H:i:s")."]".$row_me['username']." said:\n".$_POST['comment'];
+						$message = "You received a new comment on your picture '".$row_img['title']."'.\n[".date("Y-m-d H:i:s")."] ".$row_me['username']." said:\n".$_POST['comment']."\n\nLink to your picture: ".PATH_VIEW_HTTP."image.php?id=".$_POST['id'];
 						$headers = "From: no-reply@camagru.itokoyamato.net";
 
 						mail($to, $subject, $message, $headers);

@@ -33,19 +33,24 @@
 	</div>
 	<script>
 		var info_timeout;
+		var info_timeout2;
 		function info(msg, error)
 		{
-			document.getElementById("info-content").innerHTML = msg;
-			document.getElementById("info").classList.add("show");
-			if (!error)
-				document.getElementById("info").classList.remove("error");
-			else
-				document.getElementById("info").classList.add("error");
+			document.getElementById("info").classList.remove("show");
 			if (info_timeout)
 				clearTimeout(info_timeout);
-			window.scrollTo(0, 0);
-			info_timeout = setTimeout(function(){document.getElementById("info").classList.remove("show");}, 10000);
-
+			info_timeout = setTimeout(function(){
+				document.getElementById("info-content").innerHTML = msg;
+				document.getElementById("info").classList.add("show");
+				if (!error)
+					document.getElementById("info").classList.remove("error");
+				else
+					document.getElementById("info").classList.add("error");
+				if (info_timeout2)
+					clearTimeout(info_timeout2);
+				window.scrollTo(0, 0);
+				info_timeout2 = setTimeout(function(){document.getElementById("info").classList.remove("show");}, 10000);
+			}, 200);
 		}
 		function escapeRegExp(str) {
 			return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
