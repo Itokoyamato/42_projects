@@ -697,7 +697,7 @@ html, body {
 	margin-top: 30px;
 	background: #272727;
 	border-top: groove 2px #5a5a5a;
-	position: absolute;
+	position: fixed;
 	right: 0;
 	bottom: 0;
 	left: 0;
