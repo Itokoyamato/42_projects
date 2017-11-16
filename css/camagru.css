@@ -120,6 +120,9 @@ html, body {
 	margin: auto;
 	box-shadow: 0px 0px 10px #000;
 }
+.account-container {
+	height: 100%;
+}
 #reset-container {
 	width: 300px;
 	position: absolute;

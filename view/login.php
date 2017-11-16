@@ -3,50 +3,52 @@
 	include_once PATH_VIEW."header.php";
 ?>
 <html>
-	<div class="container" id="login-container">
-		<div class="container title">Login</div>
-		<form method="post" action="javascript:void(0);" onSubmit="return login()">
-			<input required type="text" name="login_username" id="login_username" placeholder="Username" />
-			<input required type="password" name="login_password" id="login_password" placeholder="Password" />
-			<input id="login-submit" type="submit" value="Login"/>
-		</form>
-		<div class="container container-footer">
-			<p>Forgot password ? <a href="#reset">Click here</a></p>
-			<p>Don't have account yet ? <a href="#register" onclick="display('register')">Register</a></p>
+	<div class="account-container">
+		<div class="container" id="login-container">
+			<div class="container title">Login</div>
+			<form method="post" action="javascript:void(0);" onSubmit="return login()">
+				<input required type="text" name="login_username" id="login_username" placeholder="Username" />
+				<input required type="password" name="login_password" id="login_password" placeholder="Password" />
+				<input id="login-submit" type="submit" value="Login"/>
+			</form>
+			<div class="container container-footer">
+				<p>Forgot password ? <a href="#reset">Click here</a></p>
+				<p>Don't have account yet ? <a href="#register" onclick="display('register')">Register</a></p>
+			</div>
 		</div>
-	</div>
-	<div class="container" id="register-container">
-		<div class="container title">Register</div>
-		<form method="post" action="javascript:void(0);" onSubmit="return register()">
-			<input required type="text" id="register_username" name="Username" placeholder="Username" pattern="[a-zA-Z0-9]{5,15}"
-				title="Username must:&#10;- be at least 5 characters long&#10;- contain only alphanumeric characters.">
+		<div class="container" id="register-container">
+			<div class="container title">Register</div>
+			<form method="post" action="javascript:void(0);" onSubmit="return register()">
+				<input required type="text" id="register_username" name="Username" placeholder="Username" pattern="[a-zA-Z0-9]{5,15}"
+					title="Username must:&#10;- be at least 5 characters long&#10;- contain only alphanumeric characters.">
 
-			<input required type="email" id="register_email" name="Email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-				title="Please enter a valid email address." />
+				<input required type="email" id="register_email" name="Email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+					title="Please enter a valid email address." />
 
-			<input required type="password" id="register_pwd" name="Password" placeholder="Password" oninput="form.register_pwd2.pattern = escapeRegExp(this.value)"
-				pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" title="Password must:&#10;- be at least 7 characters long&#10;- Contain one uppercase letter&#10;- Contain one lowercase letter&#10;- Contain one number"/>
+				<input required type="password" id="register_pwd" name="Password" placeholder="Password" oninput="form.register_pwd2.pattern = escapeRegExp(this.value)"
+					pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" title="Password must:&#10;- be at least 7 characters long&#10;- Contain one uppercase letter&#10;- Contain one lowercase letter&#10;- Contain one number"/>
 
-			<input required type="password" id="register_pwd2" name="Password" placeholder="Comfirm Password" pattern="" title="Fields must match" />
+				<input required type="password" id="register_pwd2" name="Password" placeholder="Comfirm Password" pattern="" title="Fields must match" />
 
-			<input id="register-submit" type="submit" value="Register"/>
-		</form>
-		<div class="container container-footer">
-			<p>Already have an account ? <a href="#login" onclick="display('login')">Login</a></p>
+				<input id="register-submit" type="submit" value="Register"/>
+			</form>
+			<div class="container container-footer">
+				<p>Already have an account ? <a href="#login" onclick="display('login')">Login</a></p>
+			</div>
 		</div>
-	</div>
-	<div class="container" id="reset-container">
-		<div class="container title">Reset</div>
-		<form method="post" action="javascript:void(0);" onSubmit="return reset_password()">
-			<input required type="email" id="reset_email" name="Email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-				title="Please enter a valid email address." />
-			<input id="reset-submit" type="submit" value="Reset my password"/>
-		</form>
-		<div class="container container-footer">
-			<p>Go back to <a href="#login" onclick="display('login')">Login</a></p>
+		<div class="container" id="reset-container">
+			<div class="container title">Reset</div>
+			<form method="post" action="javascript:void(0);" onSubmit="return reset_password()">
+				<input required type="email" id="reset_email" name="Email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+					title="Please enter a valid email address." />
+				<input id="reset-submit" type="submit" value="Reset my password"/>
+			</form>
+			<div class="container container-footer">
+				<p>Go back to <a href="#login" onclick="display('login')">Login</a></p>
+			</div>
 		</div>
+		<?php include_once PATH_VIEW."footer.php"; ?>
 	</div>
-	<?php include_once PATH_VIEW."footer.php"; ?>
 	<script>
 		var hash = window.location.hash;
 		if (hash != "")
