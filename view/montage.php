@@ -221,7 +221,6 @@
 
 			function upload_pic(picture, stickers_data, title)
 			{
-				console.log(stickers_data);
 				var formData = new FormData();
 				formData.append("file", picture);
 				formData.append("action", "upload");
