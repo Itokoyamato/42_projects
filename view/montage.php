@@ -96,6 +96,7 @@
 							else
 							{
 								info(response.message);
+								setTimeout(function(){window.location.href = "<?php echo PATH_VIEW_HTTP.'montage.php' ?>";}, 1000);
 							}
 						});
 					});
