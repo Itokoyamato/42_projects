@@ -230,7 +230,12 @@
 				.then(response => {
 					response.text().then(data => {
 						// console.log(data);
-						var response = JSON.parse(data);
+						try {
+							response = JSON.parse(data);
+						} catch(e) {
+							info(e);
+							return;
+						}
 						if (response.error)
 							info(response.message, true);
 						else
