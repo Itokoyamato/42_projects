@@ -197,7 +197,12 @@
 				canvas.height = height;
 				context.drawImage(image, 0, 0, width, height);
 
-				var stickers_send = JSON.parse(JSON.stringify(stickers));
+				var stickers_data = [];
+				for (var i = 0; i < stickers.length; i++) {
+					if (stickers[i])
+						stickers_data.push(stickers[i]);
+				}
+				var stickers_send = JSON.parse(JSON.stringify(stickers_data));
 				var title = document.getElementById("picture-title").value;
 				var picture = canvas.toBlob(function(blob){
 
@@ -216,6 +221,7 @@
 
 			function upload_pic(picture, stickers_data, title)
 			{
+				console.log(stickers_data);
 				var formData = new FormData();
 				formData.append("file", picture);
 				formData.append("action", "upload");

@@ -9,17 +9,19 @@
 			</script>
 		<?php else: ?>
 			<html>
-				<div class="container roll-in" id="reset-container">
-					<div class="container title">Reset</div>
-					<form method="post" action="javascript:void(0);" onSubmit="return change_password()">
-						<input required type="password" id="reset_pwd" name="Password" placeholder="Password"
-							oninput="form.reset_pwd2.pattern = escapeRegExp(this.value)"
-							pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" title="Password must:&#10;- be at least 7 characters long&#10;- Contain one uppercase letter&#10;- Contain one lowercase letter&#10;- Contain one number"/>
+				<div class="account-container">
+					<div class="container roll-in" id="reset-container">
+						<div class="container title">Reset</div>
+						<form method="post" action="javascript:void(0);" onSubmit="return change_password()">
+							<input required type="password" id="reset_pwd" name="Password" placeholder="Password"
+								oninput="form.reset_pwd2.pattern = escapeRegExp(this.value)"
+								pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" title="Password must:&#10;- be at least 7 characters long&#10;- Contain one uppercase letter&#10;- Contain one lowercase letter&#10;- Contain one number"/>
 
-						<input required type="password" id="reset_pwd2" name="Password" placeholder="Comfirm Password" pattern="" title="Fields must match" />
-						
-						<input type="submit" value="Change password"/>
-					</form>
+							<input required type="password" id="reset_pwd2" name="Password" placeholder="Comfirm Password" pattern="" title="Fields must match" />
+							
+							<input type="submit" value="Change password"/>
+						</form>
+					</div>
 				</div>
 				<script>
 					const reset_pwd = document.getElementById("reset_pwd");
