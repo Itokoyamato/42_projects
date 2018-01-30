@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+         #
+#    By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/09 15:39:04 by dthuilli          #+#    #+#              #
-#    Updated: 2018/01/30 14:33:17 by dthuilli         ###   ########.fr        #
+#    Updated: 2018/01/30 16:26:06 by llaporte         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ NAME	= lem_in
 SRC		=	main.c \
 			parser.c \
 			parser_rooms.c \
-			parser_tunnels.c
+			parser_tunnels.c\
+			solver.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 

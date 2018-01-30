@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:26:26 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 15:18:48 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/01/30 16:38:18 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct	s_point
 
 typedef struct s_room	t_room;
 typedef struct s_tunnel	t_tunnel;
+typedef struct s_ant	t_ant;
 
 struct			s_tunnel
 {
@@ -44,6 +45,13 @@ struct			s_room
 	t_room		*next;
 	t_tunnel	*tunnels;
 	t_tunnel	*tunnels_start;
+};
+
+struct			s_ant
+{
+	int			id;
+	t_room		*current_room;
+	t_ant		*next;
 };
 
 typedef struct	s_lemin
@@ -68,6 +76,7 @@ int				is_tunnel_valid(t_lemin *lem, char *line);
 void			*new_tunnel(t_tunnel **tunnels, t_room *room);
 void			parse_debug(t_lemin *lem);
 void			save_line(t_lemin *lem, char *l);
+void			solver(t_lemin *lem);
 
 void			err(char *err);
 void			*s_malloc(size_t size);
