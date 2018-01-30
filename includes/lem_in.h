@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:26:26 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/29 19:00:27 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/30 12:59:24 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,22 @@
 /*
 **** Struct
 */
-typedef struct	room	t_room;
-typedef struct	tunnel	t_tunnel;
+typedef struct	s_point
+{
+	int		x;
+	int		y;
+}				t_point;
 
-typedef struct	tunnel
+typedef struct s_room	t_room;
+typedef struct s_tunnel	t_tunnel;
+
+struct			s_tunnel
 {
 	t_room		*room;
 	t_tunnel	*next;
-}				t_tunnel;
+};
 
-typedef struct	room
+struct			s_room
 {
 	int			x;
 	int			y;
@@ -38,14 +44,30 @@ typedef struct	room
 	t_room		*next;
 	t_tunnel	*tunnels;
 	t_tunnel	*tunnels_start;
-}				t_room;
+};
 
-typedef struct	lemin
+typedef struct	s_lemin
 {
 	t_room		*start_room;
 	t_room		*end_room;
 	t_room		*rooms;
 	t_room		*rooms_start;
+	int			ants_nb;
 }				t_lemin;
+
+/*
+**** Functions
+*/
+void			parse_data(t_lemin *lem);
+int				parse_rooms(t_lemin *lem, char *line, int *start_end);
+int				is_room_valid(char *line);
+void			*new_room(t_room **rooms, char *line);
+int				parse_tunnels(t_lemin *lem, char *line);
+int				is_tunnel_valid(t_lemin *lem, char *line);
+void			*new_tunnel(t_tunnel **tunnels, t_room *room);
+void			parse_debug(t_lemin *lem);
+
+int				err(char *err);
+void			*s_malloc(size_t size);
 
 #endif

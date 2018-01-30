@@ -6,14 +6,16 @@
 #    By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/09 15:39:04 by dthuilli          #+#    #+#              #
-#    Updated: 2018/01/29 11:29:46 by dthuilli         ###   ########.fr        #
+#    Updated: 2018/01/30 13:06:07 by dthuilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= lem_in
 
 # src / obj files
-SRC		=	main.c
+SRC		=	main.c \
+			parser_rooms.c \
+			parser_tunnels.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
@@ -55,7 +57,7 @@ $(FT_LIB):
 
 $(NAME): $(OBJ)
 	@$(CC) $(OBJ) $(FT_LNK) -lm -o $(NAME)
-	@echo "$(OK_COLOR)Done compiling Filler ✓ $(NO_COLOR)"
+	@echo "$(OK_COLOR)Done compiling lem_in ✓ $(NO_COLOR)"
 
 clean:
 	@rm -rf $(OBJDIR)
