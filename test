@@ -1,25 +1,10 @@
-21
+3
 ##start
-1 23 3
-2 23 1
-#commentaire
-3 4 3
-frite 16 5
-5 9 3
-6 1 5
-elephant 4 8
+0 1 0
 ##end
-0 9 5
-0-frite
-0-6
-1-3
-frite-3
-5-2
-3-5
-#autre commentaire
-frite-2
-2-1
-elephant-6
-elephant-2
-elephant-frite
-6-5
+1 5 0
+2 9 0
+3 13 0
+0-2
+2-3
+3-1
