@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 14:29:30 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 15:18:53 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/01/30 15:33:08 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	parse_data(t_lemin *lem)
 	int		start_end;
 
 	start_end = 0;
-	if (get_next_line(0, &l) <= 0 || !ft_strcmp(l, "") || !ft_isstrdigit(l)
+	if (ft_gnl(0, &l) <= 0 || !ft_strcmp(l, "") || !ft_isstrdigit(l)
 		|| (lem->ants_nb = ft_atoi(l)) <= 0)
 		err("Error: invalid ants count.");
 	save_line(lem, l);
@@ -75,8 +75,6 @@ void	parse_data(t_lemin *lem)
 			break ;
 		free(l);
 	}
-	if (l[0])
-		free(l);
 	if (!lem->start_room || !lem->end_room || !lem->rooms || !lem->rooms->next)
 		err("Error: Invalid anthill.");
 }

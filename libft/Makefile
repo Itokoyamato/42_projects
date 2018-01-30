@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+         #
+#    By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/05 12:47:36 by llaporte          #+#    #+#              #
-#    Updated: 2017/12/13 16:47:59 by llaporte         ###   ########.fr        #
+#    Updated: 2018/01/30 15:29:19 by dthuilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ STD = ft_abs.c \
 		ft_isalpha.c \
 		ft_isascii.c \
 		ft_isdigit.c \
+		ft_isstrdigit.c \
 		ft_islower.c \
 		ft_isprint.c \
 		ft_isspace.c \
