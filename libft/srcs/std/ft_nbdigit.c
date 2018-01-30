@@ -1,40 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_nbdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/29 11:24:00 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 15:08:39 by llaporte         ###   ########.fr       */
+/*   Created: 2016/11/11 18:18:34 by llaporte          #+#    #+#             */
+/*   Updated: 2017/03/10 15:01:48 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+/*
+**	Hispeed int nb digit finder
+*/
 
-void	err(char *err)
+#include "libft.h"
+
+int		ft_nbdigit(int n)
 {
-	ft_putstr_fd(err, 1);
-	exit(1);
-}
+	unsigned int nb;
 
-void	*s_malloc(size_t size)
-{
-	void	*var;
-
-	if ((var = ft_memalloc(size)) == NULL)
-		exit(0);
-	return (var);
-}
-
-int		main(void)
-{
-	t_lemin	*lem;
-
-	lem = (t_lemin *)s_malloc(sizeof(t_lemin));
-	lem->input_str = "";
-	lem->rooms = NULL;
-	parse_data(lem);
-	parse_debug(lem);
-	return (0);
+	nb = n;
+	if (nb < 10)
+		return (1);
+	if (nb < 100)
+		return (2);
+	if (nb < 1000)
+		return (3);
+	if (nb < 10000)
+		return (4);
+	if (nb < 100000)
+		return (5);
+	if (nb < 1000000)
+		return (6);
+	if (nb < 10000000)
+		return (7);
+	if (nb < 100000000)
+		return (8);
+	if (nb < 1000000000)
+		return (9);
+	return (10);
 }

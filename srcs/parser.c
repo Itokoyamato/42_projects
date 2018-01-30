@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 14:29:30 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 14:35:23 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/30 15:09:38 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ void	parse_data(t_lemin *lem)
 	int		start_end;
 
 	start_end = 0;
-	if (get_next_line(0, &l) <= 0 || !ft_strcmp(l, "") || !ft_isstrdigit(l))
+	if (ft_gnl(0, &l) <= 0 || !ft_strcmp(l, "") || !ft_isstrdigit(l))
 		err("Error: invalid ants count.");
 	lem->ants_nb = ft_atoi(l);
 	save_line(lem, l);
 	free(l);
-	while (get_next_line(0, &l) > 0 && ft_strcmp(l, ""))
+	while (ft_gnl(0, &l) > 0 && ft_strcmp(l, ""))
 	{
 		save_line(lem, l);
 		if (!ft_strstr(l, "-"))

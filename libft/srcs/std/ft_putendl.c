@@ -1,40 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putendl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/29 11:24:00 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 15:08:39 by llaporte         ###   ########.fr       */
+/*   Created: 2016/11/07 14:37:14 by llaporte          #+#    #+#             */
+/*   Updated: 2016/11/12 14:45:34 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-void	err(char *err)
+/*
+**	On putendl_fd sur la sortie 1... ¯\_(ツ)_/¯
+*/
+
+void	ft_putendl(char *str)
 {
-	ft_putstr_fd(err, 1);
-	exit(1);
-}
-
-void	*s_malloc(size_t size)
-{
-	void	*var;
-
-	if ((var = ft_memalloc(size)) == NULL)
-		exit(0);
-	return (var);
-}
-
-int		main(void)
-{
-	t_lemin	*lem;
-
-	lem = (t_lemin *)s_malloc(sizeof(t_lemin));
-	lem->input_str = "";
-	lem->rooms = NULL;
-	parse_data(lem);
-	parse_debug(lem);
-	return (0);
+	ft_putendl_fd(str, 1);
 }

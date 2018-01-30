@@ -1,40 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/29 11:24:00 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 15:08:39 by llaporte         ###   ########.fr       */
+/*   Created: 2016/11/09 18:14:54 by llaporte          #+#    #+#             */
+/*   Updated: 2017/01/09 14:33:38 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-void	err(char *err)
+char	*ft_strrchr(const char *s, int c)
 {
-	ft_putstr_fd(err, 1);
-	exit(1);
-}
+	size_t	i;
 
-void	*s_malloc(size_t size)
-{
-	void	*var;
-
-	if ((var = ft_memalloc(size)) == NULL)
-		exit(0);
-	return (var);
-}
-
-int		main(void)
-{
-	t_lemin	*lem;
-
-	lem = (t_lemin *)s_malloc(sizeof(t_lemin));
-	lem->input_str = "";
-	lem->rooms = NULL;
-	parse_data(lem);
-	parse_debug(lem);
+	i = 0;
+	while (s[i])
+		++i;
+	if (s[i] == (char)c)
+		return ((char *)s + i);
+	if (!s[i - 1])
+		return (0);
+	--i;
+	while (i && s[i] && s[i] != (char)c)
+		--i;
+	if (s[i] == (char)c)
+		return ((char *)s + i);
 	return (0);
 }

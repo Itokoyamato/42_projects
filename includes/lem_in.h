@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:26:26 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 14:33:10 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/30 15:08:05 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void			*new_tunnel(t_tunnel **tunnels, t_room *room);
 void			parse_debug(t_lemin *lem);
 void			save_line(t_lemin *lem, char *l);
 
-int				err(char *err);
+void			err(char *err);
 void			*s_malloc(size_t size);
 
 #endif

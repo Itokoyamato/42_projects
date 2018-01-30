@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/29 11:24:00 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 15:08:39 by llaporte         ###   ########.fr       */
+/*   Created: 2016/11/12 16:19:42 by llaporte          #+#    #+#             */
+/*   Updated: 2016/11/12 16:30:25 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-void	err(char *err)
+t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	ft_putstr_fd(err, 1);
-	exit(1);
-}
+	t_list	*temp;
+	t_list	*result;
+	t_list	*anchor;
 
-void	*s_malloc(size_t size)
-{
-	void	*var;
-
-	if ((var = ft_memalloc(size)) == NULL)
-		exit(0);
-	return (var);
-}
-
-int		main(void)
-{
-	t_lemin	*lem;
-
-	lem = (t_lemin *)s_malloc(sizeof(t_lemin));
-	lem->input_str = "";
-	lem->rooms = NULL;
-	parse_data(lem);
-	parse_debug(lem);
-	return (0);
+	if (!lst)
+		return (0);
+	temp = lst;
+	result = f(temp);
+	anchor = result;
+	while (temp->next)
+	{
+		temp = temp->next;
+		result->next = f(temp);
+		result = result->next;
+	}
+	return (anchor);
 }

@@ -1,40 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/29 11:24:00 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 15:08:39 by llaporte         ###   ########.fr       */
+/*   Created: 2016/11/10 11:06:23 by llaporte          #+#    #+#             */
+/*   Updated: 2016/11/10 11:48:22 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-void	err(char *err)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	ft_putstr_fd(err, 1);
-	exit(1);
-}
+	size_t	i;
+	size_t	j;
 
-void	*s_malloc(size_t size)
-{
-	void	*var;
-
-	if ((var = ft_memalloc(size)) == NULL)
-		exit(0);
-	return (var);
-}
-
-int		main(void)
-{
-	t_lemin	*lem;
-
-	lem = (t_lemin *)s_malloc(sizeof(t_lemin));
-	lem->input_str = "";
-	lem->rooms = NULL;
-	parse_data(lem);
-	parse_debug(lem);
+	i = 0;
+	if (little[0] == '\0')
+		return ((char *)(big));
+	while (big[i] && i < len)
+	{
+		j = 0;
+		if (big[i] == little[0])
+			while (big[i + j] && little[j] && big[i + j] == little[j]
+					&& (i + j) < len)
+				++j;
+		if (little[j] == '\0')
+			return ((char *)(big + i));
+		++i;
+	}
 	return (0);
 }

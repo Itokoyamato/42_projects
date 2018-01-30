@@ -1,40 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/29 11:24:00 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 15:08:39 by llaporte         ###   ########.fr       */
+/*   Created: 2016/11/08 11:02:44 by llaporte          #+#    #+#             */
+/*   Updated: 2016/11/10 11:48:46 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-void	err(char *err)
+char	*ft_strtrim(char const *s)
 {
-	ft_putstr_fd(err, 1);
-	exit(1);
-}
+	char	*result;
+	int		size;
+	int		j;
 
-void	*s_malloc(size_t size)
-{
-	void	*var;
-
-	if ((var = ft_memalloc(size)) == NULL)
-		exit(0);
-	return (var);
-}
-
-int		main(void)
-{
-	t_lemin	*lem;
-
-	lem = (t_lemin *)s_malloc(sizeof(t_lemin));
-	lem->input_str = "";
-	lem->rooms = NULL;
-	parse_data(lem);
-	parse_debug(lem);
+	if (s)
+	{
+		while (*s == ' ' || *s == '\n' || *s == '\t')
+			s++;
+		size = 0;
+		while (s[size + 1])
+			++size;
+		while (s[size] == ' ' || s[size] == '\n' || s[size] == '\t')
+			size--;
+		size++;
+		result = ft_strnew(size);
+		if (result)
+		{
+			j = -1;
+			while (++j < size)
+				result[j] = s[j];
+			return (result);
+		}
+	}
 	return (0);
 }

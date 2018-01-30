@@ -1,40 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_wstrlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/29 11:24:00 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 15:08:39 by llaporte         ###   ########.fr       */
+/*   Created: 2017/03/29 00:29:45 by technowix         #+#    #+#             */
+/*   Updated: 2017/05/09 17:17:15 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-void	err(char *err)
+size_t	ft_wstrlen(wchar_t const *str)
 {
-	ft_putstr_fd(err, 1);
-	exit(1);
-}
+	size_t	size;
+	size_t	i;
 
-void	*s_malloc(size_t size)
-{
-	void	*var;
-
-	if ((var = ft_memalloc(size)) == NULL)
-		exit(0);
-	return (var);
-}
-
-int		main(void)
-{
-	t_lemin	*lem;
-
-	lem = (t_lemin *)s_malloc(sizeof(t_lemin));
-	lem->input_str = "";
-	lem->rooms = NULL;
-	parse_data(lem);
-	parse_debug(lem);
-	return (0);
+	i = 0;
+	size = 0;
+	while (str[i])
+	{
+		if (str[i] <= 0x7F)
+			size++;
+		else if (str[i] <= 0x7FF)
+			size += 2;
+		else if (str[i] <= 0xFFFF)
+			size += 3;
+		else if (str[i] <= 0x10FFFF)
+			size += 4;
+		i++;
+	}
+	return (size);
 }

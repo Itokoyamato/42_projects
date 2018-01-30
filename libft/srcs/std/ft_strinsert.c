@@ -1,40 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strinsert.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/29 11:24:00 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 15:08:39 by llaporte         ###   ########.fr       */
+/*   Created: 2017/03/11 15:50:22 by llaporte          #+#    #+#             */
+/*   Updated: 2017/03/27 14:59:07 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-void	err(char *err)
+char	*ft_strinsert(char const *s1, char const *s2, int where)
 {
-	ft_putstr_fd(err, 1);
-	exit(1);
-}
+	char	*result;
+	int		i;
+	int		j;
+	int		k;
 
-void	*s_malloc(size_t size)
-{
-	void	*var;
-
-	if ((var = ft_memalloc(size)) == NULL)
-		exit(0);
-	return (var);
-}
-
-int		main(void)
-{
-	t_lemin	*lem;
-
-	lem = (t_lemin *)s_malloc(sizeof(t_lemin));
-	lem->input_str = "";
-	lem->rooms = NULL;
-	parse_data(lem);
-	parse_debug(lem);
-	return (0);
+	if (!(result = ft_strnew(ft_strlen(s1) + ft_strlen(s2))))
+		return (0);
+	i = 0;
+	j = 0;
+	while (s1[j] && i != where)
+		result[i++] = s1[j++];
+	k = 0;
+	while (s2[k])
+		result[i++] = s2[k++];
+	while (s1[j])
+		result[i++] = s1[j++];
+	return (result);
 }

@@ -1,40 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_iutoa_base.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/29 11:24:00 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 15:08:39 by llaporte         ###   ########.fr       */
+/*   Created: 2017/03/21 14:01:42 by llaporte          #+#    #+#             */
+/*   Updated: 2017/05/13 19:17:52 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-void	err(char *err)
+char	*ft_iutoa_base(intmax_t value, int base)
 {
-	ft_putstr_fd(err, 1);
-	exit(1);
-}
+	char		*result;
+	void		*tofree;
 
-void	*s_malloc(size_t size)
-{
-	void	*var;
-
-	if ((var = ft_memalloc(size)) == NULL)
-		exit(0);
-	return (var);
-}
-
-int		main(void)
-{
-	t_lemin	*lem;
-
-	lem = (t_lemin *)s_malloc(sizeof(t_lemin));
-	lem->input_str = "";
-	lem->rooms = NULL;
-	parse_data(lem);
-	parse_debug(lem);
-	return (0);
+	if (!value)
+		return (ft_strdup("0"));
+	if (!(result = ft_itoa_base(value, base)))
+		return (0);
+	if (ft_strchr(result, '-'))
+	{
+		tofree = result;
+		result = ft_strerase(result, 0, 1);
+		free(tofree);
+	}
+	return (result);
 }
