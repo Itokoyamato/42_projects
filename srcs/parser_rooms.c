@@ -6,13 +6,13 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:22:17 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 16:49:20 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/30 17:28:17 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	*new_room(t_room **rooms, char *line)
+void	new_room(t_room **rooms, char *line)
 {
 	t_room	*room;
 	char	**split;
@@ -26,7 +26,6 @@ void	*new_room(t_room **rooms, char *line)
 	room->next = *rooms;
 	*rooms = room;
 	free_2d(split);
-	return (0);
 }
 
 int		is_room_position_valid(t_lemin *lem, char *line)

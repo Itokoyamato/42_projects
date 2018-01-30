@@ -6,21 +6,28 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:23:44 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 16:50:03 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/30 17:33:22 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	*new_tunnel(t_tunnel **tunnels, t_room *room)
+int		new_tunnel(t_room **rooms)
 {
-	t_tunnel	*tunnel;
+	t_tunnel	**tunnels;
 
-	tunnel = (t_tunnel *)s_malloc(sizeof(t_tunnel));
-	tunnel->room = room;
-	tunnel->next = *tunnels;
-	*tunnels = tunnel;
-	return (0);
+	tunnels = (t_tunnel **)s_malloc(sizeof(t_tunnel *) * 2);
+	tunnels[0] = (t_tunnel *)s_malloc(sizeof(t_tunnel));
+	tunnels[0]->room = rooms[1];
+	tunnels[0]->next = rooms[0]->tunnels;
+	rooms[0]->tunnels = tunnels[0];
+	tunnels[1] = (t_tunnel *)s_malloc(sizeof(t_tunnel));
+	tunnels[1]->room = rooms[0];
+	tunnels[1]->next = rooms[1]->tunnels;
+	rooms[1]->tunnels = tunnels[1];
+	free(tunnels);
+	free(rooms);
+	return (1);
 }
 
 int		is_tunnel_valid(t_lemin *lem, char *line)
@@ -43,13 +50,12 @@ int		is_tunnel_valid(t_lemin *lem, char *line)
 		lem->rooms = lem->rooms->next;
 	}
 	free_2d(split);
-	if (!rooms[0] || !rooms[1])
-		return (0);
-	new_tunnel(&rooms[0]->tunnels, rooms[1]);
-	new_tunnel(&rooms[1]->tunnels, rooms[0]);
 	lem->rooms = lem->rooms_start;
+	if (rooms[0] && rooms[1])
+		return (new_tunnel(rooms));
 	free(rooms);
-	return (1);
+	free(line);
+	return (0);
 }
 
 int		parse_tunnels(t_lemin *lem, char *line)
