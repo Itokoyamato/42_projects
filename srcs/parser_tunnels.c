@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:23:44 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 14:32:15 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/30 14:58:01 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		is_tunnel_valid(t_lemin *lem, char *line)
 	t_room	*room2;
 
 	split = ft_strsplit(line, '-');
-	if (!split[0] || !split[1] || split[2])
+	if (!split || !split[0] || !split[1] || split[2])
 		return (0);
 	while (lem->rooms)
 	{
@@ -53,6 +53,8 @@ int		is_tunnel_valid(t_lemin *lem, char *line)
 
 int		parse_tunnels(t_lemin *lem, char *line)
 {
+	if (!lem->rooms)
+		return (0);
 	if (ft_strstr(line, "#") || ft_strstr(line, "##"))
 		;
 	else if (!ft_strstr(line, "-"))

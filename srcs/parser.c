@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 14:29:30 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 14:35:23 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/30 15:14:52 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	parse_data(t_lemin *lem)
 	int		start_end;
 
 	start_end = 0;
-	if (get_next_line(0, &l) <= 0 || !ft_strcmp(l, "") || !ft_isstrdigit(l))
+	if (get_next_line(0, &l) <= 0 || !ft_strcmp(l, "") || !ft_isstrdigit(l)
+		|| (lem->ants_nb = ft_atoi(l)) <= 0)
 		err("Error: invalid ants count.");
-	lem->ants_nb = ft_atoi(l);
 	save_line(lem, l);
 	free(l);
 	while (get_next_line(0, &l) > 0 && ft_strcmp(l, ""))
