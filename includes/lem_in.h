@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:26:26 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 12:59:24 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/30 14:33:10 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct	s_lemin
 	t_room		*rooms;
 	t_room		*rooms_start;
 	int			ants_nb;
+	char		*input_str;
 }				t_lemin;
 
 /*
@@ -66,6 +67,7 @@ int				parse_tunnels(t_lemin *lem, char *line);
 int				is_tunnel_valid(t_lemin *lem, char *line);
 void			*new_tunnel(t_tunnel **tunnels, t_room *room);
 void			parse_debug(t_lemin *lem);
+void			save_line(t_lemin *lem, char *l);
 
 int				err(char *err);
 void			*s_malloc(size_t size);

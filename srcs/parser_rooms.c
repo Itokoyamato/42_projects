@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:22:17 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 12:40:08 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/30 14:32:20 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		parse_rooms(t_lemin *lem, char *line, int *start_end)
 	else if (ft_strstr(line, "##end"))
 		*start_end = 2;
 	else if (ft_strstr(line, "#") || ft_strstr(line, "##"))
-		ft_putstr(line);
+		;
 	else if (is_room_valid(line))
 	{
 		new_room(&lem->rooms, line);
@@ -76,10 +76,6 @@ int		parse_rooms(t_lemin *lem, char *line, int *start_end)
 		*start_end = 0;
 	}
 	else
-	{
-		free(line);
 		return (0);
-	}
-	free(line);
 	return (1);
 }

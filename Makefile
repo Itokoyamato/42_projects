@@ -6,7 +6,7 @@
 #    By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/09 15:39:04 by dthuilli          #+#    #+#              #
-#    Updated: 2018/01/30 13:06:07 by dthuilli         ###   ########.fr        #
+#    Updated: 2018/01/30 14:33:17 by dthuilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME	= lem_in
 
 # src / obj files
 SRC		=	main.c \
+			parser.c \
 			parser_rooms.c \
 			parser_tunnels.c
 

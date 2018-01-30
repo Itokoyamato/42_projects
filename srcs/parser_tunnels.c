@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:23:44 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 12:44:35 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/30 14:32:15 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		is_tunnel_valid(t_lemin *lem, char *line)
 int		parse_tunnels(t_lemin *lem, char *line)
 {
 	if (ft_strstr(line, "#") || ft_strstr(line, "##"))
-		ft_putstr(line);
+		;
 	else if (!ft_strstr(line, "-"))
 		err("Error: no tunnels.");
 	else
@@ -64,6 +64,5 @@ int		parse_tunnels(t_lemin *lem, char *line)
 		if (!is_tunnel_valid(lem, line))
 			return (0);
 	}
-	free(line);
 	return (1);
 }
