@@ -6,19 +6,30 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 14:29:30 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 15:33:08 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/30 16:52:29 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
+void	free_2d(char **table)
+{
+	int	i;
+
+	i = -1;
+	while (table[++i])
+		free(table[i]);
+	free(table);
+}
+
 void	parse_debug(t_lemin *lem)
 {
+	ft_putstr("\n");
 	while (lem->rooms)
 	{
-		ft_putstr("\n-------------------------------------------\nRoom: ");
+		ft_putstr("-------------------------------------------\nRoom: ");
 		ft_putstr(lem->rooms->name);
-		ft_putstr("\nTunnels with rooms:\n");
+		ft_putstr("\nConnected to rooms:\n");
 		lem->rooms->tunnels_start = lem->rooms->tunnels;
 		while (lem->rooms->tunnels)
 		{
@@ -30,12 +41,13 @@ void	parse_debug(t_lemin *lem)
 		lem->rooms = lem->rooms->next;
 	}
 	lem->rooms = lem->rooms_start;
-	ft_putstr("\n---------------------------------------\nStart room: ");
+	ft_putstr("---------------------------------------\nStart room: ");
 	ft_putstr(lem->start_room->name);
 	ft_putstr("\nEnd room: ");
 	ft_putstr(lem->end_room->name);
 	ft_putstr("\nAnts count: ");
 	ft_putnbr(lem->ants_nb);
+	ft_putstr("\n");
 }
 
 void	save_line(t_lemin *lem, char *l)
@@ -52,6 +64,18 @@ void	save_line(t_lemin *lem, char *l)
 	free(tmp2);
 }
 
+void	check_overflow(int ant_nb, char *l)
+{
+	char	*tofree;
+
+	if ((ft_strcmp(tofree = ft_itoa(ant_nb), l)))
+	{
+		free(tofree);
+		err("Error: invalid ants count. (overflow)");
+	}
+	free(tofree);
+}
+
 void	parse_data(t_lemin *lem)
 {
 	char	*l;
@@ -61,6 +85,7 @@ void	parse_data(t_lemin *lem)
 	if (ft_gnl(0, &l) <= 0 || !ft_strcmp(l, "") || !ft_isstrdigit(l)
 		|| (lem->ants_nb = ft_atoi(l)) <= 0)
 		err("Error: invalid ants count.");
+	check_overflow(lem->ants_nb, l);
 	save_line(lem, l);
 	free(l);
 	while (ft_gnl(0, &l) > 0 && ft_strcmp(l, ""))

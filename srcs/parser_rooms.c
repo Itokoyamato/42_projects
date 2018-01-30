@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:22:17 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 15:26:14 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/30 16:49:20 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,36 @@ void	*new_room(t_room **rooms, char *line)
 
 	split = ft_strsplit(line, ' ');
 	room = (t_room *)s_malloc(sizeof(t_room));
-	room->name = split[0];
+	room->name = ft_strdup(split[0]);
 	room->x = ft_atoi(split[1]);
 	room->y = ft_atoi(split[2]);
 	room->tunnels = NULL;
 	room->next = *rooms;
 	*rooms = room;
-	free(split[1]);
-	free(split[2]);
-	free(split);
+	free_2d(split);
 	return (0);
+}
+
+int		is_room_position_valid(t_lemin *lem, char *line)
+{
+	char	**split;
+
+	split = ft_strsplit(line, ' ');
+	while (lem->rooms)
+	{
+		if (ft_atoi(split[1]) == lem->rooms->x
+			&& ft_atoi(split[2]) == lem->rooms->y)
+		{
+			free_2d(split);
+			lem->rooms = lem->rooms_start;
+			ft_putstr("hello");
+			return (0);
+		}
+		lem->rooms = lem->rooms->next;
+	}
+	lem->rooms = lem->rooms_start;
+	free_2d(split);
+	return (1);
 }
 
 int		is_room_valid(char *line)
@@ -40,21 +60,15 @@ int		is_room_valid(char *line)
 	i = -1;
 	if (!split[0] || !split[1] || !split[2] || split[3])
 	{
-		while (split[++i])
-			free(split[i]);
-		free(split);
+		free_2d(split);
 		return (0);
 	}
 	if (!ft_isstrdigit(split[1]) || !ft_isstrdigit(split[2]))
 	{
-		while (split[++i])
-			free(split[i]);
-		free(split);
+		free_2d(split);
 		return (0);
 	}
-	while (split[++i])
-		free(split[i]);
-	free(split);
+	free_2d(split);
 	return (1);
 }
 
@@ -66,9 +80,10 @@ int		parse_rooms(t_lemin *lem, char *line, int *start_end)
 		*start_end = 2;
 	else if (ft_strstr(line, "#") || ft_strstr(line, "##"))
 		;
-	else if (is_room_valid(line))
+	else if (is_room_valid(line) && is_room_position_valid(lem, line))
 	{
 		new_room(&lem->rooms, line);
+		lem->rooms_start = lem->rooms;
 		if (*start_end == 1)
 			lem->start_room = lem->rooms;
 		else if (*start_end == 2)
