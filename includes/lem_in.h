@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:26:26 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 16:55:30 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/01/30 17:16:17 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ struct			s_room
 	t_tunnel	*tunnels_start;
 };
 
-struct			s_ant
+struct
+			s_ant
 {
 	int			id;
 	t_room		*current_room;
@@ -60,6 +61,7 @@ typedef struct	s_lemin
 	t_room		*end_room;
 	t_room		*rooms;
 	t_room		*rooms_start;
+	t_ant		*ants;
 	int			ants_nb;
 	char		*input_str;
 }				t_lemin;
