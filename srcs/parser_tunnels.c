@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:23:44 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 14:58:01 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/30 16:50:03 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,29 @@ void	*new_tunnel(t_tunnel **tunnels, t_room *room)
 int		is_tunnel_valid(t_lemin *lem, char *line)
 {
 	char	**split;
-	t_room	*room1;
-	t_room	*room2;
+	t_room	**rooms;
 
+	rooms = (t_room **)malloc(sizeof(t_room *) * 2);
+	rooms[0] = NULL;
+	rooms[1] = NULL;
 	split = ft_strsplit(line, '-');
 	if (!split || !split[0] || !split[1] || split[2])
 		return (0);
 	while (lem->rooms)
 	{
 		if (ft_strcmp(lem->rooms->name, split[0]) == 0)
-			room1 = lem->rooms;
+			rooms[0] = lem->rooms;
 		if (ft_strcmp(lem->rooms->name, split[1]) == 0)
-			room2 = lem->rooms;
+			rooms[1] = lem->rooms;
 		lem->rooms = lem->rooms->next;
 	}
-	if (!room1 || !room2)
+	free_2d(split);
+	if (!rooms[0] || !rooms[1])
 		return (0);
-	new_tunnel(&room1->tunnels, room2);
-	new_tunnel(&room2->tunnels, room1);
+	new_tunnel(&rooms[0]->tunnels, rooms[1]);
+	new_tunnel(&rooms[1]->tunnels, rooms[0]);
 	lem->rooms = lem->rooms_start;
-	free(split[0]);
-	free(split[1]);
-	free(split);
+	free(rooms);
 	return (1);
 }
 
@@ -59,12 +60,7 @@ int		parse_tunnels(t_lemin *lem, char *line)
 		;
 	else if (!ft_strstr(line, "-"))
 		err("Error: no tunnels.");
-	else
-	{
-		if (!lem->rooms_start)
-			lem->rooms_start = lem->rooms;
-		if (!is_tunnel_valid(lem, line))
-			return (0);
-	}
+	else if (!is_tunnel_valid(lem, line))
+		return (0);
 	return (1);
 }

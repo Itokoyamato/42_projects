@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:26:26 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 16:38:18 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/01/30 16:55:30 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct	s_lemin
 void			parse_data(t_lemin *lem);
 int				parse_rooms(t_lemin *lem, char *line, int *start_end);
 int				is_room_valid(char *line);
+int				is_room_position_valid(t_lemin *lem, char *line);
 void			*new_room(t_room **rooms, char *line);
 int				parse_tunnels(t_lemin *lem, char *line);
 int				is_tunnel_valid(t_lemin *lem, char *line);
@@ -80,5 +81,6 @@ void			solver(t_lemin *lem);
 
 void			err(char *err);
 void			*s_malloc(size_t size);
+void			free_2d(char **table);
 
 #endif
