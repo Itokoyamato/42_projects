@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:26:26 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 17:45:43 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/01/31 13:30:08 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ struct			s_room
 	int			x;
 	int			y;
 	char		*name;
+	int			id;
 	t_room		*next;
 	t_tunnel	*tunnels;
 	t_tunnel	*tunnels_start;
@@ -73,7 +74,7 @@ void			parse_data(t_lemin *lem);
 int				parse_rooms(t_lemin *lem, char *line, int *start_end);
 int				is_room_valid(char *line);
 int				is_room_position_valid(t_lemin *lem, char *line);
-void			new_room(t_room **rooms, char *line);
+void			new_room(t_lemin *lem, t_room **rooms, char *line);
 int				parse_tunnels(t_lemin *lem, char *line);
 int				is_tunnel_valid(t_lemin *lem, char *line);
 int				new_tunnel(t_room **rooms);
