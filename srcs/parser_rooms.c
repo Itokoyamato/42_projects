@@ -6,13 +6,13 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:22:17 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 17:28:17 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/31 13:29:55 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	new_room(t_room **rooms, char *line)
+void	new_room(t_lemin *lem, t_room **rooms, char *line)
 {
 	t_room	*room;
 	char	**split;
@@ -20,6 +20,10 @@ void	new_room(t_room **rooms, char *line)
 	split = ft_strsplit(line, ' ');
 	room = (t_room *)s_malloc(sizeof(t_room));
 	room->name = ft_strdup(split[0]);
+	if (!lem->rooms)
+		room->id = 0;
+	else
+		room->id = lem->rooms->id + 1;
 	room->x = ft_atoi(split[1]);
 	room->y = ft_atoi(split[2]);
 	room->tunnels = NULL;
@@ -81,7 +85,7 @@ int		parse_rooms(t_lemin *lem, char *line, int *start_end)
 		;
 	else if (is_room_valid(line) && is_room_position_valid(lem, line))
 	{
-		new_room(&lem->rooms, line);
+		new_room(lem, &lem->rooms, line);
 		lem->rooms_start = lem->rooms;
 		if (*start_end == 1)
 			lem->start_room = lem->rooms;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 14:29:30 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 17:46:03 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/01/31 13:31:21 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,17 @@ void	parse_debug(t_lemin *lem)
 	{
 		ft_putstr("-------------------------------------------\nRoom: ");
 		ft_putstr(lem->rooms->name);
+		ft_putstr(" (id: ");
+		ft_putnbr(lem->rooms->id);
+		ft_putstr(")\n");
 		ft_putstr("\nConnected to rooms:\n");
 		lem->rooms->tunnels_start = lem->rooms->tunnels;
 		while (lem->rooms->tunnels)
 		{
 			ft_putstr(lem->rooms->tunnels->room->name);
-			ft_putstr("\n");
+			ft_putstr(" (id: ");
+			ft_putnbr(lem->rooms->tunnels->room->id);
+			ft_putstr(")\n");
 			lem->rooms->tunnels = lem->rooms->tunnels->next;
 		}
 		lem->rooms->tunnels = lem->rooms->tunnels_start;
@@ -64,11 +69,13 @@ void	save_line(t_lemin *lem, char *l)
 	free(tmp2);
 }
 
-void	check_overflow(int ant_nb, char *l)
+void	parse_ants(t_lemin *lem, char *l)
 {
 	char	*tofree;
 
-	if ((ft_strcmp(tofree = ft_itoa(ant_nb), l)))
+	if ((lem->ants_nb = ft_atoi(l)) <= 0)
+		err("Error: invalid ants count.");
+	if ((ft_strcmp(tofree = ft_itoa(lem->ants_nb), l)))
 	{
 		free(tofree);
 		err("Error: invalid ants count. (overflow)");
@@ -82,16 +89,12 @@ void	parse_data(t_lemin *lem)
 	int		start_end;
 
 	start_end = 0;
-	if (ft_gnl(0, &l) <= 0 || !ft_strcmp(l, "") || !ft_isstrdigit(l)
-		|| (lem->ants_nb = ft_atoi(l)) <= 0)
-		err("Error: invalid ants count.");
-	check_overflow(lem->ants_nb, l);
-	save_line(lem, l);
-	free(l);
 	while (ft_gnl(0, &l) > 0 && ft_strcmp(l, ""))
 	{
 		save_line(lem, l);
-		if (!ft_strstr(l, "-"))
+		if (!lem->ants_nb && ft_isstrdigit(l))
+			parse_ants(lem, l);
+		else if (!ft_strstr(l, "-"))
 		{
 			if (!parse_rooms(lem, l, &start_end))
 				break ;
