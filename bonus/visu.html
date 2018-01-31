@@ -1,0 +1,27 @@
+<!doctype html>
+	<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Lem_in Visualizer</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+	</head>
+
+	<body>
+		<div class="sidebar">
+			<input type="file" id="fileToLoad" onChange="return loadFileAsText(this)">
+			<textarea id="result" class="text"></textarea>
+		</div>
+		<div class="main" id="main_div">
+			<div id="blocker">
+				<div id="instructions">
+					<span style="font-size:40px">Click to move</span>
+					<br />
+					(W, A, S, D = Move, MOUSE = Look around)
+				</div>
+			</div>
+		</div>
+		<script src="js/three.js"></script>
+		<script src="js/PointerLockControls.js"></script>
+		<script src="js/visualizer.js"></script>
+	</body>
+</html>
