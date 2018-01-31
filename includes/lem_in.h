@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:26:26 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/31 14:32:15 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/01/31 15:17:03 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ struct			s_room
 	int			id;
 	t_room		*next;
 	t_tunnel	*tunnels;
+	int			nb_tunnels;
 	t_tunnel	*tunnels_start;
 };
+
 
 struct			s_ant
 {
