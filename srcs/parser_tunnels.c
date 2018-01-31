@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:23:44 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/31 13:37:31 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/31 15:24:31 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ int		new_tunnel(t_room **rooms)
 	tunnels[0]->room = rooms[1];
 	tunnels[0]->next = rooms[0]->tunnels;
 	rooms[0]->tunnels = tunnels[0];
+	rooms[0]->nb_tunnels++;
 	tunnels[1] = (t_tunnel *)s_malloc(sizeof(t_tunnel));
 	tunnels[1]->room = rooms[0];
 	tunnels[1]->next = rooms[1]->tunnels;
 	rooms[1]->tunnels = tunnels[1];
+	rooms[1]->nb_tunnels++;
 	free(tunnels);
 	free(rooms);
 	return (1);

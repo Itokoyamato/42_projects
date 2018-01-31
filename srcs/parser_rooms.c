@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:22:17 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/31 13:29:55 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/31 15:18:39 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	new_room(t_lemin *lem, t_room **rooms, char *line)
 		room->id = lem->rooms->id + 1;
 	room->x = ft_atoi(split[1]);
 	room->y = ft_atoi(split[2]);
+	room->nb_tunnels = 0;
 	room->tunnels = NULL;
 	room->next = *rooms;
 	*rooms = room;

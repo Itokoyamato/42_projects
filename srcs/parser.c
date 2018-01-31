@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 14:29:30 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/31 13:31:21 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/31 15:23:04 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	parse_debug(t_lemin *lem)
 		ft_putstr(lem->rooms->name);
 		ft_putstr(" (id: ");
 		ft_putnbr(lem->rooms->id);
+		ft_putstr(" | nb_tunnels: ");
+		ft_putnbr(lem->rooms->nb_tunnels);
 		ft_putstr(")\n");
 		ft_putstr("\nConnected to rooms:\n");
 		lem->rooms->tunnels_start = lem->rooms->tunnels;
