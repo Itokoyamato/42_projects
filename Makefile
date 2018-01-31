@@ -6,7 +6,7 @@
 #    By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/09 15:39:04 by dthuilli          #+#    #+#              #
-#    Updated: 2018/01/30 16:26:06 by llaporte         ###   ########.fr        #
+#    Updated: 2018/01/31 12:03:24 by llaporte         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,9 @@ NAME	= lem_in
 SRC		=	main.c \
 			parser.c \
 			parser_rooms.c \
-			parser_tunnels.c\
-			solver.c
+			parser_tunnels.c \
+			solver.c \
+			ants_utils.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 

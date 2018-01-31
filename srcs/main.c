@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:24:00 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 17:43:27 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/01/31 11:50:09 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	err(char *err)
 	exit(1);
 }
 
-void	s_malloc(size_t size)
+void	*s_malloc(size_t size)
 {
 	void	*var;
 

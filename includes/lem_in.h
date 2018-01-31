@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:26:26 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/30 17:45:43 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/01/31 13:17:34 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ struct			s_room
 	t_tunnel	*tunnels_start;
 };
 
-struct
-			s_ant
+struct			s_ant
 {
 	int			id;
 	t_room		*current_room;
@@ -79,7 +78,9 @@ int				is_tunnel_valid(t_lemin *lem, char *line);
 int				new_tunnel(t_room **rooms);
 void			parse_debug(t_lemin *lem);
 void			save_line(t_lemin *lem, char *l);
+
 void			solver(t_lemin *lem);
+void			init_ants(t_lemin *lem);
 
 void			err(char *err);
 void			*s_malloc(size_t size);
