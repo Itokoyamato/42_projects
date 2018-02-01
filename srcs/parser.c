@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 14:29:30 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/31 15:23:04 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/02/01 16:24:53 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	parse_debug(t_lemin *lem)
 	ft_putstr(lem->start_room->name);
 	ft_putstr("\nEnd room: ");
 	ft_putstr(lem->end_room->name);
+	ft_putstr("\nRooms count: ");
+	ft_putnbr(lem->nb_rooms);
 	ft_putstr("\nAnts count: ");
 	ft_putnbr(lem->ants_nb);
 	ft_putstr("\n");

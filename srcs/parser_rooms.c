@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:22:17 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/31 15:18:39 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/02/01 16:23:40 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	new_room(t_lemin *lem, t_room **rooms, char *line)
 	room->tunnels = NULL;
 	room->next = *rooms;
 	*rooms = room;
+	lem->nb_rooms++;
 	free_2d(split);
 }
 
