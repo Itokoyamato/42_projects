@@ -130,11 +130,15 @@ function init() {
 		var element = document.body;
 		var pointerlockchange = function ( event ) {
 			if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
+				moveForward = false;
+				moveBackward = false;
+				moveLeft = false;
+				moveRight = false;
+				velocity = new THREE.Vector3();
 				controlsEnabled = true;
 				controls.enabled = true;
 				blocker.style.display = 'none';
 			} else {
-				controlsEnabled = false;
 				controls.enabled = false;
 				blocker.style.display = 'block';
 				instructions.style.display = '';
@@ -240,7 +244,7 @@ delta_amount = 100.0;
 function animate()
 {
 	requestAnimationFrame(animate);
-	if (controlsEnabled === true)
+	if (controlsEnabled === true && controls.enabled === true)
 	{
 		var time = performance.now();
 		var delta = ( time - prevTime ) / 1000;
@@ -286,7 +290,6 @@ function animate()
 		}
 		else
 			info.innerHTML = "";
-		renderer.render( scene, camera );
 	}
 	renderer.render(scene, camera);
 }
