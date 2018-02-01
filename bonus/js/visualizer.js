@@ -7,9 +7,7 @@ function loadFileAsText(element){
 		document.getElementById("result").innerHTML = data;
 		init();
 		animate();
-		// tunnel.object.material.color.setHex(0xffffff);
 		var lines = data.split("\n");
-		console.log(lines);
 		for (var i = 0; i < lines.length; i++)
 		{
 			var l = lines[i];
@@ -66,6 +64,7 @@ var moveRight = false;
 var prevTime = performance.now();
 var velocity = new THREE.Vector3();
 var direction = new THREE.Vector3();
+var raycaster = new THREE.Raycaster();
 
 function init() {
 	if ( havePointerLock ) {
@@ -106,12 +105,6 @@ function init() {
 
 	camera = new THREE.PerspectiveCamera( 75, element.offsetWidth / element.offsetHeight, 1, 10000 );
 
-	// geometry = new THREE.BoxGeometry( 10, 10, 10 );
-	// material = new THREE.MeshLambertMaterial({color: 0xff0000});
-
-	// mesh = new THREE.Mesh( geometry, material );
-	// scene.add( mesh );
-
 	var light = new THREE.PointLight( 0xffffff, 1, 100 );
 	light.position.set(10, 10, 10);
 	scene.add( light );
@@ -119,7 +112,8 @@ function init() {
 	scene.add( light );
 
 	controls = new THREE.PointerLockControls(camera);
-	scene.add( controls.getObject() );
+	controls.getObject().position.set(10, 7, 40);
+	scene.add(controls.getObject());
 
 	var onKeyDown = function ( event ) {
 		switch ( event.keyCode ) {
@@ -168,9 +162,9 @@ function init() {
 	document.addEventListener('keyup', onKeyUp, false);
 
 	renderer = new THREE.WebGLRenderer();
-	renderer.setSize( element.offsetWidth, element.offsetHeight);
+	renderer.setSize(element.clientWidth - 20, element.clientHeight, false);
 
-	element.appendChild( renderer.domElement );
+	element.appendChild(renderer.domElement);
 }
 
 function animate()
@@ -201,6 +195,28 @@ function animate()
 		controls.getObject().translateZ( velocity.z * delta );
 		controls.getObject().translateY( velocity.y * delta );
 		prevTime = time;
+
+		raycaster.set( camera.getWorldPosition(), camera.getWorldDirection() );
+		var intersects = raycaster.intersectObjects( scene.children );
+		var info = document.getElementById("info_content");
+		if (intersects[0])
+		{
+			for (i in rooms)
+			{
+				if (rooms[i].object === intersects[0].object)
+					info.innerHTML = "Room: " + rooms[i].name + "<br>" + "Ants: " + rooms[i].ants;
+			}
+			for (i in tunnels)
+			{
+				if (tunnels[i].object === intersects[0].object)
+					info.innerHTML = "Tunnel: " + tunnels[i].name + "<br>" + "Ants: " + tunnels[i].ants;
+			}
+		}
+		else
+		{
+			info.innerHTML = "";
+		}
+		renderer.render( scene, camera );
 	}
 	renderer.render(scene, camera);
 }
@@ -224,12 +240,12 @@ function cylinderMesh(pointX, pointY, material) {
 
 function addRoom(x, y, name, ants)
 {
-	var room = new THREE.BoxGeometry( 1, 0.5, 1 );
+	var room = new THREE.BoxGeometry(1, 0.5, 1);
 	var material = new THREE.MeshLambertMaterial({color: 0xff0000});
 
 	var mesh = new THREE.Mesh(room, material);
-	var z = Math.random(1, 10);
-	mesh.position.set(x, y, z);
+	var z = Math.floor(Math.random() * 10);
+	mesh.position.set(x, z, y);
 	scene.add(mesh);
 	room = {object: mesh, name: name, ants: ants};
 	rooms.push(room);
@@ -243,7 +259,7 @@ function addTunnel(room1, room2, ants)
 
 	var mesh = new cylinderMesh(room1.object.position, room2.object.position, material);
 	scene.add(mesh);
-	tunnel = {object: mesh, ants: ants};
+	tunnel = {object: mesh, name: room1.name + "-" + room2.name, ants: ants};
 	tunnels.push(tunnel);
 	return (tunnel);
 }
