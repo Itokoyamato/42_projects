@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:26:26 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/31 15:22:46 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/02/01 19:27:03 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 **** Libs
 */
 # include "libft.h"
+# include <stdio.h>
 
 /*
 **** Struct
@@ -28,13 +29,13 @@ typedef struct	s_point
 }				t_point;
 
 typedef struct s_room	t_room;
-typedef struct s_tunnel	t_tunnel;
+typedef struct s_roomlist	t_roomlist;
 typedef struct s_ant	t_ant;
 
-struct			s_tunnel
+struct			s_roomlist
 {
 	t_room		*room;
-	t_tunnel	*next;
+	t_roomlist	*next;
 };
 
 struct			s_room
@@ -44,9 +45,9 @@ struct			s_room
 	char		*name;
 	int			id;
 	t_room		*next;
-	t_tunnel	*tunnels;
+	t_roomlist	*tunnels;
 	int			nb_tunnels;
-	t_tunnel	*tunnels_start;
+	t_roomlist	*tunnels_start;
 };
 
 
@@ -65,6 +66,7 @@ typedef struct	s_lemin
 	t_room		*rooms_start;
 	t_ant		*ants;
 	int			ants_nb;
+	int			nb_rooms;
 	char		*input_str;
 }				t_lemin;
 

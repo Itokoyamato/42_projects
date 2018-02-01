@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tunnels.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:23:44 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/01/31 15:24:31 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/02/01 17:58:23 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 int		new_tunnel(t_room **rooms)
 {
-	t_tunnel	**tunnels;
+	t_roomlist	**tunnels;
 
-	tunnels = (t_tunnel **)s_malloc(sizeof(t_tunnel *) * 2);
-	tunnels[0] = (t_tunnel *)s_malloc(sizeof(t_tunnel));
+	tunnels = (t_roomlist **)s_malloc(sizeof(t_roomlist *) * 2);
+	tunnels[0] = (t_roomlist *)s_malloc(sizeof(t_roomlist));
 	tunnels[0]->room = rooms[1];
 	tunnels[0]->next = rooms[0]->tunnels;
 	rooms[0]->tunnels = tunnels[0];
 	rooms[0]->nb_tunnels++;
-	tunnels[1] = (t_tunnel *)s_malloc(sizeof(t_tunnel));
+	tunnels[1] = (t_roomlist *)s_malloc(sizeof(t_roomlist));
 	tunnels[1]->room = rooms[0];
 	tunnels[1]->next = rooms[1]->tunnels;
 	rooms[1]->tunnels = tunnels[1];
