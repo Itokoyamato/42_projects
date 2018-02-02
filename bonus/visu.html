@@ -10,6 +10,10 @@
 		<div class="sidebar">
 			<input type="file" id="fileToLoad" onChange="return loadFileAsText(this)">
 			<textarea id="result" class="text"></textarea>
+			<button onclick="stop()">stop</button>
+			<button onclick="play()">play</button>
+			<button onclick="pause()">pause</button>
+			<button onclick="next_move()">Next move</button>
 		</div>
 		<div class="main" id="main_div">
 			<div id="cursor"><span>+</span></div>
