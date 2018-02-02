@@ -1,0 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   roomlist_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/02 16:31:11 by llaporte          #+#    #+#             */
+/*   Updated: 2018/02/02 17:13:08 by llaporte         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "lem_in.h"
+
+void show_roomlist(t_roomlist *list)
+{
+	while (list)
+	{
+		ft_putstr(" -|");
+		ft_putstr(list->room->name);
+		ft_putchar('\n');
+		list = list->next;
+	}
+	ft_putchar('\n');
+}
+
+t_roomlist	*init_roomlist(t_room *toadd)
+{
+	t_roomlist	*list;
+	list = (t_roomlist *)s_malloc(sizeof(t_roomlist));
+	list->room = toadd;
+	list->next = NULL;
+	return (list);
+}
+
+void	add_roomlist(t_room *toadd, t_roomlist *parent, t_roomlist *list)
+{
+	while (list->next)
+		list = list->next;
+	list->next = (t_roomlist *)s_malloc(sizeof(t_roomlist));
+	list->next->room = toadd;
+	list->next->parent = parent;
+	list->next->next = NULL;
+}
+
+int		in_roomlist(t_room *current, t_roomlist *list)
+{
+	while (list)
+	{
+		if (list->room == current)
+			return (1);
+		list = list->next;
+	}
+	return (0);
+}

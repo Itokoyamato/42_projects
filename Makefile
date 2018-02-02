@@ -6,7 +6,7 @@
 #    By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/09 15:39:04 by dthuilli          #+#    #+#              #
-#    Updated: 2018/01/31 15:25:08 by dthuilli         ###   ########.fr        #
+#    Updated: 2018/02/02 16:35:54 by llaporte         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRC		=	main.c \
 			parser_rooms.c \
 			parser_tunnels.c \
 			solver.c \
-			ants_utils.c
+			ants_utils.c \
+			roomlist_utils.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
