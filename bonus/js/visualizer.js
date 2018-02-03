@@ -164,7 +164,7 @@ function parse_data(data)
 				for (j in split)
 				{
 					var split2 = split[j].replace("L", "").split("-");
-					var result = arr_rooms.filter(function(obj) {return obj.name == split2[1];});
+					var result = arr_rooms.filter(function(obj) {return obj.name == split2[1].trim();});
 					moves.push({ant: arr_ants[split2[0]-1], dest: result[0]});
 				}
 				arr_turns.push(moves);
@@ -176,9 +176,9 @@ function parse_data(data)
 				var room2;
 				for (var j = 0; j < arr_rooms.length; j++)
 				{
-					if (arr_rooms[j].name == split[0])
+					if (arr_rooms[j].name == split[0].trim())
 						room1 = arr_rooms[j];
-					if (arr_rooms[j].name == split[1])
+					if (arr_rooms[j].name == split[1].trim())
 						room2 = arr_rooms[j];
 				}
 				if (room1 && room2)
@@ -188,7 +188,7 @@ function parse_data(data)
 			{
 				var split = l.split(" ");
 				room_count++;
-				addRoom(parseInt(split[1])*5, parseInt(split[2])*5, split[0]);
+				addRoom(parseInt(split[1])*5, parseInt(split[2])*5, split[0].trim());
 			}
 		}
 	}
