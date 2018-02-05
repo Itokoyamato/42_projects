@@ -12,14 +12,6 @@
 
 #include "lem_in.h"
 
-t_room	*get_first(t_roomlist *list)
-{
-	t_room		*result;
-
-	result = list->room;
-	return (result);
-}
-
 void	destroy_roomlist(t_roomlist *list)
 {
 	if (list->next)
@@ -27,7 +19,19 @@ void	destroy_roomlist(t_roomlist *list)
 	free(list);
 }
 
+int 	ant_in_room(t_room *current, t_lemin *lem)
+{
+	t_ant *ants;
 
+	ants = lem->ants;
+	while (ants)
+	{
+		if (current == ants->current_room)
+			return (1);
+		ants = ants->next;
+	}
+	return (0);
+}
 
 void	add_tunnels_to_list(t_roomlist *tunnels, t_roomlist *list,
 	t_roomlist *already)
@@ -45,24 +49,19 @@ void	add_tunnels_to_list(t_roomlist *tunnels, t_roomlist *list,
 
 t_roomlist	*tree_paths(t_room *current, t_lemin *lem)
 {
+	// int					first;
 	t_roomlist	*list;
-	t_roomlist	*list_start;
 	t_roomlist	*already;
-	t_room		*current_room;
-	t_roomlist	*current_room_tunnels;
-
+	// first = 1;
 	list = init_roomlist(current);
-	list_start = list;
 	already = init_roomlist(current);
-	while (list && current_room != lem->end_room)
+	while (list && list->room != lem->end_room)
 	{
-		current_room = get_first(list);
-		current_room_tunnels = current_room->tunnels;
-		add_tunnels_to_list(current_room_tunnels, list, already);
-		list = current_room != lem->end_room ? list->next : list;
+		add_tunnels_to_list(list->room->tunnels, list, already);
+		list = list->room != lem->end_room ? list->next : list;
 	}
 	destroy_roomlist(already);
-	if (current_room == lem->end_room)
+	if (list->room == lem->end_room)
 		return (list);
 	else
 		destroy_roomlist(list);

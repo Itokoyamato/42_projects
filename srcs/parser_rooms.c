@@ -59,10 +59,8 @@ int		is_room_position_valid(t_lemin *lem, char *line)
 int		is_room_valid(char *line)
 {
 	char	**split;
-	int		i;
 
 	split = ft_strsplit(line, ' ');
-	i = -1;
 	if (!split[0] || !split[1] || !split[2] || split[3])
 	{
 		free_2d(split);
