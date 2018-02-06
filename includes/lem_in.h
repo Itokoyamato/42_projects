@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:26:26 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/02/02 16:58:55 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/06 18:27:48 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,11 @@ void				save_line(t_lemin *lem, char *l);
 
 void				solver(t_lemin *lem);
 void				init_ants(t_lemin *lem);
-void				show_roomlist(t_roomlist *list);
+void				move_ant(t_ant *ant, t_room *target_room);
 t_roomlist	*init_roomlist(t_room *toadd);
 void				add_roomlist(t_room *toadd, t_roomlist *parent, t_roomlist *list);
 int					in_roomlist(t_room *current, t_roomlist *list);
+void				destroy_roomlist(t_roomlist *list);
 
 void				err(char *err);
 void				*s_malloc(size_t size);

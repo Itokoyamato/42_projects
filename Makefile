@@ -6,7 +6,7 @@
 #    By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/09 15:39:04 by dthuilli          #+#    #+#              #
-#    Updated: 2018/02/02 16:35:54 by llaporte         ###   ########.fr        #
+#    Updated: 2018/02/06 15:25:37 by llaporte         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
 # compiler
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -g
+CFLAGS	= -Wall -Wextra -Werror -g3
 
 # ft library
 FT_DIR		= ./libft/
