@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   roomlist_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 16:31:11 by llaporte          #+#    #+#             */
-/*   Updated: 2018/02/07 16:33:40 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/02/07 17:48:01 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,6 @@ void		destroy_roomlist(t_roomlist *list)
 			destroy_roomlist(list->next);
 		free(list);
 	}
-}
-
-void		show_roomlist(t_roomlist *list)
-{
-	while (list)
-	{
-		ft_putstr(" -|");
-		ft_putstr(list->room->name);
-		ft_putchar('\n');
-		list = list->next;
-	}
-	ft_putchar('\n');
 }
 
 t_roomlist	*init_roomlist(t_room *toadd)

@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 16:25:07 by llaporte          #+#    #+#             */
-/*   Updated: 2018/02/07 16:56:07 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/07 18:12:37 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,50 +45,51 @@ void		add_tunnels_to_list(t_roomlist *tunnels, t_roomlist *list,
 	}
 }
 
-t_roomlist	*tree_paths(t_room *current, t_lemin *lem)
+t_room		*path_to_take(t_room *current, t_lemin *lem)
 {
 	t_roomlist	*list;
 	t_roomlist	*list_start;
 	t_roomlist	*already;
+	t_room		*result;
 
-	list = init_roomlist(current);
-	list_start = list;
+	result = NULL;
+	list_start = init_roomlist(current);
+	list = list_start;
 	already = init_roomlist(current);
 	while (list && list->room != lem->end_room)
 	{
 		add_tunnels_to_list(list->room->tunnels, list, already, lem);
-		list = list->room != lem->end_room ? list->next : list;
+		if (list->room != lem->end_room)
+			list = list->next;
 	}
 	destroy_roomlist(already);
 	if (list && list->room == lem->end_room)
-		return (list);
-	destroy_roomlist(list_start);
-	return (NULL);
-}
-
-t_room		*path_to_take(t_roomlist *tree_paths)
-{
-	while (tree_paths->parent && tree_paths->parent->parent)
-		tree_paths = tree_paths->parent;
-	return (tree_paths->room);
+	{
+		while (list->parent && list->parent->parent)
+			list = list->parent;
+		result = list->room;
+	}
+	if (list_start)
+		destroy_roomlist(list_start);
+	return (result);
 }
 
 void		solver(t_lemin *lem)
 {
-	t_roomlist	*tmp;
+	t_room		*tmp;
 	t_ant		*ants;
 
+	if (!(path_to_take(lem->start_room, lem)))
+		err("No paths available to the end.\n", lem);
 	while (nb_ant_in_room(lem->end_room, lem) != lem->ants_nb)
 	{
 		ants = lem->ants;
 		while (ants)
 		{
-			if ((tmp = tree_paths(ants->current_room, lem))
-				&& ants->current_room != lem->end_room)
-				move_ant(ants, path_to_take(tmp));
+			tmp = path_to_take(ants->current_room, lem);
+			if (tmp && ants->current_room != lem->end_room)
+				move_ant(ants, tmp);
 			ants = ants->next;
-			if (tmp)
-				destroy_roomlist(tmp);
 		}
 		ft_putchar('\n');
 	}
