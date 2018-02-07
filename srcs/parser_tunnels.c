@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tunnels.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:23:44 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/02/01 17:58:23 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/07 16:07:06 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		parse_tunnels(t_lemin *lem, char *line)
 	if (ft_strstr(line, "#") || ft_strstr(line, "##"))
 		;
 	else if (!ft_strstr(line, "-"))
-		err("Error: no tunnels.");
+		err("Error: no tunnels.", lem);
 	else if (!is_tunnel_valid(lem, line))
 		return (0);
 	return (1);

@@ -1,43 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/29 11:24:00 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/02/07 16:52:49 by llaporte         ###   ########.fr       */
+/*   Created: 2018/02/07 16:47:56 by dthuilli          #+#    #+#             */
+/*   Updated: 2018/02/07 16:48:02 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	err(char *err)
+void		destroy_rooms(t_room *list)
 {
-	ft_putstr_fd(err, 1);
-	exit(1);
+	if (list)
+	{
+		if (list->next)
+			destroy_rooms(list->next);
+		destroy_roomlist(list->tunnels);
+		list->tunnels_start = NULL;
+		free(list->name);
+		free(list);
+	}
 }
 
-void	*s_malloc(size_t size)
+void		destroy_ants(t_ant *list)
 {
-	void	*var;
-
-	if ((var = ft_memalloc(size)) == NULL)
-		exit(0);
-	return (var);
-}
-
-int		main(void)
-{
-	t_lemin	*lem;
-
-	lem = (t_lemin *)s_malloc(sizeof(t_lemin));
-	lem->input_str = "";
-	lem->rooms = NULL;
-	parse_data(lem);
-	init_ants(lem);
-	ft_putstr(lem->input_str);
-	ft_putchar('\n');
-	solver(lem);
-	return (0);
+	if (list)
+	{
+		if (list->next)
+			destroy_ants(list->next);
+		free(list);
+	}
 }

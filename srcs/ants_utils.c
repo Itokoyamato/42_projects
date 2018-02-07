@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ants_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 12:02:23 by llaporte          #+#    #+#             */
-/*   Updated: 2018/02/07 13:25:01 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/07 16:06:16 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_ants(t_lemin *lem)
 
 	i = 1;
 	if (!(lem->ants = (t_ant*)ft_memalloc(sizeof(t_ant))))
-		err("Can't allocate memory for first ant");
+		err("Can't allocate memory for first ant", lem);
 	lem->ants->current_room = lem->start_room;
 	lem->ants->id = i;
 	ants = lem->ants;
@@ -27,7 +27,7 @@ void	init_ants(t_lemin *lem)
 	while (i <= lem->ants_nb)
 	{
 		if (!(ants->next = (t_ant*)ft_memalloc(sizeof(t_ant))))
-			err("Can't allocate memory for an ant");
+			err("Can't allocate memory for an ant", lem);
 		ants = ants->next;
 		ants->current_room = lem->start_room;
 		ants->id = i;

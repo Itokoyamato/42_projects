@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:26:26 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/02/07 14:35:11 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/07 16:48:55 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,10 @@ t_roomlist		*parent, t_roomlist *list);
 int				in_roomlist(t_room *current, t_roomlist *list);
 void			destroy_roomlist(t_roomlist *list);
 
-void			err(char *err);
+void			err(char *err, t_lemin *lem);
 void			*s_malloc(size_t size);
 void			free_2d(char **table);
+void			destroy_ants(t_ant *list);
+void			destroy_rooms(t_room *list);
 
 #endif

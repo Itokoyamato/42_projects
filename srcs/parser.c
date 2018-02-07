@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 14:29:30 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/02/07 13:25:39 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/07 16:47:12 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ void	parse_ants(t_lemin *lem, char *l)
 	char	*tofree;
 
 	if ((lem->ants_nb = ft_atoi(l)) <= 0)
-		err("Error: invalid ants count.");
+		err("Error: invalid ants count.", lem);
 	if ((ft_strcmp(tofree = ft_itoa(lem->ants_nb), l)))
 	{
 		free(tofree);
-		err("Error: invalid ants count. (overflow)");
+		err("Error: invalid ants count. (overflow)", lem);
 	}
 	free(tofree);
 }
@@ -64,12 +64,15 @@ void	parse_data(t_lemin *lem)
 		else if (!ft_strstr(l, "-"))
 		{
 			if (!parse_rooms(lem, l, &start_end))
-				break ;
+			{
+				err("Error: Invalid anthill.", lem);
+				free(l);
+			}
 		}
 		else if (!parse_tunnels(lem, l))
 			break ;
 		free(l);
 	}
 	if (!lem->start_room || !lem->end_room || !lem->rooms || !lem->rooms->next)
-		err("Error: Invalid anthill.");
+		err("Error: Invalid anthill.", lem);
 }
