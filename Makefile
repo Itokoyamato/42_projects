@@ -6,11 +6,11 @@
 #    By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/09 15:39:04 by dthuilli          #+#    #+#              #
-#    Updated: 2018/02/06 15:25:37 by llaporte         ###   ########.fr        #
+#    Updated: 2018/02/07 12:24:32 by llaporte         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= lem_in
+NAME	= lem-in
 
 # src / obj files
 SRC		=	main.c \
