@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_rooms.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:22:17 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/02/01 17:58:26 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/07 16:12:22 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,23 @@ void	new_room(t_lemin *lem, t_room **rooms, char *line)
 	free_2d(split);
 }
 
-int		is_room_position_valid(t_lemin *lem, char *line)
+int		is_room_position_name_valid(t_lemin *lem, char *line)
 {
 	char	**split;
 
 	split = ft_strsplit(line, ' ');
 	while (lem->rooms)
 	{
+		if (ft_strcmp(lem->rooms->name, split[0]) == 0)
+		{
+			free_2d(split);
+			return (0);
+		}
 		if (ft_atoi(split[1]) == lem->rooms->x
 			&& ft_atoi(split[2]) == lem->rooms->y)
 		{
 			free_2d(split);
 			lem->rooms = lem->rooms_start;
-			ft_putstr("hello");
 			return (0);
 		}
 		lem->rooms = lem->rooms->next;
@@ -83,7 +87,7 @@ int		parse_rooms(t_lemin *lem, char *line, int *start_end)
 		*start_end = 2;
 	else if (ft_strstr(line, "#") || ft_strstr(line, "##"))
 		;
-	else if (is_room_valid(line) && is_room_position_valid(lem, line))
+	else if (is_room_valid(line) && is_room_position_name_valid(lem, line))
 	{
 		new_room(lem, &lem->rooms, line);
 		lem->rooms_start = lem->rooms;

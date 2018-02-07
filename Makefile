@@ -6,7 +6,7 @@
 #    By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/09 15:39:04 by dthuilli          #+#    #+#              #
-#    Updated: 2018/02/07 12:24:32 by llaporte         ###   ########.fr        #
+#    Updated: 2018/02/07 16:48:40 by dthuilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC		=	main.c \
 			parser.c \
 			parser_rooms.c \
 			parser_tunnels.c \
+			parser_utils.c \
 			solver.c \
 			ants_utils.c \
 			roomlist_utils.c
