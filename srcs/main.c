@@ -6,14 +6,18 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:24:00 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/02/07 16:52:49 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/07 16:54:43 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	err(char *err)
+void	err(char *err, t_lemin *lem)
 {
+	destroy_rooms(lem->rooms);
+	destroy_ants(lem->ants);
+	free(lem->input_str);
+	free(lem);
 	ft_putstr_fd(err, 1);
 	exit(1);
 }
@@ -39,5 +43,9 @@ int		main(void)
 	ft_putstr(lem->input_str);
 	ft_putchar('\n');
 	solver(lem);
+	destroy_rooms(lem->rooms);
+	destroy_ants(lem->ants);
+	free(lem->input_str);
+	free(lem);
 	return (0);
 }

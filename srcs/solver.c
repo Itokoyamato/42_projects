@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 16:25:07 by llaporte          #+#    #+#             */
-/*   Updated: 2018/02/07 16:48:34 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/07 16:56:07 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ t_roomlist	*tree_paths(t_room *current, t_lemin *lem)
 	destroy_roomlist(already);
 	if (list && list->room == lem->end_room)
 		return (list);
-	else if (list_start)
-		destroy_roomlist(list_start);
+	destroy_roomlist(list_start);
 	return (NULL);
 }
 
