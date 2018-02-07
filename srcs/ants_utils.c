@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 12:02:23 by llaporte          #+#    #+#             */
-/*   Updated: 2018/02/06 18:27:38 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/07 13:25:01 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,14 @@ void	init_ants(t_lemin *lem)
 		ants->id = i;
 		++i;
 	}
-	// ants = lem->ants;
-	// while (ants)
-	// {
-	// 	ft_putstr("L");
-	// 	ft_putnbr(ants->id);
-	// 	ft_putstr("-");
-	// 	ft_putstr(ants->current_room->name);
-	// 	ft_putchar(' ');
-	// 	ants = ants->next;
-	// }
 }
 
 void	move_ant(t_ant *ant, t_room *target_room)
 {
-		ant->current_room = target_room;
-		ft_putchar('L');
-		ft_putnbr(ant->id);
-		ft_putchar('-');
-		ft_putstr(ant->current_room->name);
-		ft_putchar(' ');
+	ant->current_room = target_room;
+	ft_putchar('L');
+	ft_putnbr(ant->id);
+	ft_putchar('-');
+	ft_putstr(ant->current_room->name);
+	ft_putchar(' ');
 }

@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:26:26 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/02/06 18:27:48 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/07 14:35:11 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 */
 typedef struct	s_point
 {
-	int		x;
-	int		y;
+	int					x;
+	int					y;
 }				t_point;
 
 typedef struct s_room	t_room;
@@ -74,27 +74,28 @@ typedef struct	s_lemin
 /*
 **** Functions
 */
-void				parse_data(t_lemin *lem);
-int					parse_rooms(t_lemin *lem, char *line, int *start_end);
-int					is_room_valid(char *line);
-int					is_room_position_valid(t_lemin *lem, char *line);
-void				new_room(t_lemin *lem, t_room **rooms, char *line);
-int					parse_tunnels(t_lemin *lem, char *line);
-int					is_tunnel_valid(t_lemin *lem, char *line);
-int					new_tunnel(t_room **rooms);
-void				parse_debug(t_lemin *lem);
-void				save_line(t_lemin *lem, char *l);
+void			parse_data(t_lemin *lem);
+int				parse_rooms(t_lemin *lem, char *line, int *start_end);
+int				is_room_valid(char *line);
+int				is_room_position_valid(t_lemin *lem, char *line);
+void			new_room(t_lemin *lem, t_room **rooms, char *line);
+int				parse_tunnels(t_lemin *lem, char *line);
+int				is_tunnel_valid(t_lemin *lem, char *line);
+int				new_tunnel(t_room **rooms);
+void			parse_debug(t_lemin *lem);
+void			save_line(t_lemin *lem, char *l);
 
-void				solver(t_lemin *lem);
-void				init_ants(t_lemin *lem);
-void				move_ant(t_ant *ant, t_room *target_room);
-t_roomlist	*init_roomlist(t_room *toadd);
-void				add_roomlist(t_room *toadd, t_roomlist *parent, t_roomlist *list);
-int					in_roomlist(t_room *current, t_roomlist *list);
-void				destroy_roomlist(t_roomlist *list);
+void			solver(t_lemin *lem);
+void			init_ants(t_lemin *lem);
+void			move_ant(t_ant *ant, t_room *target_room);
+t_roomlist		*init_roomlist(t_room *toadd);
+void			add_roomlist(t_room *toadd,
+t_roomlist		*parent, t_roomlist *list);
+int				in_roomlist(t_room *current, t_roomlist *list);
+void			destroy_roomlist(t_roomlist *list);
 
-void				err(char *err);
-void				*s_malloc(size_t size);
-void				free_2d(char **table);
+void			err(char *err);
+void			*s_malloc(size_t size);
+void			free_2d(char **table);
 
 #endif

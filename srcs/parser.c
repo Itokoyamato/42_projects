@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 14:29:30 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/02/01 17:58:11 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/07 13:25:39 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,43 +20,6 @@ void	free_2d(char **table)
 	while (table[++i])
 		free(table[i]);
 	free(table);
-}
-
-void	parse_debug(t_lemin *lem)
-{
-	ft_putstr("\n");
-	while (lem->rooms)
-	{
-		ft_putstr("-------------------------------------------\nRoom: ");
-		ft_putstr(lem->rooms->name);
-		ft_putstr(" (id: ");
-		ft_putnbr(lem->rooms->id);
-		ft_putstr(" | nb_tunnels: ");
-		ft_putnbr(lem->rooms->nb_tunnels);
-		ft_putstr(")\n");
-		ft_putstr("\nConnected to rooms:\n");
-		lem->rooms->tunnels_start = lem->rooms->tunnels;
-		while (lem->rooms->tunnels)
-		{
-			ft_putstr(lem->rooms->tunnels->room->name);
-			ft_putstr(" (id: ");
-			ft_putnbr(lem->rooms->tunnels->room->id);
-			ft_putstr(")\n");
-			lem->rooms->tunnels = lem->rooms->tunnels->next;
-		}
-		lem->rooms->tunnels = lem->rooms->tunnels_start;
-		lem->rooms = lem->rooms->next;
-	}
-	lem->rooms = lem->rooms_start;
-	ft_putstr("---------------------------------------\nStart room: ");
-	ft_putstr(lem->start_room->name);
-	ft_putstr("\nEnd room: ");
-	ft_putstr(lem->end_room->name);
-	ft_putstr("\nRooms count: ");
-	ft_putnbr(lem->nb_rooms);
-	ft_putstr("\nAnts count: ");
-	ft_putnbr(lem->ants_nb);
-	ft_putstr("\n");
 }
 
 void	save_line(t_lemin *lem, char *l)

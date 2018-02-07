@@ -6,22 +6,23 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 16:31:11 by llaporte          #+#    #+#             */
-/*   Updated: 2018/02/06 15:28:24 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/07 13:28:33 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	destroy_roomlist(t_roomlist *list)
+void		destroy_roomlist(t_roomlist *list)
 {
-	if (list) {
+	if (list)
+	{
 		if (list->next)
 			destroy_roomlist(list->next);
 		free(list);
 	}
 }
 
-void show_roomlist(t_roomlist *list)
+void		show_roomlist(t_roomlist *list)
 {
 	while (list)
 	{
@@ -36,13 +37,15 @@ void show_roomlist(t_roomlist *list)
 t_roomlist	*init_roomlist(t_room *toadd)
 {
 	t_roomlist	*list;
+
 	list = (t_roomlist *)s_malloc(sizeof(t_roomlist));
 	list->room = toadd;
 	list->next = NULL;
 	return (list);
 }
 
-void	add_roomlist(t_room *toadd, t_roomlist *parent, t_roomlist *list)
+void		add_roomlist(t_room *toadd, t_roomlist *parent,
+	t_roomlist *list)
 {
 	while (list->next)
 		list = list->next;
@@ -52,7 +55,7 @@ void	add_roomlist(t_room *toadd, t_roomlist *parent, t_roomlist *list)
 	list->next->next = NULL;
 }
 
-int		in_roomlist(t_room *current, t_roomlist *list)
+int			in_roomlist(t_room *current, t_roomlist *list)
 {
 	while (list)
 	{
