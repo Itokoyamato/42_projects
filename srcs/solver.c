@@ -6,7 +6,7 @@
 /*   By: llaporte <llaporte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 16:25:07 by llaporte          #+#    #+#             */
-/*   Updated: 2018/02/07 13:30:48 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/07 16:48:34 by llaporte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void		solver(t_lemin *lem)
 				&& ants->current_room != lem->end_room)
 				move_ant(ants, path_to_take(tmp));
 			ants = ants->next;
+			if (tmp)
+				destroy_roomlist(tmp);
 		}
 		ft_putchar('\n');
 	}
