@@ -1,3 +1,6 @@
+var camera_speed = 100.0;
+var turn_speed = 1000;
+
 var scene, camera, renderer, controls;
 var geometry, material, mesh;
 
@@ -13,6 +16,8 @@ var current_turn = -1;
 var ant_count = 0;
 var room_count = 0;
 var	turn_startTime;
+var	state = "stopped";
+var play_interval;
 
 var instructions = document.getElementById( 'instructions' );
 var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
@@ -26,6 +31,7 @@ var prevTime = performance.now();
 var velocity = new THREE.Vector3();
 var direction = new THREE.Vector3();
 var raycaster = new THREE.Raycaster();
+var last_raycast = performance.now();
 
 var skybox;
 var texture_dirt;
@@ -33,24 +39,68 @@ var texture_glow;
 var ant_object;
 var ant_material = new THREE.MeshLambertMaterial({ color: 0xFF0000, opacity: 1});
 
+function changeTurnSpeed(element)
+{
+	turn_speed = 200*(element.value);
+}
+
+function changeCameraSpeed(element)
+{
+	camera_speed = 100*(element.value);
+}
+
 function stop()
 {
-	console.log("stop");
+	state = "stopped";
+	if (play_interval)
+	{
+		clearInterval(play_interval);
+		play_interval = null;
+	}
+	current_turn = -1;
+	for (i in arr_ants)
+	{
+		scene.remove(arr_ants[i].object);
+		arr_ants[i].object = createAnt(start_room.object.position.x, start_room.object.position.y, start_room.object.position.z);
+		arr_ants[i].room = start_room;
+	}
 }
 
 function play()
 {
-	console.log("play");
+	state = "play";
+	if (play_interval)
+		return;
+	play_interval = setInterval(function()
+	{
+		var wait = false;
+		if (state == "play")
+		{
+			for (i in arr_ants)
+			{
+				if (arr_ants[i].moving)
+					wait = true;
+			}
+			if (!wait)
+				next_move();
+		}
+	}, 100);
 }
 
 function pause()
 {
-	console.log("pause");
+	state = "paused";
+	if (play_interval)
+	{
+		clearInterval(play_interval);
+		play_interval = null;
+	}
 }
 
-function next_move()
+function next_move(isManual)
 {
-	console.log("next_move");
+	if (isManual && state == "play")
+		return;
 	current_turn++;
 	var turn = arr_turns[current_turn];
 	if (turn)
@@ -64,6 +114,8 @@ function next_move()
 			move.ant.object.lookAt(move.ant.dest.object.position);
 		}
 	}
+	else
+		pause();
 }
 
 window.onload = function() {
@@ -93,6 +145,7 @@ window.onload = function() {
 
 function reset_scene()
 {
+	stop();
 	for (i in arr_rooms)
 		scene.remove(arr_rooms[i].object);
 	for (i in arr_tunnels)
@@ -163,6 +216,8 @@ function parse_data(data)
 				var split = l.split(" ");
 				for (j in split)
 				{
+					if (split[j] == "")
+						continue;
 					var split2 = split[j].replace("L", "").split("-");
 					var result = arr_rooms.filter(function(obj) {return obj.name == split2[1].trim();});
 					moves.push({ant: arr_ants[split2[0]-1], dest: result[0]});
@@ -238,20 +293,20 @@ function init() {
 	scene = new THREE.Scene();
 	camera = new THREE.PerspectiveCamera(75, element.offsetWidth / element.offsetHeight, 1, 10000);
 
-	var light = new THREE.PointLight(0xffffff, 1, 100);
-	light.position.set(10, 10, 10);
-	scene.add( light );
+	// var light = new THREE.PointLight(0xffffff, 1, 100);
+	// light.position.set(10, 10, 10);
+	// scene.add( light );
 
-	light = new THREE.PointLight(0xffffff, 1, 100);
-	light.position.set(-10, 10, 10);
-	scene.add( light );
+	// light = new THREE.PointLight(0xffffff, 1, 100);
+	// light.position.set(-10, 10, 10);
+	// scene.add( light );
 
-	var light = new THREE.AmbientLight(0x404040, 2);
+	var light = new THREE.AmbientLight(0x404040, 4);
 	scene.add( light );
 
 	var geometry = new THREE.SphereGeometry(1000, 32, 32);
 	texture_dirt = new THREE.TextureLoader().load("skybox.jpg");
-	var material = new THREE.MeshPhongMaterial({color: 0xffffff, map: texture_dirt})
+	var material = new THREE.MeshPhongMaterial({color: 0xffffff, map: texture_dirt, transparent: true, opacity: 0.3})
 	skybox = new THREE.Mesh(geometry, material);
 	skybox.material.side = THREE.DoubleSide;
 	scene.add(skybox);
@@ -309,13 +364,11 @@ function init() {
 	document.addEventListener('keyup', onKeyUp, false);
 
 	renderer = new THREE.WebGLRenderer();
-	renderer.setSize(element.clientWidth - 20, element.clientHeight, false);
+	renderer.setSize(element.clientWidth, element.clientHeight, false);
 
 	element.appendChild(renderer.domElement);
 }
 
-var delta_amount = 100.0;
-var last_raycast = performance.now();
 function animate()
 {
 	requestAnimationFrame(animate);
@@ -335,10 +388,10 @@ function animate()
 		direction.y = Number(moveForward) - Number(moveBackward);
 		direction.normalize();
 
-		if ( moveForward || moveBackward ) velocity.z -= direction.z * (delta_amount) * delta;
-		if ( moveLeft || moveRight ) velocity.x -= direction.x * delta_amount * delta;
-		if (moveForward) velocity.y += direction3d.y * delta_amount * delta;
-		if (moveBackward) velocity.y -= direction3d.y * delta_amount * delta;
+		if ( moveForward || moveBackward ) velocity.z -= direction.z * (camera_speed) * delta;
+		if ( moveLeft || moveRight ) velocity.x -= direction.x * camera_speed * delta;
+		if (moveForward) velocity.y += direction3d.y * camera_speed * delta;
+		if (moveBackward) velocity.y -= direction3d.y * camera_speed * delta;
 
 		controls.getObject().translateX( velocity.x * delta );
 		controls.getObject().translateZ( velocity.z * delta );
@@ -357,12 +410,7 @@ function animate()
 				for (i in arr_rooms)
 				{
 					if (arr_rooms[i].object === intersects[0].object)
-						info.innerHTML = "Room: " + arr_rooms[i].name + "<br>" + "Ants: " + arr_rooms[i].ants;
-				}
-				for (i in arr_tunnels)
-				{
-					if (arr_tunnels[i].object === intersects[0].object)
-						info.innerHTML = "Tunnel: " + arr_tunnels[i].name + "<br>" + "Ants: " + arr_tunnels[i].ants;
+						info.innerHTML = "Room: " + arr_rooms[i].name;
 				}
 			}
 			else
@@ -377,7 +425,7 @@ function animate()
 		{
 			var tmp = new THREE.Vector3();
 			var	dest = ant.room.object.position.clone();
-			var progress = Math.min((performance.now() - turn_startTime) / 2000);
+			var progress = Math.min((performance.now() - turn_startTime) / turn_speed);
 
 			dest.z += 0.5;
 			dest.y -= 0.5;
@@ -387,6 +435,7 @@ function animate()
 			{
 				ant.moving = false;
 				ant.room = ant.dest;
+				ant.object.position.set(ant.dest.object.position.x, ant.dest.object.position.y - 0.5, ant.dest.object.position.z + 0.5);
 				ant.dest = null;
 			}
 		}
@@ -422,10 +471,14 @@ function addRoom(x, y, name, ants)
 	var material = new THREE.MeshLambertMaterial({transparent: true, opacity: 0.7});
 
 	var mesh = new THREE.Mesh(room, material);
-	var z = Math.floor(Math.random() * 20);
+	var z = Math.floor(Math.random() * 50);
+	if (document.getElementById("randomPos").checked == true)
+	{
+		x = x + Math.floor(Math.random() * 50);
+		y = y + Math.floor(Math.random() * 50);
+	}
 	mesh.position.set(x, z, y);
 	material.map = texture_dirt;
-	material.depthWrite = false;
 	scene.add(mesh);
 	room = {object: mesh, name: name, ants: ants};
 	arr_rooms.push(room);
@@ -452,25 +505,17 @@ function toRadians(angle)
 	return (angle * (Math.PI / 180));
 }
 
-function addAnt(x, y, z, room)
+function createAnt(x, y, z)
 {
 	var ant = ant_object.clone();
 	ant.position.set(x - 0.6, y, z);
 	scene.add(ant);
+	return (ant);
+}
 
-	var spriteMaterial = new THREE.SpriteMaterial( 
-	{ 
-		map: texture_glow,
-		color: 0xFF0000,
-		transparent: false,
-		blending: THREE.AdditiveBlending,
-		opacity: 0.1
-	});
-	var sprite = new THREE.Sprite(spriteMaterial);
-	sprite.scale.set(3, 3, 1.0);
-	// sprite.translateZ(-0.6);
-	// sprite.translateY(0.2);
-	// ant.add(sprite);
+function addAnt(x, y, z, room)
+{
+	var ant = createAnt(x, y, z);
 
 	ant = {object: ant, room: room};
 	arr_ants.push(ant);

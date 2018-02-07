@@ -3,15 +3,21 @@ html, body {
 	padding: 0;
 }
 .sidebar {
-	position: relative;
+	position: absolute;
+	left: 0;
 	float: left;
-	width: 200px;
-	background: #eee;
+	width: 210px;
+	height: 100vh;
+	background: #252525;
+	color: #eee;
+	border-right: solid 2px #eee;
+	z-index: 100;
+	padding-top: 20px
 }
 .main {
 	position: relative;
 	float: right;
-	width: calc(100% - 200px);
+	width: calc(100% - 210px);
 	height: 100vh;
 }
 .main > canvas {

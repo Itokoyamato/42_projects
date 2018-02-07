@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 12:23:44 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/02/07 16:07:06 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/02/07 17:37:38 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		is_tunnel_valid(t_lemin *lem, char *line)
 	if (rooms[0] && rooms[1])
 		return (new_tunnel(rooms));
 	free(rooms);
-	return (1);
+	return (0);
 }
 
 int		parse_tunnels(t_lemin *lem, char *line)
