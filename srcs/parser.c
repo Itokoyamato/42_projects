@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/30 14:29:30 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/02/07 16:47:12 by dthuilli         ###   ########.fr       */
+/*   Updated: 2018/02/08 13:25:10 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	parse_data(t_lemin *lem)
 			break ;
 		free(l);
 	}
-	if (!lem->start_room || !lem->end_room || !lem->rooms || !lem->rooms->next)
+	if (!lem->ants_nb || !lem->start_room || !lem->end_room || !lem->rooms
+		|| !lem->rooms->next)
 		err("Error: Invalid anthill.", lem);
 }
