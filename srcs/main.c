@@ -6,7 +6,7 @@
 /*   By: dthuilli <dthuilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:24:00 by dthuilli          #+#    #+#             */
-/*   Updated: 2018/02/07 17:48:52 by llaporte         ###   ########.fr       */
+/*   Updated: 2018/02/08 13:54:19 by dthuilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	err(char *err, t_lemin *lem)
 {
 	destroy_rooms(lem->rooms);
 	destroy_ants(lem->ants);
-	free(lem->input_str);
+	if (lem->input_str && lem->input_str[0])
+		free(lem->input_str);
 	free(lem);
 	ft_putstr_fd(err, 1);
 	exit(1);
