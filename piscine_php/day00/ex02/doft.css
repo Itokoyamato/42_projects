@@ -1,0 +1,140 @@
+html body {
+	background: #514e51;
+	height:100%;
+	width:100%;
+	padding:0;
+	margin:0;
+}
+
+.main {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1850px;
+	min-width: 1000px;
+	margin-top: 20px;
+}
+
+.header {
+	background: #909090;
+	margin-bottom: 25px;
+	padding-bottom: 30px;
+	position:relative;
+}
+
+.round-shadow {
+	border-radius: 15px;
+    padding: 15px;
+    box-shadow: 12px 12px 15px;
+}
+
+a {
+	cursor: pointer;
+}
+
+.sidebar {
+	background: #909090;
+	height: 550px;
+	width: 160px;
+	float: left;
+	margin-right: 35px;
+	margin-left: 35px;
+}
+
+.container {
+	position: relative;
+	background: #909090;
+	width: calc(100% - 550px);;
+	float: left;
+}
+
+.content {
+	width: 100%;
+	height: 100%;
+}
+
+.chair-link {
+	display: block;
+	width: calc(100% * 0.13);
+	height: calc(100% * 0.4);
+	position: absolute;
+	/*background: rgba(255, 0, 0, 0.5);*/
+	top: calc(100% * 0.57);
+	left: calc(100% * 0.325);
+}
+
+.screen-link {
+	display: block;
+	width: calc(100% * 0.19);
+	height: calc(100% * 0.3);
+	position: absolute;
+	/*background: rgba(255, 0, 0, 0.5);*/
+	top: calc(100% * 0.55);
+	left: calc(100% * 0.78);
+}
+
+.item {
+	width: 100px;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.selected {
+	border: 5px solid red;
+	border-radius: 7px;
+}
+
+.brick {
+	background: url(resources/brick.jpg);
+	height: 80px;
+	width: 150px;
+}
+
+.interactionWindow {
+	background: #88FF89;
+	width: 640px;
+	height: 200px;
+	position: absolute;
+	bottom: 70px;
+	left: calc(100% * 0.05);
+	font-size: 21px;
+	font-family: sans-serif;
+	letter-spacing: 1.4px;
+}
+
+.bigtext {
+	font-size: 42px;
+    font-family: serif;
+}
+
+.textinput {
+	all: initial;
+	height: 20px;
+	width: 493px;
+	background: white;
+	border-top: 3px solid #9C9899;
+	border-left: 3px solid #9C9899;
+	border-bottom: 3px solid #EEEEEE;
+	border-right: 3px solid #EEEEEE;
+}
+
+.answer {
+	border-radius: 0;
+	font-size: 17px;
+	height: 25px;
+	padding-bottom: 20px;
+	padding-top: 1px;
+	width: 110px;
+	background: linear-gradient(#f5f7f6, #e2e2e2);
+	border: 1px solid #A8A4A5;
+}
+
+.textshadow {
+	text-shadow: 7px 7px 5px rgba(255, 70, 40, 1);
+}
+
+
+

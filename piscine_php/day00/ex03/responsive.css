@@ -1,0 +1,60 @@
+html body {
+	background: radial-gradient(#858585, #353535) no-repeat;
+	height:100%;
+	width:100%;
+	padding:0;
+	margin:0;
+}
+h1 {
+	font-size: 40px;
+	text-align: center;
+	color: white;
+	padding: 0;
+	margin: 0;
+	margin-bottom: 70px;
+}
+table {
+	padding: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}
+table:focus {
+	outline: none;
+}
+tr {
+	height: 5vw;
+	width: 100%;
+}
+td {
+	position: relative;
+	text-align: center;
+	width: 5%;
+}
+td .symbol {
+	text-align: center;
+	font-size: 3vw;
+}
+td .number {
+	position: absolute;
+	font-size: 0.7vw;
+	bottom: 0;
+	left: 0;
+}
+td .mass {
+	position: absolute;
+	font-size: 0.75vw;
+	top: 0;
+	right: 0;
+}
+span {
+	padding: 2px;
+	font-family: monospace;
+}
+img {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	width: 256px;
+	height: 256px;
+}
