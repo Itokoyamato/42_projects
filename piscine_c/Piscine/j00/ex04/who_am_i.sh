@@ -1,0 +1,1 @@
+ldapwhoami | sed -n 's/^[ \t]*dn:[ \t]*\(.*\)/\1/p'

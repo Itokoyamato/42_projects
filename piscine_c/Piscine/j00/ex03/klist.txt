@@ -1,0 +1,7 @@
+Credentials cache: API:18426
+        Principal: dthuilli@42.FR
+
+  Issued                Expires               Principal
+Jul  5 19:27:29 2016  Jul  6 05:27:29 2016  krbtgt/42.FR@42.FR
+Jul  5 19:47:03 2016  Jul  6 05:27:29 2016  host/vgs-fn1.42.fr@42.FR
+Jul  5 19:56:37 2016  Jul  6 05:27:29 2016  ldap/ldap-proxy.42.fr@42.FR
