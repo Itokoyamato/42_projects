@@ -2,8 +2,6 @@
 # My @42Born2Code Projects
 None of those projects are production-ready. I mostly experienced, and played around with the languages when working on those projects, trying to achieve additional features for bonuses when available.
 
-*- Screenshots will be added soon -*
-
 ## [Lem-in](https://github.com/Itokoyamato/42_projects/tree/master/lem_in)
 Grade: **125**/100 *(Done with **@Technowix**)*
 
@@ -44,6 +42,8 @@ The first project of the web branch. Camagru is a php based website that allows 
 
 While I did produce several more features than what requested, my lack of planning made the end-of-project refactoring somewhat difficult, hence the code is far from being well structured.
 
+[Camagru demo](https://itokoyamato.net/42/camagru/)
+
 ## [Filler](https://github.com/Itokoyamato/42_projects/tree/master/filler)
 Grade: **96**/100
 
@@ -51,15 +51,21 @@ The goal of this project is to code an AI for the game of Filler, for which we h
 
 This project was kind of hurried, as I was missing one project to be able to start the web branch at a set date, but ended up being decently good.
 
+<img src="/screenshots/filler.gif?raw=true" width="500px">
+
 ## [Fractol](https://github.com/Itokoyamato/42_projects/tree/master/fractol)
 Grade: **113**/100
 
 A fractal visualizer coded in C. Supports [Julia](https://en.wikipedia.org/wiki/Mandelbrot_set), [Mandelbrot](https://en.wikipedia.org/wiki/Mandelbrot_set) and [burningship](https://en.wikipedia.org/wiki/Burning_Ship_fractal). Pushed a little further than asked with a smoothing of colors, as well as a settings menu to allow user to change colors which was reused from the FdF project.
 
+<img src="/screenshots/fractol.gif?raw=true" width="500px">
+
 ## [Fil de Fer (Wireframe)](https://github.com/Itokoyamato/42_projects/tree/master/fdf)
 Grade: **125**/100
 
 A wireframe representation of given maps, with movement and rotation support, as well as color chart based on height. Included a settings menu that adds background gradient settings and the ability to edit any color of the wireframe.
+
+<img src="/screenshots/fdf.gif?raw=true" width="500px">
 
 ## [Fillit](https://github.com/Itokoyamato/42_projects/tree/master/fillit)
 Grade: **100**/100 *(Done with **@Technowix**)*
